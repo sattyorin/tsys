@@ -20,16 +20,24 @@ public interface HotelItemMapper {
 
 	/**
 	 * ホテル情報のリストを更新する
-	 * @param hotelItemCode 商品コード
-	 * @param data			日付
-	 * @param price			料金
-	 * @param stock			在庫
+	 * 
+	 * @param hotelItemCode
+	 *            商品コード
+	 * @param data
+	 *            日付
+	 * @param price
+	 *            料金
+	 * @param stock
+	 *            在庫
 	 */
-	public void updateHotelItem(String hotelItemCode,String date, int price, int stock);
+	public void updateHotelItem(String hotelItemCode, String date, int price,
+			int stock);
 
 	/**
 	 * ホテル情報のリストを一件削除する
-	 * @param hotelItemCode 商品コード
+	 * 
+	 * @param hotelItemCode
+	 *            商品コード
 	 */
 	public int deleteHotelItem(String hotelItemCode);
 
