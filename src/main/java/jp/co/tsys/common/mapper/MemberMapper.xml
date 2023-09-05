@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- RetrieveProductMapper.xml -->
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.tsys.common.mapper.MemberMapper">
+
+	<!-- テンプレ：[あああ]ああああ -->
+	
+	<!-- [検索]メンバー検索 -->
+	<select id="findMember" resultType="jp.co.tsys.common.entity.Member">
+		SELECT
+			MemberCode, Name, Password, Role, Mail, ZipCode, Prefecture, Address, Tel
+		FROM
+			member
+		WHERE
+			MemberCode = #{id};
+	</select>
