@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- RetrieveProductMapper.xml -->
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.tsys.common.mapper.HotelItemMapper">
+
+	<!-- update -->
+	<update id="updateHotelItem" resultType="int">
+		UPDATE
+			Hotel
+		SET
+			Date = #{date},
+			Price = #{price},
+			Stock = #{stock}
+		WHERE
+			ItemCode = #{hotelItemCode}
+		;
+	</update>
+
+	<!-- delete -->
+	<delete id="deleteHotelItem" resultType="int">
+		DELETE
+			FROM Hotel
+		WHERE
+			ItemCode = #{hotelItemCode}
+		;
+	</delete>
+</mapper>
