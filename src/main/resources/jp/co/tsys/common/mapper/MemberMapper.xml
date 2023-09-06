@@ -1,19 +1,138 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- RetrieveProductMapper.xml -->
-<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.tsys.common.mapper.MemberMapper">
-
-	<!-- テンプレ：[あああ]ああああ -->
 	
+	<!-- メンバー登録 -->
+	<insert id="insertMember">
+		INSERT INTO
+			MEMBER(MemberCode, Name, Password, Role, Mail, ZipCode, Prefecture, Adress, Tel)
+			#{MemberCode},
+			#{Name},
+			#{Password},
+			#{Role},
+			#{Mail}
+			#{ZipCode},
+			#{Prefecture},
+			#{Adress},
+			#{Tel});
+	</insert>
+	
+	<!-- メンバーコード（顧客）を取得 -->
+	<select id="getLastCustomerCode" resultType="String">
+		SELECT
+			MemberCode
+			FROM
+			member
+		WHERE
+			Role = "Customer"
+		ORDER BY
+			MemberCode
+		DESC
+			limit 1;
+	</select>
+	
+	<!-- メンバーコード（従業員）を取得 -->
+	<select id="getLastEmployeeCode" resultType="String">
+		SELECT
+			MemberCode
+		FROM
+			member
+		WHERE
+			Role = "Employee"
+		ORDER BY
+			MemberCode
+		DESC
+			limit 1;
+	</select>
+	
+
 	<!-- [検索]メンバー検索 -->
 	<select id="findMember" resultType="jp.co.tsys.common.entity.Member">
 		SELECT
-			MemberCode, Name, Password, Role, Mail, ZipCode, Prefecture, Address, Tel
+			MemberCode as memberCode,
+			Name as name, 
+			Password as password, 
+			Role as role, 
+			Mail as mail, 
+			ZipCode as zipCode, 
+			Prefecture as prefecture, 
+			Address as address, 
+			Tel as tel
+		FROM
+			member
+		WHERE
+			MemberCode = #{memberCode};
+	</select>
+	
+	<!--メンバー情報更新-->
+	<update id = "updateMember" resultType = "jp.co.tsys.common.entity.Member">
+	UPDATE
+		member
+	SET
+		MemberCode = #{memberCode},
+		Name = #{name},
+		Password = #{password},
+		Role =  #{role},
+		Mail = #{mail},
+		ZipCode = #{zipCode},
+		Prefecture = #{prefecture},
+		Address = #{tel},
+		Tel = #{tel},
+	Where
+		MemberCode = #{memberCode};
+	</update>
+	
+	<!-- [削除・退会]メンバー削除・退会-->
+	<delete id="deleteMember">
+		DELETE
 		FROM
 			member
 		WHERE
 			MemberCode = #{id};
+	</delete>
+	
+	<!-- [削除・退会]メンバー一覧-->
+	<select id="findAllMember" resultType="jp.co.tsys.common.entity.Member">
+	SELECT
+		MemberCode AS memberCode,
+		Name AS name,
+		Role AS role,
+		Mail AS mail,
+		ZipCode AS zipCode,
+		Prefecture AS prefecture,
+		Address AS address,
+		Tel AS tel
+	FROM
+		member
+	WHERE
+		Role = #{role} OR
+		Name = #{name} OR
+		Tel = #{tel} OR
+		Mail = #{mail};
 	</select>
+		
+
+	<!-- [ログイン]メンバー検索 -->
+	<select id="findOne" resultType="jp.co.tsys.common.entity.Member">
+		SELECT
+			MemberCode AS memberCode,
+			Name AS name,
+			Password AS password,
+			Role AS role,
+			Mail AS mail,
+			ZipCode AS zipCode,
+			Prefecture AS prefecture,
+			Address AS address,
+			Tel AS tel
+		FROM
+			member
+		WHERE
+			MemberCode = #{memberCode};
+		AND
+			Password = #{password}
+	</select>
+	
+</mapper>	
