@@ -7,7 +7,7 @@ package jp.co.tsys.common.util;
 
 /**
  * メッセージを管理するユーティリティクラス
- * 
+ *
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
@@ -21,7 +21,7 @@ public final class MessageList {
 	 * <li>メッセージ本文：{@value}</li>
 	 * </ul>
 	 */
-	// public static final String SYSERR000 = "システムエラーです。システム管理者に連絡してください。";
+	public static final String SYSERR000 = "こちらにお問い合わせください。";
 
 	/**
 	 * 業務エラー（セッション無効）時のエラーメッセージ
