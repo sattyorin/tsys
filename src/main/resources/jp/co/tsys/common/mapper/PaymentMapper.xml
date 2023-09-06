@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- RetrieveProductMapper.xml -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.tsys.common.mapper.HotelItemMapper">
+
+	<!-- OrderMasterに登録 -->
+	<insert id="addOrderMaster" >
+		INSERT INTO
+			OrderMaster(
+				OrderDate,
+				OrderTotal,
+				MemberCode,
+				Payment
+		) VALUES (
+			#{orderDate},
+			#{orderTotal},
+			#{memberCode},
+			#{payment}
+		);
+	</insert>
+	
+	<!-- 受注番号を取得 -->
+	<select id="getLastOrderNo" resultType="String">
+		SELECT
+			orderNo
+		FROM
+			orderMaster
+		ORDER BY
+			orderNo
+		DESC
+			limit 1
+		;
+	</select>
+	
+	<!-- OrderDetailに登録 -->
+	<insert id="addOrderDetail" >
+		INSERT INTO
+			OrderDetail(
+				orderNo,
+				ItemCode,
+				price,
+				quantity
+		) 
+		VALUES 
+		<foreach item="orders" collection="orders" open="(" close=")" separator=",">
+		(
+			#{orderNo},
+			#{orders.hotelItem.itemCode},
+			#{orders.hotelItem.price},
+			#{orders.quantity}
+		)
+		</foreach>
+		;
+	</insert>
+</mapper>
