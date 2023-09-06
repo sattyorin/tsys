@@ -31,7 +31,7 @@ public interface HotelItemMapper {
 	 * @param stock
 	 *            在庫
 	 */
-	public void updateHotelItem(String hotelItemCode, String date, int price,
+	public int updateHotelItem(String hotelItemCode, String date, int price,
 			int stock);
 
 	/**

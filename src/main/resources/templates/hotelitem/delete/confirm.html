@@ -1,0 +1,71 @@
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<title>商品削除確認</title>
+</head>
+
+<body>
+	<div style="text-align: center;">
+		<p>
+			<a th:href="@{/itemMgrMenu}">
+				<button>商品管理メニュー</button>
+			</a>
+		</p>
+		<h1>ホテル商品削除確認</h1>
+
+		<table border="1" align="center">
+			<tr>
+				<th>商品コード</th>
+				<td th:text="${hotelItemForm.itemCode}">itemCode</td>
+			</tr>
+			<tr>
+				<th>ホテルコード</th>
+				<td th:text="${hotelItemForm.hotelCode}">hotelCode</td>
+			</tr>
+			<tr>
+				<th>ホテル名</th>
+				<td th:text="${hotelItemForm.name}">name</td>
+			</tr>
+			<tr>
+				<th>宿泊日</th>
+				<td th:text="${hotelItemForm.date}">date</td>
+			</tr>
+			<tr>
+				<th>都市名</th>
+				<td th:text="${hotelItemForm.cityName}">cityName</td>
+			</tr>
+			<tr>
+				<th>グレード</th>
+				<td th:text="${hotelItemForm.grade}">grade</td>
+			</tr>
+			<tr>
+				<th>料金</th>
+				<td class="digit" th:text="${hotelItemForm.price} + '円'">price</td>
+			</tr>
+			<tr>
+				<th>在庫数</th>
+				<td th:text="${hotelItemForm.stock}">stock</td>
+			</tr>
+		</table>
+
+		<p>
+			<a th:href="@{'/hotelItem/delete/quitdelete}">
+				<button>戻る</button>
+			</a>
+		</p>
+
+		<p>
+			<a th:href="@{'/hotelItem/delete/commitdelete}">
+				<button>確定</button>
+			</a>
+		</p>
+
+		<div th:insert="footer::back2Top"></div>
+	</div>
+</body>
+
+</html>
