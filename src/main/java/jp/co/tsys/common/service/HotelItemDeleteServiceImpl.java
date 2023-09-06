@@ -1,6 +1,5 @@
 /**
  * HotelItemDeleteServiceImpl.java
- * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
  */
 
 package jp.co.tsys.common.service;
@@ -14,7 +13,7 @@ import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.mapper.HotelItemMapper;
 
 /**
- * 商品検索Serviceの実装クラス
+ * 商品削除Serviceの実装クラス
  * 
  * @author FLM
  * @version 1.0 yyyy/mm/dd
@@ -30,7 +29,7 @@ public class HotelItemDeleteServiceImpl implements HotelItemDeleteService {
 	 * @see HotelItemDeleteService#deleteHotelItem(String)
 	 */
 	@Override
-	public int deleteHotelItem(String HotelItemCode) {
+	public void deleteHotelItem(String HotelItemCode) {
 		// MapperのdeleteHotelItemメソッドを呼び出し
 		// 削除した件数を格納
 		int delCount = mapper.deleteHotelItem(HotelItemCode);
@@ -41,8 +40,6 @@ public class HotelItemDeleteServiceImpl implements HotelItemDeleteService {
 			// 業務エラーを明示的に発生させる
 			throw new BusinessException("エラーメッセージ");
 		}
-
-		return delCount;
 	}
 
 }

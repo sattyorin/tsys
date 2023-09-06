@@ -1,6 +1,5 @@
 /**
  * HotelItemDeleteService.java
- * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
  */
 
 package jp.co.tsys.common.service;
@@ -24,6 +23,6 @@ public interface HotelItemDeleteService {
 	 * @throws BusinessException
 	 *             検索結果が存在しない場合
 	 */
-	public int deleteHotelItem(String hotelItemCode) throws BusinessException;
+	public void deleteHotelItem(String hotelItemCode) throws BusinessException;
 
 }
