@@ -22,7 +22,6 @@ public final class MessageList {
 	 * </ul>
 	 */
 	public static final String SYSERR000 = "こちらにお問い合わせください。";
-
 	/**
 	 * 業務エラー（セッション無効）時のエラーメッセージ
 	 * <ul>
@@ -137,22 +136,24 @@ public final class MessageList {
 	public static final String BIZERR204 = "該当するメンバー情報が見つかりません。";
 
 	/**
-	 * 業務エラー（既に削除されている）時のエラーメッセージ
-	 * <ul>
-	 * <li>メッセージID：BIZERR000</li>
-	 * <li>メッセージ本文：{@value}</li>
-	 * </ul>
-	 */
-	public static final String BIZERR205 = "すでに削除済みです。";
-
-	/**
 	 * 業務エラー（既に退会されている）時のエラーメッセージ
 	 * <ul>
 	 * <li>メッセージID：BIZERR000</li>
 	 * <li>メッセージ本文：{@value}</li>
 	 * </ul>
 	 */
-	public static final String BIZERR206 = "すでに退会済みです。";
+
+	public static final String BIZERR205 = "すでに退会済みです。";
+
+	/**
+	 * 業務エラー（メンバーコードが重複している）時のエラーメッセージ
+	 * <ul>
+	 * <li>メッセージID：BIZERR000</li>
+	 * <li>メッセージ本文：{@value}</li>
+	 * </ul>
+	 */
+
+	public static final String BIZERR206 = "メンバーコードが重複しています。";
 
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!! 商品管理エラーメッセージ
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -191,6 +192,15 @@ public final class MessageList {
 	 * </ul>
 	 */
 	public static final String BIZERR304 = "ホテル名、期間のうち1つ以上を入力してください。";
+
+	/**
+	 * 業務エラー（商品コードが重複している）時のエラーメッセージ
+	 * <ul>
+	 * <li>メッセージID：BIZERR000</li>
+	 * <li>メッセージ本文：{@value}</li>
+	 * </ul>
+	 */
+	public static final String BIZERR305 = "商品コードが重複しています。";
 
 	/** プライベート・コンストラクター */
 	private MessageList() {
