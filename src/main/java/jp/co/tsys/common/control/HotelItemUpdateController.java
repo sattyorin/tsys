@@ -1,6 +1,5 @@
 /**
  * Lab3_UpdateMemberController.java
- * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
  */
 
 package jp.co.tsys.common.control;
@@ -33,7 +32,7 @@ import jp.co.tsys.common.service.HotelItemUpdateService;
  */
 @SessionAttributes(types = HotelItemDetailForm.class)
 @Controller
-@RequestMapping("/hotelItem/update")
+@RequestMapping("/hotelitem/update")
 public class HotelItemUpdateController {
 
 	/** Service */
@@ -49,6 +48,15 @@ public class HotelItemUpdateController {
 	 */
 	@RequestMapping("inputupdate")
 	public String inputUpdate(Model model) {
+		// sessionからdetailを取得
+		HotelItemDetailForm itemDetail = (HotelItemDetailForm) model
+				.getAttribute("hotelItemForm");
+		// 変更用フォームの初期値設定
+		ItemUpdateForm updateForm = new ItemUpdateForm(itemDetail.getDate(),
+				itemDetail.getPrice(), itemDetail.getStock());
+
+		// フォームオブジェクトをキー名"updateForm"でModelに格納
+		model.addAttribute("updateForm", updateForm);
 
 		return "/hotelItem/update/view";
 	}
@@ -65,14 +73,14 @@ public class HotelItemUpdateController {
 	 *            Modelオブジェクト
 	 * @return 会員更新確認画面（/hotelItem/update/confirm）
 	 */
-	@RequestMapping(value = "confirmpdate", method = RequestMethod.POST)
+	@RequestMapping(value = "confirmupdate", method = RequestMethod.POST)
 	public String confirmUpdate(@Validated ItemUpdateForm updateForm,
 			BindingResult result, Model model) {
 		// 入力チェック
 		if (result.hasErrors()) {
 
 			// 商品変更画面（/hotelItem/update/view-update-HTML）を返却する
-			return "/hotelItem/update/view-update-HTML";
+			return "/hotelItem/update/view";
 		}
 
 		// フォームオブジェクトをキー名"updateForm"でModelに格納
@@ -160,7 +168,6 @@ public class HotelItemUpdateController {
 	 *            例外オブジェクト
 	 * @return 商品詳細画面（/hotelItem/retrieve/itemdetail）
 	 */
-	// TODO(kano): check thi method
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(BusinessException.class)
 	public String catchBizException(Model model, Exception e) {
@@ -178,7 +185,6 @@ public class HotelItemUpdateController {
 	 *            Modelオブジェクト
 	 * @return 商品詳細画面（/hotelItem/retrieve/itemdetail）
 	 */
-	// TODO(kano): check thi method
 	@ResponseStatus(HttpStatus.BAD_GATEWAY)
 	@ExceptionHandler(HttpSessionRequiredException.class)
 	public String sessionExpired(Model model) {
