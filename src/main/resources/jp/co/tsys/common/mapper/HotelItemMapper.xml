@@ -7,7 +7,7 @@
 <mapper namespace="jp.co.tsys.common.mapper.HotelItemMapper">
 
 	<!-- update -->
-	<update id="updateHotelItem" resultType="Integer">
+	<update id="updateHotelItem" >
 		UPDATE
 			Hotel
 		SET
@@ -20,7 +20,7 @@
 	</update>
 
 	<!-- delete -->
-	<delete id="deleteHotelItem" resultType="Integer">
+	<delete id="deleteHotelItem">
 		DELETE
 			FROM Hotel
 		WHERE
