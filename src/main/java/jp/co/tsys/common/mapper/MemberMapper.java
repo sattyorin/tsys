@@ -8,6 +8,7 @@ package jp.co.tsys.common.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import jp.co.tsys.common.entity.Member;
@@ -17,6 +18,7 @@ import jp.co.tsys.common.entity.Member;
  * @author FLM
  * @version 1.0.0
  */
+@Mapper
 public interface MemberMapper {
 
 	/**

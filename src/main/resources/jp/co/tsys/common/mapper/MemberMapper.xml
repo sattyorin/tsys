@@ -68,7 +68,7 @@
 	</select>
 	
 	<!--メンバー情報更新-->
-	<update id = "updateMember" resultType = "jp.co.tsys.common.entity.Member">
+	<update id = "updateMember" >
 	UPDATE
 		member
 	SET
