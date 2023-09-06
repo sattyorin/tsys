@@ -45,7 +45,7 @@
 		WHERE
 			hotel.itemCode = #{ItemCode};
 	</select>
-	<resultMap id="hotelItemMap" type="jp.co.tsys.common.entity.Hotelitem">
+	<resultMap id="hotelItemMap" type="jp.co.tsys.common.entity.HotelItem">
 		<id property="itemCode" column="itemCode"/>
 		<result property="date" column="date"/>
 		<result property="price" column="price"/>
@@ -78,7 +78,7 @@
 		WHERE
 			city.Name = #{inputCityName} and date &gt;= #{inDate} and date &lt; #{outDate} and price between #{lowPrice} and #{highPrice} and grade &gt;= #{grade} ;
 	</select>
-	<resultMap id="hotelItemMapForAll" type="jp.co.tsys.common.entity.Hotelitem">
+	<resultMap id="hotelItemMapForAll" type="jp.co.tsys.common.entity.HotelItem">
 		<id property="itemCode" column="itemCode"/>
 		<result property="date" column="date"/>
 		<result property="price" column="price"/>

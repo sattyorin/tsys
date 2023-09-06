@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Order implements Serializable {
 
 	/** ホテル商品 */
-	private Hotelitem hotelItem;
+	private HotelItem hotelItem;
 
 	/** 部屋数 */
 	private int quantity;

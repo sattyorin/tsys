@@ -10,17 +10,17 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jp.co.tsys.common.entity.Hotel;
 
 /**
  * ホテル情報を管理するエンティティクラス
+ * 
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Hotelitem implements Serializable {
+public class HotelItem implements Serializable {
 
 	/** 商品コード */
 	private String itemCode;
