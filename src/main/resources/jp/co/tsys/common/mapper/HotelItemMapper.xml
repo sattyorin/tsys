@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- RetrieveProductMapper.xml -->
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.tsys.common.mapper.HotelItemMapper">
 
 	<!-- update -->
-	<update id="updateHotelItem" >
+	<update id="updateHotelItem" resultType="Integer">
 		UPDATE
 			Hotel
 		SET
@@ -19,11 +20,77 @@
 	</update>
 
 	<!-- delete -->
-	<delete id="deleteHotelItem">
+	<delete id="deleteHotelItem" resultType="Integer">
 		DELETE
 			FROM Hotel
 		WHERE
 			ItemCode = #{hotelItemCode}
 		;
 	</delete>
+
+	<!-- findOne -->
+	<select id="findHotelDetail" resultMap="hotelItemMap">
+		SELECT
+			itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name, hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade, hotelmaster.basicPrice
+		FROM
+			Hotel
+		inner join
+			hotelmaster
+		on
+		 hotel.hotelCode = hotelmaster.hotelCode
+		inner join
+			city
+		on
+		 hotelmaster.cityCode = city.cityCode
+		WHERE
+			hotel.itemCode = #{ItemCode};
+	</select>
+	<resultMap id="hotelItemMap" type="jp.co.tsys.common.entity.Hotelitem">
+		<id property="itemCode" column="itemCode"/>
+		<result property="date" column="date"/>
+		<result property="price" column="price"/>
+		<result property="stock" column="stock"/>
+	
+		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
+			<id property="hotelCode" column="hotelCode"/>
+			<result property="name" column="name"/>
+			<result property="cityCode" column="cityCode"/>
+			<result property="cityName" column="cityName"/>
+			<result property="grade" column="grade"/>
+			<result property="basicPrice" column="basicPrice"/>
+		</association>
+	</resultMap>
+	
+	<!-- findAll -->
+	<select id="findHotelList" resultMap="hotelItemMapForAll">
+		SELECT
+			itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name, hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade, hotelmaster.basicPrice
+		FROM
+			Hotel
+		inner join
+			hotelmaster
+		on
+		 hotel.hotelCode = hotelmaster.hotelCode
+		inner join
+			city
+		on
+		 hotelmaster.cityCode = city.cityCode
+		WHERE
+			city.Name = #{inputCityName} and date &gt;= #{inDate} and date &lt; #{outDate} and price between #{lowPrice} and #{highPrice} and grade &gt;= #{grade} ;
+	</select>
+	<resultMap id="hotelItemMapForAll" type="jp.co.tsys.common.entity.Hotelitem">
+		<id property="itemCode" column="itemCode"/>
+		<result property="date" column="date"/>
+		<result property="price" column="price"/>
+		<result property="stock" column="stock"/>
+	
+		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
+			<id property="hotelCode" column="hotelCode"/>
+			<result property="name" column="name"/>
+			<result property="cityCode" column="cityCode"/>
+			<result property="cityName" column="cityName"/>
+			<result property="grade" column="grade"/>
+			<result property="basicPrice" column="basicPrice"/>
+		</association>
+	</resultMap>
 </mapper>
