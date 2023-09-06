@@ -25,7 +25,7 @@ public interface PaymentMapper {
 	 * @param orders
 	 *            予約情報
 	 */
-	public void addOrderMaster(Orders orders);
+	public void insertOrderMaster(Orders orders);
 
 	/**
 	 * 最新の予約番号を取得する
@@ -40,6 +40,6 @@ public interface PaymentMapper {
 	 * @param orders
 	 *            予約情報
 	 */
-	public void addOrderDetail(@Param("orders") List<Order> orders,
+	public void insertOrderDetail(@Param("orders") List<Order> orders,
 			@Param("orderNo") String orderNo);
 }

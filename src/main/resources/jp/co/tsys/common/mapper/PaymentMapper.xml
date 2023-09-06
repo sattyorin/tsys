@@ -6,7 +6,7 @@
 <mapper namespace="jp.co.tsys.common.mapper.PaymentMapper">
 
 	<!-- OrderMasterに登録 -->
-	<insert id="addOrderMaster" >
+	<insert id="insertOrderMaster" >
 		INSERT INTO
 			OrderMaster(
 				OrderDate,
@@ -35,7 +35,7 @@
 	</select>
 	
 	<!-- OrderDetailに登録 -->
-	<insert id="addOrderDetail" >
+	<insert id="insertOrderDetail" >
 		INSERT INTO
 			OrderDetail(
 				orderNo,

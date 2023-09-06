@@ -25,14 +25,14 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public String addProduct(Orders orders) {
 		// MapperのsaveOrderMasterメソッドを呼び出し
-		mapper.addOrderMaster(orders);
+		mapper.insertOrderMaster(orders);
 
 		// MapperのsaveOrderMasterメソッドを呼び出し
 		// 予約番号を取得して、格納
 		String orderNo = mapper.getLastOrderNo();
 
 		// MapperのsaveOrderMasterメソッドを呼び出し
-		mapper.addOrderDetail(orders.getOrders(), orderNo);
+		mapper.insertOrderDetail(orders.getOrders(), orderNo);
 
 		return orderNo;
 
