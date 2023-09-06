@@ -8,6 +8,8 @@ package jp.co.tsys.common.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import jp.co.tsys.common.entity.HotelItem;
+
 //import jp.co.tsys.common.entity.Hotelitem;
 
 /**
@@ -19,7 +21,7 @@ public interface HotelItemMapper {
 
 	/**
 	 * ホテル情報のリストを更新する
-	 * 
+	 *
 	 * @param hotelItemCode
 	 *            商品コード
 	 * @param data
@@ -34,10 +36,26 @@ public interface HotelItemMapper {
 
 	/**
 	 * ホテル情報のリストを一件削除する
-	 * 
+	 *
 	 * @param hotelItemCode
 	 *            商品コード
 	 */
 	public int deleteHotelItem(String hotelItemCode);
 
+	/**
+	 * 商品コードからホテル商品の1件検索を行う
+	 *
+	 * @param hotelItemCode
+	 *            商品コード
+	 */
+	public HotelItem findHotelDetail(String itemCode);
+
+	/**
+	 * 検索条件からホテル商品の全件検索を行う
+	 *
+	 * @param hotelItemCode
+	 *            商品コード
+	 */
+	public HotelItem findHotelList(String inputCityName, String inDate,
+			String outDate, int lowProce, int highPrice, String grade);
 }
