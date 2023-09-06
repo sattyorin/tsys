@@ -4,6 +4,8 @@
 
 package jp.co.tsys.common.mapper;
 
+import java.util.List;
+
 //import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -56,6 +58,6 @@ public interface HotelItemMapper {
 	 * @param hotelItemCode
 	 *            商品コード
 	 */
-	public HotelItem findHotelList(String inputCityName, String inDate,
+	public List<HotelItem> findHotelList(String inputCityName, String inDate,
 			String outDate, int lowProce, int highPrice, String grade);
 }
