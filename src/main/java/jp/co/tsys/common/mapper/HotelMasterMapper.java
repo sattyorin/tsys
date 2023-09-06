@@ -22,4 +22,5 @@ import jp.co.tsys.common.entity.Hotel;
 public interface HotelMasterMapper {
 	public List<Hotel> findHotel(@Param("hotelCode") String hotelCode,
 			@Param("hotelName") String hotelName);
+
 }

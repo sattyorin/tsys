@@ -9,6 +9,7 @@ import java.util.List;
 //import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import jp.co.tsys.common.entity.HotelItem;
 
@@ -20,6 +21,11 @@ import jp.co.tsys.common.entity.HotelItem;
  */
 @Mapper
 public interface HotelItemMapper {
+	public void registHotelItem(@Param("ItemCode") String ItemCode,
+			@Param("HotelCode") String HotelCode, @Param("Date") String Date,
+			@Param("Price") int Price, @Param("Stock") int Stock);
+
+	public String getLastHotelCode();
 
 	/**
 	 * ホテル情報のリストを更新する

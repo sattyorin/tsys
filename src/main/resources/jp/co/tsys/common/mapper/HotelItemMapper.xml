@@ -5,92 +5,123 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.tsys.common.mapper.HotelItemMapper">
-
+	<!-- insert -->
+	<insert id="registHotelItem">
+		INSERT INTO
+		Hotel(ItemCode, HotelCode, Date, Price, Stock)
+		VALUES (
+		#{ItemCode},
+		#{HotelCode},
+		#{Date},
+		#{Price},
+		#{Stock});
+	</insert>
+	<!--- select lasthotelCode -->
+	<select id="getLastHotelCode" resultType="String">
+		SELECT
+		ItemCode
+		FROM
+		hotel
+		ORDER BY
+		ItemCode
+		DESC
+		limit 1;
+	</select>
 	<!-- update -->
-	<update id="updateHotelItem" >
+	<update id="updateHotelItem">
 		UPDATE
-			Hotel
+		Hotel
 		SET
-			Date = #{date},
-			Price = #{price},
-			Stock = #{stock}
+		Date = #{date},
+		Price = #{price},
+		Stock = #{stock}
 		WHERE
-			ItemCode = #{hotelItemCode}
+		ItemCode = #{hotelItemCode}
 		;
 	</update>
 
 	<!-- delete -->
 	<delete id="deleteHotelItem">
 		DELETE
-			FROM Hotel
+		FROM Hotel
 		WHERE
-			ItemCode = #{hotelItemCode}
+		ItemCode = #{hotelItemCode}
 		;
 	</delete>
 
 	<!-- findOne -->
 	<select id="findHotelDetail" resultMap="hotelItemMap">
 		SELECT
-			itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name, hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade, hotelmaster.basicPrice
+		itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name,
+		hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade,
+		hotelmaster.basicPrice
 		FROM
-			Hotel
+		Hotel
 		inner join
-			hotelmaster
+		hotelmaster
 		on
-		 hotel.hotelCode = hotelmaster.hotelCode
+		hotel.hotelCode = hotelmaster.hotelCode
 		inner join
-			city
+		city
 		on
-		 hotelmaster.cityCode = city.cityCode
+		hotelmaster.cityCode = city.cityCode
 		WHERE
-			hotel.itemCode = #{ItemCode};
+		hotel.itemCode = #{ItemCode};
 	</select>
-	<resultMap id="hotelItemMap" type="jp.co.tsys.common.entity.HotelItem">
-		<id property="itemCode" column="itemCode"/>
-		<result property="date" column="date"/>
-		<result property="price" column="price"/>
-		<result property="stock" column="stock"/>
-	
-		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
-			<id property="hotelCode" column="hotelCode"/>
-			<result property="name" column="name"/>
-			<result property="cityCode" column="cityCode"/>
-			<result property="cityName" column="cityName"/>
-			<result property="grade" column="grade"/>
-			<result property="basicPrice" column="basicPrice"/>
+	<resultMap id="hotelItemMap"
+		type="jp.co.tsys.common.entity.HotelItem">
+		<id property="itemCode" column="itemCode" />
+		<result property="date" column="date" />
+		<result property="price" column="price" />
+		<result property="stock" column="stock" />
+
+		<association property="hotel"
+			javaType="jp.co.tsys.common.entity.Hotel">
+			<id property="hotelCode" column="hotelCode" />
+			<result property="name" column="name" />
+			<result property="cityCode" column="cityCode" />
+			<result property="cityName" column="cityName" />
+			<result property="grade" column="grade" />
+			<result property="basicPrice" column="basicPrice" />
 		</association>
 	</resultMap>
-	
+
 	<!-- findAll -->
 	<select id="findHotelList" resultMap="hotelItemMapForAll">
 		SELECT
-			itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name, hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade, hotelmaster.basicPrice
+		itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name,
+		hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade,
+		hotelmaster.basicPrice
 		FROM
-			Hotel
+		Hotel
 		inner join
-			hotelmaster
+		hotelmaster
 		on
-		 hotel.hotelCode = hotelmaster.hotelCode
+		hotel.hotelCode = hotelmaster.hotelCode
 		inner join
-			city
+		city
 		on
-		 hotelmaster.cityCode = city.cityCode
+		hotelmaster.cityCode = city.cityCode
 		WHERE
-			city.Name = #{inputCityName} and date &gt;= #{inDate} and date &lt; #{outDate} and price between #{lowPrice} and #{highPrice} and grade &gt;= #{grade} ;
+		city.Name = #{inputCityName} and date &gt;= #{inDate} and date &lt; #{outDate}
+		and price between #{lowPrice} and #{highPrice} and grade &gt;=
+		#{grade} ;
 	</select>
-	<resultMap id="hotelItemMapForAll" type="jp.co.tsys.common.entity.HotelItem">
-		<id property="itemCode" column="itemCode"/>
-		<result property="date" column="date"/>
-		<result property="price" column="price"/>
-		<result property="stock" column="stock"/>
-	
-		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
-			<id property="hotelCode" column="hotelCode"/>
-			<result property="name" column="name"/>
-			<result property="cityCode" column="cityCode"/>
-			<result property="cityName" column="cityName"/>
-			<result property="grade" column="grade"/>
-			<result property="basicPrice" column="basicPrice"/>
+	<resultMap id="hotelItemMapForAll"
+		type="jp.co.tsys.common.entity.HotelItem">
+		<id property="itemCode" column="itemCode" />
+		<result property="date" column="date" />
+		<result property="price" column="price" />
+		<result property="stock" column="stock" />
+
+		<association property="hotel"
+			javaType="jp.co.tsys.common.entity.Hotel">
+			<id property="hotelCode" column="hotelCode" />
+			<result property="name" column="name" />
+			<result property="cityCode" column="cityCode" />
+			<result property="cityName" column="cityName" />
+			<result property="grade" column="grade" />
+			<result property="basicPrice" column="basicPrice" />
 		</association>
 	</resultMap>
 </mapper>
