@@ -152,11 +152,11 @@
 		join city
 		on hotelmaster.CityCode = City.CityCode
 		where
-		(hotel.itemCode = #{itemCode} OR #{itemCode} = "*")
+		(hotel.itemCode = #{itemCode} OR #{itemCode} = "")
 		and
-		(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "*")
+		(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "")
 		and
-		(hotel.Date LIKE CONCAT('%', #{date}, '%') OR #{date} = "*")
+		(hotel.Date LIKE CONCAT('%', #{date}, '%') OR #{date} = "")
 		;
 	</select>
 	<!-- UC504 find detail -->
