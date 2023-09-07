@@ -26,6 +26,9 @@ import lombok.NoArgsConstructor;
 public class MemberForm implements Serializable {
 
 	@NotBlank
+	private String memberCode;
+
+	@NotBlank
 	private String role;
 
 	@NotBlank
@@ -33,6 +36,9 @@ public class MemberForm implements Serializable {
 
 	@NotBlank
 	private String lastName;
+
+	//nameはアノテーションはつけない
+	private String name;
 
 	@NotBlank
 	@Size(min = 8, max = 15)
@@ -57,7 +63,7 @@ public class MemberForm implements Serializable {
 	private String address;
 
 	@NotBlank
-	@Pattern(regexp = "0\\d{1,4}-\\d{1,4}-\\d{4}")
+	@Pattern(regexp = "0\\d{1,2}-\\d{1,4}-\\d{4}")
 	private String tel;
 
 }
