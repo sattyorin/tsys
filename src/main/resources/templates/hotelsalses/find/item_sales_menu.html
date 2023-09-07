@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
+<title>従業員用メニュー</title>
+</head>
+
+<body>
+	<div style="text-align: center;">
+		<h1>従業員用メニュー</h1>
+		<form th:action="@{/hotelFind/findHotel}" method="post">
+			<button type="submit">ホテル予約</button>
+		</form>
+		<form th:action="@{/order/find}" method="post">
+			<button type="submit">顧客情報検索</button>
+		</form>
+	</div>
+</body>
+
+</html>

@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import jp.co.tsys.common.entity.HotelItem;
 import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.exception.NoResultException;
+import jp.co.tsys.common.form.HotelDetailForm;
 import jp.co.tsys.common.form.HotelFindForm;
 import jp.co.tsys.common.service.HotelReservationServiceImpl;
 
 /**
  * ホテル1件検索を行うためのコントローラー
- * 
+ *
  * @author 大久保
  * @version 1.0.0
  */
@@ -33,17 +34,29 @@ public class HotelReservationController {
 	private HotelReservationServiceImpl service;
 
 	/**
+	 * 従業員用メニュー画面に遷移するHandlerメソッド
+	 */
+	@RequestMapping("/hotelreservation/sendemployeemenu")
+	public String sendEmployeeMenu(Model model) {
+
+		return "/hotelsalses/find/hotel_detail";
+	}
+
+	/**
 	 * ホテル検索画面の検索ボタンに対応するHandlerメソッド
 	 */
-	@RequestMapping("/hotelReservation/findHotelDetail")
+	@RequestMapping("/hotelreservation/findhoteldetail")
 	public String findHotelDetail(@RequestParam String itemCode, Model model) {
 		// itemCodeをもとにホテル商品を1件検索する
 		HotelItem hotelItem = service.findHotelDetail(itemCode);
+		// HotelDetailFormに検索したHotelItemを設定する
+		HotelDetailForm hotelDetailForm = new HotelDetailForm();
+		hotelDetailForm.setHotelItem(hotelItem);
 
 		// 検索したホテル商品をキー名"hotelItem"でModelに格納する
-		model.addAttribute("hotelItem", hotelItem);
+		model.addAttribute("hotelDetailForm", hotelDetailForm);
 
-		return "V0801_01HotelDetailView";
+		return "/hotelsalses/find/hotel_detail";
 	}
 
 	/**
