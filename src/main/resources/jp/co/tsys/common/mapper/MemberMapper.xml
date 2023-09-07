@@ -6,19 +6,20 @@
 <mapper namespace="jp.co.tsys.common.mapper.MemberMapper">
 	
 	<!-- メンバー登録 -->
-	<insert id="insertMember">
-		INSERT INTO
-			MEMBER(MemberCode, Name, Password, Role, Mail, ZipCode, Prefecture, Adress, Tel)
-			#{MemberCode},
-			#{Name},
-			#{Password},
-			#{Role},
-			#{Mail}
-			#{ZipCode},
-			#{Prefecture},
-			#{Adress},
-			#{Tel});
-	</insert>
+		<insert id="insertMember">
+			INSERT INTO
+				MEMBER(MemberCode, Name, Password, Role, Mail, ZipCode, Prefecture, Address, Tel)
+			VALUES(
+				#{memberCode},
+				#{name},
+				#{password},
+				#{role},
+				#{mail},
+				#{zipCode},
+				#{prefecture},
+				#{address},
+				#{tel});
+		</insert>
 	
 	<!-- メンバーコード（顧客）を取得 -->
 	<select id="getLastCustomerCode" resultType="String">
@@ -79,8 +80,8 @@
 		Mail = #{mail},
 		ZipCode = #{zipCode},
 		Prefecture = #{prefecture},
-		Address = #{tel},
-		Tel = #{tel},
+		Address = #{address},
+		Tel = #{tel}
 	Where
 		MemberCode = #{memberCode};
 	</update>
@@ -115,7 +116,7 @@
 	</select>
 		
 
-	<!-- [ログイン]メンバー検索 -->
+<!-- [ログイン]メンバー検索 -->
 	<select id="findOne" resultType="jp.co.tsys.common.entity.Member">
 		SELECT
 			MemberCode AS memberCode,
@@ -130,9 +131,9 @@
 		FROM
 			member
 		WHERE
-			MemberCode = #{memberCode};
+			MemberCode = #{memberCode}
 		AND
-			Password = #{password}
+			Password = #{password};
 	</select>
 	
 </mapper>	
