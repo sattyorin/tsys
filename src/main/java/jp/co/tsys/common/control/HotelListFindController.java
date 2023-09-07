@@ -70,7 +70,7 @@ public class HotelListFindController {
 		// List<HotelItem>オブジェクトをキー名"result"でModelに格納する
 		model.addAttribute("result", hotelList);
 
-		return "V0802_01HotelFindView.html";
+		return "hotelsalses/find/hotel_find";
 	}
 
 	/**
