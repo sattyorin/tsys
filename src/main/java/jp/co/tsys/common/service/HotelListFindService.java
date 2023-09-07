@@ -39,5 +39,4 @@ public interface HotelListFindService {
 	public List<HotelItem> findHotelList(String inputCityName, String inDate,
 			String outDate, int lowProce, int highPrice, String grade)
 			throws BusinessException;
-
 }

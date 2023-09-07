@@ -49,13 +49,13 @@ public class HotelListFindServiceImpl implements HotelListFindService {
 	 */
 	@Override
 	public List<HotelItem> findHotelList(String inputCityName, String inDate,
-			String outDate, int lowProce, int highPrice, String grade)
+			String outDate, int lowPrice, int highPrice, String grade)
 			throws BusinessException {
 		// MapperのfindHotelListメソッドを呼び出し
 		// ホテル商品情報のリストを格納
-		List<HotelItem> result = mapper.findHotelList(inputCityName, inDate,
-				outDate, lowProce, highPrice, grade);
 
+		List<HotelItem> result = mapper.findHotelList(inputCityName, inDate,
+				outDate, lowPrice, highPrice, grade);
 		// ホテル商品情報のリストが空の場合
 		if (result.size() == 0) {
 
