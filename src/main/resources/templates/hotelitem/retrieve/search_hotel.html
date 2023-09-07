@@ -1,0 +1,100 @@
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+​
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title>ホテル商品検索画面</title>
+<style type="text/css">
+.search_block {
+	display: inline-block;
+	/* インラインブロック要素にする */
+	border-color: black;
+	border-width: 3px;
+	border-style: solid;
+	/*padding: 20px;*/
+	/* 余白指定 */
+	/*height: 100px;*/
+	/* 高さ指定 */
+}
+
+​
+		.search_title {
+	display: inline-block;
+	/* インラインブロック要素にする */
+	background-color: #E6B9B8;
+}
+
+​
+		.search_input {
+	display: inline-block;
+	/* インラインブロック要素にする */
+}
+</style>
+</head>
+​
+<body>
+	<div style="text-align: center;">
+		<h1>ホテル商品検索</h1>
+		<hr>
+		<!--  エラーメッセージ -->
+		<p th:text="${message}" class="error">error message</p>
+		<form th:object="${retrieveHotelItemForm}" method="post"
+			action="@{/hotelitem/retrieve/searchlist}">
+			<div>
+				<div class="search_block">
+					<div class="search_title">商品コード</div>
+					<div class="search_input">
+						<input type="text" th:field="*{itemCode}">
+					</div>
+				</div>
+				<div class="search_block">
+					<div class="search_title">ホテル名</div>
+					<div class="search_input">
+						<input type="text" th:field="*{name}">
+					</div>
+				</div>
+				<div class="search_block">
+					<div class="search_title">宿泊日</div>
+					<div class="search_input">
+						<input type="text" th:field="*{date}">
+					</div>
+				</div>
+				<div style="display: inline-block;">
+					<button type="submit">検索</button>
+				</div>
+			</div>
+		</form>
+		<br> ​
+		<div>
+			<table border="1" align="center">
+				<tr>
+					<th>商品コード</th>
+					<th>ホテルコード</th>
+					<th>ホテル名</th>
+					<th>宿泊日</th>
+					<th>料金</th>
+					<th>在庫数</th>
+				</tr>
+				<th:block th:object="${hotelItemDetailForm}"
+					th:each="hotelItemDetailForm : ${hotelItemList}">
+					<tr>
+						<td th:text="*{itemCode}"><a
+							th:href="@{'/hotelitem/retrieve/detail/' + *{itemCode}">
+								itemCode </a></td>
+						<td th:text="*{hotelCode}">hotelCode</td>
+						<td th:text="*{name}">name</td>
+						<td
+							th:text="${#temporals.format(hotelItemDetailForm.date, 'yyyy/MM/dd')}">date</td>
+						<td class="digit" th:text="*{price}+'円'">price</td>
+						<td class="digit" th:text="*{stock}">stock</td>
+					</tr>
+				</th:block>
+			</table>
+		</div>
+		​
+	</div>
+</body>
+​
+</html>
