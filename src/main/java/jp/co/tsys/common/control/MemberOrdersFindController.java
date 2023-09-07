@@ -34,7 +34,7 @@ public class MemberOrdersFindController {
 	// 顧客情報検索画面に遷移する。
 	@RequestMapping("order/find")
 	public String findMemberOrders(Model model) {
-		return "V203_01MemberCodeFindView";
+		return "hotelshop/member_code_find";
 	}
 
 	// 顧客情報検索画面の検索ボタンに対応するメソッド
@@ -53,7 +53,7 @@ public class MemberOrdersFindController {
 			// 入力チェック
 			if (result.hasErrors()) {
 				// 受注一覧画面
-				return "V203_01MemberCodeFindView";
+				return "hotelshop/member_code_find";
 			}
 
 			// Service で各メソッドを呼び出し
