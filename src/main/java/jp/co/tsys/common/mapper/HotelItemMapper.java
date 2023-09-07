@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import jp.co.tsys.common.entity.HotelItem;
+import jp.co.tsys.common.form.HotelItemDetailForm;
 
 //import jp.co.tsys.common.entity.Hotelitem;
 
@@ -66,4 +67,10 @@ public interface HotelItemMapper {
 	 */
 	public List<HotelItem> findHotelList(String inputCityName, String inDate,
 			String outDate, int lowProce, int highPrice, String grade);
+
+	// 商品コードまたはホテル名または日付からホテル商品の検索を行う
+	public List<HotelItemDetailForm> findHotelItemList(String itemCode,
+			String hotelName, String date);
+	// 商品コードのリンクから詳細検索
+	public HotelItemDetailForm findDetail(String itemCode);
 }
