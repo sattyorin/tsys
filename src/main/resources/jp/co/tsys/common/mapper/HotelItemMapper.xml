@@ -5,6 +5,29 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.tsys.common.mapper.HotelItemMapper">
+<!-- UC501 insert -->
+	<insert id = "registHotelItem">
+	INSERT INTO
+		Hotel(ItemCode, HotelCode, Date, Price, Stock)
+	VALUES (
+		#{ItemCode},
+		#{HotelCode},
+		#{Date},
+		#{Price},
+		#{Stock});
+	</insert>
+	
+	<!--- UC501 lasthotelCode-->
+	<select id = "getLastHotelCode" resultType="String">
+	SELECT
+		ItemCode
+	FROM
+		hotel
+	ORDER BY
+		ItemCode
+		DESC
+	limit 1;
+	</select>
 	<!-- insert -->
 	<insert id="registHotelItem">
 		INSERT INTO
