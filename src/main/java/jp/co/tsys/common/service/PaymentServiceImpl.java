@@ -3,6 +3,7 @@
 package jp.co.tsys.common.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jp.co.tsys.common.entity.Orders;
 import jp.co.tsys.common.mapper.PaymentMapper;;
@@ -13,6 +14,7 @@ import jp.co.tsys.common.mapper.PaymentMapper;;
  * @author
  * @version 1.0 yyyy/mm/dd
  */
+@Service
 public class PaymentServiceImpl implements PaymentService {
 
 	/** Mapper */
