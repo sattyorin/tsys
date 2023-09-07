@@ -26,7 +26,7 @@ public class HotelListFindController {
 
 	/**
 	 * 従業員商品販売メニュー画面の[ホテル予約]orトップメニュー画面の[ホテル予約]に対応するHandlerメソッド
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @return ホテル商品検索画面 (V0802_01HotelFindView.html)
@@ -37,12 +37,12 @@ public class HotelListFindController {
 		// フォームオブジェクトをキー名"hotelFindForm"でModelに格納
 		model.addAttribute("hotelFindForm", new HotelFindForm());
 
-		return "V0802_01HotelFindView.html";
+		return "hotelsalses/find/hotel_find";
 	}
 
 	/**
 	 * ホテル商品検索画面の[検索]に対応するHandlerメソッド()
-	 * 
+	 *
 	 * @param form
 	 *            ホテル商品検索オブジェクト
 	 * @param result
@@ -58,7 +58,7 @@ public class HotelListFindController {
 		// 入力チェック
 		if (result.hasErrors()) {
 			// ホテル商品検索画面 (V0802_01HotelFindView.html)を返却する
-			return "V0802_01HotelFindView.html";
+			return "hotelsalses/find/hotel_find";
 		}
 
 		// ServiceのfingHotelListメソッドを呼び出し
@@ -75,7 +75,7 @@ public class HotelListFindController {
 
 	/**
 	 * 業務例外（検索結果が存在しない場合）のハンドリング
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @param e
@@ -91,6 +91,6 @@ public class HotelListFindController {
 		// フォームオブジェクトをキー名"hotelFindForm"でModelに格納
 		model.addAttribute("hotelFindForm", new HotelFindForm());
 
-		return "V0802_01HotelFindView";
+		return "hotelsalses/find/hotel_find";
 	}
 }
