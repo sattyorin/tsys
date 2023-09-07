@@ -1,0 +1,31 @@
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="utf-8">
+<!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<title>トップメニュー画面</title>
+</head>
+<body>
+	​
+	<div th:insert="header::back2Top"></div>
+	<div style="text-align: center;">
+		<h1>トップメニュー</h1>
+		<p>
+			<a th:href="@{/customerhotelreserve}">
+				<button class="menuButton">ホテル予約</button>
+			</a>
+		</p>
+		<p>
+			<a th:href="@{/reservehistory}">
+				<button class="menuButton">予約履歴</button>
+			</a>
+		</p>
+		<p>
+			<a th:href="@{/changemember}">
+				<button class="menuButton">お客様情報 変更・退会</button>
+			</a>
+		</p>
+	</div>
+</body>
+</html>
