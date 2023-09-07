@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+	<div id="headerArea" th:fragment="back2Top">
+		<a th:action="@{/topMenu}">
+			<button class="headButton">トップメニュー</button>
+		</a>
+		<div style="text-align: right;">
+			<span th:text="${loginmember.name}+ 'さんようこそ'">name</span> <a
+				th:action="@{/logout}">
+				<button class="headButton">ログアウト</button>
+			</a>
+		</div>
+	</div>
+</body>
+
+</html>
