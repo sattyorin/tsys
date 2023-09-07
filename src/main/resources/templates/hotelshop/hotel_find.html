@@ -1,3 +1,4 @@
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
@@ -62,18 +63,18 @@ button {
 	<!--  ホテル商品検索フォーム -->
 	<p class="input-message red">※入力必須項目</p>
 	<form th:object="${hotelFindForm}" method="post"
-		th:action="@{/findHotelList}">
+		th:action="@{/hotelfind/findhotellist}">
 		<table>
 			<tr>
 				<th>都市名<span class="red">*</span></th>
-				<td><select>
-						<option th:field="*{inputCityName}"></option>
-						<option th:field="*{inputCityName}">札幌</option>
-						<option th:field="*{inputCityName}">旭川</option>
-						<option th:field="*{inputCityName}">函館</option>
-						<option th:field="*{inputCityName}">福岡</option>
-						<option th:field="*{inputCityName}">鹿児島</option>
-						<option th:field="*{inputCityName}">那覇</option>
+				<td><select th:field="*{inputCityName}">
+						<option th:value="none"></option>
+						<option th:value="札幌">札幌</option>
+						<option th:value="旭川">旭川</option>
+						<option th:value="函館">函館</option>
+						<option th:value="福岡">福岡</option>
+						<option th:value="鹿児島">鹿児島</option>
+						<option th:value="那覇">那覇</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -89,13 +90,13 @@ button {
 			</tr>
 			<tr>
 				<th>グレード</th>
-				<td><select>
-						<option th:field="*{grade}"></option>
-						<option th:field="*{grade}">1</option>
-						<option th:field="*{grade}">2</option>
-						<option th:field="*{grade}">3</option>
-						<option th:field="*{grade}">4</option>
-						<option th:field="*{grade}">5</option>
+				<td><select th:field="*{grade}">
+						<option value="none"></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
 				</select> 以上</td>
 			</tr>
 		</table>
@@ -105,16 +106,14 @@ button {
 	</form>
 
 	<!--  エラーメッセージエリア -->
+	<!--
 	<div class="error-area">
-		<div class="error" th:if="${#fields.hasErrors('inputCityName')}"
-			th:errors="*{inputCityName}">validation massage</div>
-		<div class="error" th:if="${#fields.hasErrors('inDate')}"
-			th:errors="*{inDate}">validation massage</div>
-		<div class="error" th:if="${#fields.hasErrors('outDate')}"
-			th:errors="*{outDate}">validation massage</div>
-		<div class="error" th:if="${result.size()==0}" th:errors="*{result}">validation
-			massage</div>
+		<div class="error" th:if="${#fields.hasErrors('inputCityName')}" th:errors="*{inputCityName}">validation massage</div>
+		<div class="error" th:if="${#fields.hasErrors('inDate')}" th:errors="*{inDate}">validation massage</div>
+		<div class="error" th:if="${#fields.hasErrors('outDate')}" th:errors="*{outDate}">validation massage</div>
+		<div class="error" th:if="${result.size()==0}" th:errors="*{result}">validation massage</div>
 	</div>
+	-->
 
 	<!--  戻るボタン -->
 	<!--  従業員 -->
@@ -138,7 +137,9 @@ button {
 		<th:block th:each="hotelItem : ${result}">
 			<tr>
 				<td th:text="${hotelItem.itemCode}"></td>
-				<td th:text="${hotelItem.hotel.name}"></td>
+				<td><a
+					th:href="@{hotelreservation/findhoteldetail/${hotelItem.itemCode}}"
+					th:text="${hotelItem.hotel.name}"></a></td>
 				<td th:text="${hotelItem.date}"></td>
 				<td th:text="${hotelItem.price}"></td>
 				<td th:text="${hotelItem.hotel.grade}"></td>
