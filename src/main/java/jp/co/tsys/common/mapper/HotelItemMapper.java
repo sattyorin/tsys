@@ -66,7 +66,7 @@ public interface HotelItemMapper {
 	 *            商品コード
 	 */
 	public List<HotelItem> findHotelList(String inputCityName, String inDate,
-			String outDate, int lowProce, int highPrice, String grade);
+			String outDate, int lowPrice, int highPrice, String grade);
 
 	// 商品コードまたはホテル名または日付からホテル商品の検索を行う
 	public List<HotelItemDetailForm> findHotelItemList(String itemCode,
