@@ -54,7 +54,7 @@ public class MemeberFindController {
 
 	/**
 	 * メンバー検索画面の「検索」ボタン押下→メンバー詳細画面に遷移 マッピングするURL：/member/find/result
-	 * 
+	 *
 	 * @param @Validated
 	 *            MemberCodeForm form, BindingResult result, Model model
 	 * @return 商品検索画面（V0904_02_MemberDetailView） 見つからない場合、メンバー検索画面にもどる
@@ -74,7 +74,7 @@ public class MemeberFindController {
 
 	/**
 	 * お客様画面の「お客様情報変更・削除」ボタン押下→メンバー詳細画面に遷移 マッピングするURL：/member/find/retrive
-	 * 
+	 *
 	 * @param @Validated
 	 *            LoginForm form, BindingResult result, Model model
 	 * @return 商品検索画面（V0904_02_MemberDetailView）
@@ -95,7 +95,7 @@ public class MemeberFindController {
 
 	/**
 	 * BusinessExceptionハンドラ(メンバーが見つからない場合は、メンバー検索画面に戻る)
-	 * 
+	 *
 	 * @param model
 	 * @param e
 	 * @return
@@ -110,7 +110,7 @@ public class MemeberFindController {
 	}
 	/**
 	 * メンバー詳細画面にて「戻るボタン」を押された場合、メンバー検索画面に遷移する
-	 * 
+	 *
 	 * @param model
 	 * @param e
 	 * @return/member_find
@@ -123,7 +123,7 @@ public class MemeberFindController {
 	}
 	/**
 	 * メンバー検索画面にて「戻るボタン」を押された場合、メンバー管理メニュー画面に遷移する
-	 * 
+	 *
 	 * @param model
 	 * @param e
 	 * @return/returnTopMenuEmp
@@ -136,12 +136,12 @@ public class MemeberFindController {
 
 	/**
 	 * お客様の詳細画面にて「戻るボタン」を押された場合、お客様トップ画面に遷移する
-	 * 
+	 *
 	 * @param model
 	 * @param e
 	 * @return/returnTopMenu
 	 */
-	@RequestMapping("/return/findtopmenu/emp")
+	@RequestMapping("/return/findtopmenu/tmpemp")
 	public String returnTopMenu(Model model) {
 
 		return "/TopMenu"; // TODO(siya):ここ絶対認識のすり合わせを行う
