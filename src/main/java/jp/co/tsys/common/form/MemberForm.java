@@ -37,7 +37,7 @@ public class MemberForm implements Serializable {
 	@NotBlank
 	private String lastName;
 
-	//nameはアノテーションはつけない
+	// nameはアノテーションはつけない
 	private String name;
 
 	@NotBlank
@@ -46,7 +46,7 @@ public class MemberForm implements Serializable {
 
 	@NotBlank
 	@Size(min = 8, max = 15)
-	private String confirmpassword;
+	private String confirmPassword;
 
 	@NotBlank
 	@Email

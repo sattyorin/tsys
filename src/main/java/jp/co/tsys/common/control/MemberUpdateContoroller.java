@@ -45,7 +45,7 @@ public class MemberUpdateContoroller {
 		member.setMemberCode(memberForm.getMemberCode());
 		member.setName(memberForm.getName());
 		member.setPassword(memberForm.getPassword());
-		member.setConfirmpassword(memberForm.getConfirmpassword());
+		member.setConfirmPassword(memberForm.getConfirmPassword());
 		member.setZipCode(memberForm.getZipCode());
 		member.setPrefecture(memberForm.getPrefecture());
 		member.setAddress(memberForm.getAddress());
@@ -126,7 +126,7 @@ public class MemberUpdateContoroller {
 		member.setMemberCode(memberForm.getMemberCode());
 		member.setName(memberForm.getName());
 		member.setPassword(memberForm.getPassword());
-		member.setConfirmpassword(memberForm.getConfirmpassword());
+		member.setConfirmPassword(memberForm.getConfirmPassword());
 		member.setZipCode(memberForm.getZipCode());
 		member.setPrefecture(memberForm.getPrefecture());
 		member.setAddress(memberForm.getAddress());
