@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<title>予約履歴画面</title>
+</head>
+
+<body>
+	<div style="text-align: center;">
+		<!--		<div th:insert="top::back2Top"></div>-->
+		<!--		<table align="center">-->
+		<!--			<tbody>-->
+		<!--				<tr>-->
+		<!--					<th>顧客番号</th>-->
+		<!--					<td th:text="${member.memberCode}">memberCode</td>-->
+		<!--					<th>メールアドレス</th>-->
+		<!--					<td th:text="${member.Mail}">Mail</td>-->
+		<!--					<th>郵便番号</td>-->
+		<!--					<td th:text="${member.ZipCode}">ZipCode</td>-->
+		<!--				</tr>-->
+		<!--				<tr>-->
+		<!--					<th>名前</th>-->
+		<!--					<td th:text="${member.Name}">Name</td>-->
+		<!--					<th>電話番号</th>-->
+		<!--					<td th:text="${member.Tel}">Tel</td>-->
+		<!--					<th>住所</th>-->
+		<!--					<td th:text="${member.Address}">Address</td>-->
+		<!--				</tr>-->
+		<!--			</tbody>-->
+		<!--		</table>-->
+		<p>現在の予約履歴</p>
+
+		<form action="#" th:action="@{/order/deleteComfirm}" th:object="${OrderHistoryForm}" method="post">
+			<table align="center">
+				<tbody>
+					<tr>
+						<th>宿泊予定日</th>
+						<!-- <th>注文日</th> -->
+						<th>ホテル名</th>
+						<th></th>
+					</tr>
+
+					<tr th:if="${!#lists.isEmpty(orderHistoryForm.currentOrders)}"
+						th:each="pair : ${orderHistoryForm.currentOrders}">
+						<td th:text="${pair.first.hotelItem.date}">Date</td>
+						<td th:text="${pair.first.hotelItem.hotel.name}">Hotel</td>
+						<!-- <td><input type="checkbox" th:value="${item}" th:text="check" th:field="*{content}" /> -->
+						<td><input type="checkbox" th:text="キャンセル" th:checked="${pair.second}" th:value="true" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				<button>予約キャンセル</button>
+			</p>
+		</form>
+
+		<!--		<p>過去の予約履歴</p>-->
+		<!--		<p>(当日のキャンセルはできません)</p>-->
+		<!--		<table align="center">-->
+		<!--			<tbody>-->
+		<!--				<tr>-->
+		<!--					<th>宿泊予定日</th>-->
+		<!--					<th>注文日</td>-->
+		<!--					<th>ホテル名</td>-->
+		<!--				</tr>-->
+		<!--				 要素の数ループする -->
+		<!--				<tr th:if="${!#lists.isEmpty(listPastOrder)}" th:each="fruit : ${listPastOrder}">-->
+		<!--					<td th:text="${order.}">ReservationDate</td>-->
+		<!--					<td th:text="${order.}">Date</td>-->
+		<!--					<td th:text="${order.}">Hotel</td>-->
+		<!--				</tr>-->
+		<!--			</tbody>-->
+		<!--		</table>-->
+
+		<!--		<p>-->
+		<!--			<a th:href="@{'hotelShop/M0005_00ItemSalesMenu'}">-->
+		<!--				<button>戻る</button>-->
+		<!--			</a>-->
+		<!--		</p>-->
+
+		<!--		<div th:insert="footer::back2Top"></div>-->
+	</div>
+</body>
+
+</html>

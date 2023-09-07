@@ -1,0 +1,35 @@
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title>顧客情報検索画面</title>
+</head>
+
+<body>
+	<div style="text-align: center;">
+		<div th:insert="top::back2Top"></div>
+		<p>顧客番号を入力してください</p>
+
+		<form th:object="${customerCodeForm}" method="post"
+			th:action="@{/order/history/}">
+			<div class="error" th:if="${#fields.hasErrors('memberCode')}"
+				th:errors="*{memberCode}">validation massage</div>
+			<p>
+				<input type="text" th:field="*{memberCode}">
+				<button type="submit">検索</button>
+			</p>
+		</form>
+		<p>
+			<a th:href="@{'hotelShop/M0005_00ItemSalesMenu'}">
+				<button>戻る</button>
+			</a>
+		</p>
+
+		<div th:insert="footer::back2Top"></div>
+	</div>
+</body>
+
+</html>
