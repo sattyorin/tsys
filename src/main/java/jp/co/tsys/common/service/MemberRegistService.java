@@ -1,5 +1,5 @@
 /**
- * MemberResistService.java
+ * MemberRegistService.java
  */
 
 package jp.co.tsys.common.service;
@@ -12,13 +12,12 @@ import jp.co.tsys.common.exception.BusinessException;
  * @author FLM
  * @version 1.0.0
  */
-public interface MemberResistService {
+public interface MemberRegistService {
 
 	/**
 	 * @param menber
 	 * @throws BusinessException
 	 */
-
-	public void resistMember(Member menber) throws BusinessException;
+	public void registMember(Member menber) throws BusinessException;
 
 }

@@ -1,6 +1,6 @@
 
 /**
- * MemberResistServiceImpl.java
+ * MemberRegistServiceImpl.java
  */
 
 package jp.co.tsys.common.service;
@@ -9,6 +9,7 @@ import static jp.co.tsys.common.util.MessageList.BIZERR206;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Service;
 
 import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.exception.BusinessException;
@@ -19,7 +20,8 @@ import jp.co.tsys.common.mapper.MemberMapper;
  * @author FLM
  * @version 1.0.0
  */
-public class MemberResistServiceImpl implements MemberResistService {
+@Service
+public class MemberRegistServiceImpl implements MemberRegistService {
 
 	/** Mapper */
 	@Autowired
@@ -29,7 +31,7 @@ public class MemberResistServiceImpl implements MemberResistService {
 	 * 登録に成功した場合にメンバーコードを返す
 	 */
 	@Override
-	public void resistMember(Member member) {
+	public void registMember(Member member) {
 
 		// memberのroleを取得する
 		String role = member.getRole();
