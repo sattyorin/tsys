@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import jp.co.tsys.common.entity.HotelItem;
@@ -38,15 +38,16 @@ public class HotelReservationController {
 	 */
 	@RequestMapping("/hotelreservation/sendemployeemenu")
 	public String sendEmployeeMenu(Model model) {
+		System.out.println("1");
 
-		return "/hotelsalses/find/hotel_detail";
+		return "/hotelsalses/find/item_sales_menu";
 	}
 
 	/**
 	 * ホテル検索画面の検索ボタンに対応するHandlerメソッド
 	 */
-	@RequestMapping("/hotelreservation/findhoteldetail")
-	public String findHotelDetail(@RequestParam String itemCode, Model model) {
+	@RequestMapping("/hotelreservation/findhoteldetail/{itemCode}")
+	public String findHotelDetail(@PathVariable String itemCode, Model model) {
 		// itemCodeをもとにホテル商品を1件検索する
 		HotelItem hotelItem = service.findHotelDetail(itemCode);
 		// HotelDetailFormに検索したHotelItemを設定する
@@ -70,7 +71,7 @@ public class HotelReservationController {
 
 		model.addAttribute("HotelFindForm", new HotelFindForm());
 
-		return "V0802_01HotelFindView";
+		return "/hotelfind/findhotel";
 	}
 
 	/**
@@ -82,6 +83,6 @@ public class HotelReservationController {
 		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", e.getMessage());
 
-		return "V0802_01HotelFindView";
+		return "/hotelfind/findhotel";
 	}
 }

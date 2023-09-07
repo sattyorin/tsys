@@ -17,10 +17,10 @@
 	</div>
 	<div style="text-align: center;">
 		<h1>ホテル詳細</h1>
+		<form method="POST" th:object="${hotelDetailForm}">
 		<div class="error" th:if="${#fields.hasErrors('inputQuantity')}" th:errors="*{inputQuantity}">validation massage
 		</div>
 		<p>*入力必須項目</p>
-		<form method="POST">
 
 			<table border="1" align="center">
 				<tr>
@@ -56,9 +56,11 @@
 					<td><input type="text" th:field="${hotelDetailForm.inputQuantity}" maxlength="2">*</td>
 				</tr>
 			</table>
+			<div class="button019">
 			<input type="submit" value="戻る" th:formaction="@{/hotelFind/findHotelList}" />
 			<input type="submit" value="カートに入れる" th:formaction="@{/payment/cart}" />
 			<input type="submit" value="今すぐ予約" th:formaction="@{/payment/complition}" />
+			</div>
 		</form>
 	</div>
 </body>
