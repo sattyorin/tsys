@@ -44,7 +44,7 @@
 				quantity
 		) 
 		VALUES 
-		<foreach item="orders" collection="orders" open="(" close=")" separator=",">
+		<foreach item="orders" collection="orders"  separator=",">
 		(
 			#{orderNo},
 			#{orders.hotelItem.itemCode},
