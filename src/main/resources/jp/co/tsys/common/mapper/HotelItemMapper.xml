@@ -8,7 +8,8 @@
 	<!-- insert -->
 	<insert id="registHotelItem">
 		INSERT INTO
-		Hotel(ItemCode, HotelCode, Date, Price, Stock)
+		Hotel(ItemCode, HotelCode, Date, Price,
+		Stock)
 		VALUES (
 		#{ItemCode},
 		#{HotelCode},
@@ -34,7 +35,8 @@
 		SET
 		Date = #{date},
 		Price = #{price},
-		Stock = #{stock}
+		Stock =
+		#{stock}
 		WHERE
 		ItemCode = #{hotelItemCode}
 		;
@@ -52,8 +54,10 @@
 	<!-- findOne -->
 	<select id="findHotelDetail" resultMap="hotelItemMap">
 		SELECT
-		itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name,
-		hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade,
+		itemCode, date,
+		price, stock, hotel.hotelCode, hotelmaster.name,
+		hotelmaster.cityCode,
+		city.Name as cityName, hotelmaster.grade,
 		hotelmaster.basicPrice
 		FROM
 		Hotel
@@ -89,8 +93,10 @@
 	<!-- findAll -->
 	<select id="findHotelList" resultMap="hotelItemMapForAll">
 		SELECT
-		itemCode, date, price, stock, hotel.hotelCode, hotelmaster.name,
-		hotelmaster.cityCode, city.Name as cityName, hotelmaster.grade,
+		itemCode, date,
+		price, stock, hotel.hotelCode, hotelmaster.name,
+		hotelmaster.cityCode,
+		city.Name as cityName, hotelmaster.grade,
 		hotelmaster.basicPrice
 		FROM
 		Hotel
@@ -103,8 +109,10 @@
 		on
 		hotelmaster.cityCode = city.cityCode
 		WHERE
-		city.Name = #{inputCityName} and date &gt;= #{inDate} and date &lt; #{outDate}
-		and price between #{lowPrice} and #{highPrice} and grade &gt;=
+		city.Name =
+		#{inputCityName} and date &gt;= #{inDate} and date &lt; #{outDate}
+		and
+		price between #{lowPrice} and #{highPrice} and grade &gt;=
 		#{grade} ;
 	</select>
 	<resultMap id="hotelItemMapForAll"
@@ -124,4 +132,57 @@
 			<result property="basicPrice" column="basicPrice" />
 		</association>
 	</resultMap>
+	<!-- UC504 find item list -->
+	<select id="findHotelItemList"
+		resultType="jp.co.tsys.common.form.HotelItemDetailForm">
+		select
+		hotel.itemCode as itemCode,
+		hotelMaster.HotelCode as hotelCode,
+		hotelMaster.Name as name,
+		hotel.Date as date,
+		City.Name as cityName,
+		hotelMaster.Grade as grade,
+		hotel.Price as price,
+		hotel.Stock as stock
+		from
+		hotel
+		inner join hotelMaster
+		on hotel.HotelCode = hotelMaster.HotelCode
+		inner
+		join city
+		on hotelmaster.CityCode = City.CityCode
+		where
+		(hotel.itemCode = #{itemCode} OR #{itemCode} = "*")
+		and
+		(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "*")
+		and
+		(hotel.Date LIKE CONCAT('%', #{date}, '%') OR #{date} = "*")
+		;
+	</select>
+	<!-- UC504 find detail -->
+	<select id="findDetail"
+		resultType="jp.co.tsys.common.form.HotelItemDetailForm">
+		SELECT
+		hotel.ItemCode AS itemCode,
+		hotel.HotelCode AS hotelCode,
+		hotelmaster.Name AS name,
+		hotel.Date AS date,
+		city.Name AS cityName,
+		hotelmaster.Grade AS grade,
+		hotel.Price AS price,
+		hotel.Stock AS stock
+		FROM
+		hotel
+		INNER JOIN
+		hotelmaster
+		ON
+		hotel.HotelCode = hotelmaster.HotelCode
+		INNER JOIN
+		city
+		ON
+		hotelmaster.CityCode = city.CityCode
+		WHERE
+		hotel.ItemCode = #{ItemCode}
+		;
+	</select>
 </mapper>
