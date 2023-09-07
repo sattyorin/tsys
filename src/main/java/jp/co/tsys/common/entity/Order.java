@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 注文商品情報を管理するエンティティクラス
- * 
+ *
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
@@ -30,5 +30,9 @@ public class Order implements Serializable {
 
 	/** チェックボックス （注文取消） */
 	private boolean check;
+
+	private String itemCode;
+
+	private String orderNo;
 
 }

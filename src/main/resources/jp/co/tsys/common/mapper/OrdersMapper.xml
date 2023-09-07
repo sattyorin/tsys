@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- RetrieveProductMapper.xml -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.tsys.common.mapper.OrdersMapper">
+	
+	<!-- select orderNo -->
+	<select id = "findMemberOrder" resultType="java.lang.Integer">
+	select
+		orderNo
+	from
+		ordermaster
+	where
+		memberCode = #{memberCode};
+	</select>
+	<!-- select orderNo -->
+	
+	<!-- select current -->
+	<select id="findCurrentOrder" resultMap="currentorderDetailMap">
+		SELECT
+			orderdetail.orderNo as orno,
+			orderdetail.itemcode as item,
+			orderdetail.price as pri,
+			orderdetail.quantity as qu,
+			hotelmaster.hotelcode as hoco,
+			hotelmaster.name as na,
+			hotelmaster.citycode as cico,
+			hotelmaster.grade as gra,
+			hotelmaster.basicprice as baprice,
+			hotel.date as da,
+			hotel.stock as st,
+			city.name as cina
+		FROM
+			orderdetail
+		inner join
+			hotel
+		on
+			orderdetail.itemcode = hotel.itemCode
+		inner join
+			hotelmaster
+		on
+			hotelmaster.hotelcode = hotel.hotelcode
+		inner join
+			city
+		on
+			hotelmaster.citycode = city.citycode
+		where
+			orderno = #{orderNo} 
+		and
+			hotel.date &gt; '2023-06-30';
+		</select>
+		<resultMap id="currentorderDetailMap" type="jp.co.tsys.common.entity.Order">
+		<id property="itemCode" column="item"/>
+		<id property="orderNo" column="orno"/>
+		<result property="quantity" column="qu"/>
+		
+		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
+			<id property="itemCode" column="item"/>
+			<result property="date" column="da"/>
+			<result property="price" column="pri"/>
+			<result property="stock" column="st"/>
+		
+		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
+			<id property="hotelCode" column="hoco"/>
+			<result property="name" column="na"/>
+			<result property="cityCode" column="cico"/>
+			<result property="cityName" column="cina"/>
+			<result property="grade" column="gra"/>
+		</association>
+		</association>
+	</resultMap>
+	<!-- select current -->
+	
+	<!-- select past -->
+	<select id="findPastOrder" resultMap="pastorderDetailMap">
+		SELECT
+			orderdetail.orderNo as orno,
+			orderdetail.itemcode as item,
+			orderdetail.price as pri,
+			orderdetail.quantity as qu,
+			hotelmaster.hotelcode as hoco,
+			hotelmaster.name as na,
+			hotelmaster.citycode as cico,
+			hotelmaster.grade as gra,
+			hotelmaster.basicprice as baprice,
+			hotel.date as da,
+			hotel.stock as st,
+			city.name as cina
+		FROM
+			orderdetail
+		inner join
+			hotel
+		on
+			orderdetail.itemcode = hotel.itemCode
+		inner join
+			hotelmaster
+		on
+			hotelmaster.hotelcode = hotel.hotelcode
+		inner join
+			city
+		on
+			hotelmaster.citycode = city.citycode
+		where
+			orderno = #{orderNo} 
+		and
+			hotel.date &lt; '2023-09-30';
+		</select>
+		<resultMap id="pastorderDetailMap" type="jp.co.tsys.common.entity.Order">
+		<id property="itemCode" column="item"/>
+		<id property="orderNo" column="orno"/>
+		<result property="quantity" column="qu"/>
+		
+		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
+			<id property="itemCode" column="item"/>
+			<result property="date" column="da"/>
+			<result property="price" column="pri"/>
+			<result property="stock" column="st"/>
+		
+		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
+			<id property="hotelCode" column="hoco"/>
+			<result property="name" column="na"/>
+			<result property="cityCode" column="cico"/>
+			<result property="cityName" column="cina"/>
+			<result property="grade" column="gra"/>
+		</association>
+		</association>
+	</resultMap>
+	<!-- select past -->
+
+	<!-- delete -->
+	<delete id = "deleteOrderDetail">
+	 	delete from orderdetail
+	 	where
+	 	orderNo = #{orderNo} and itemCode = #{itemCode};
+	</delete>
+	<delete id = "deleteOrderMaster">
+		delete from ordermaster where orderNo = #{orderNo};	
+	</delete>
+	<!-- delete -->
+	
+	<!-- update -->
+	<update id ="updateHotel">
+		update hotel set stock = stock + #{quantity} where itemcode = #{itemCode};
+	</update>
+	<update id = "updateOrderMaster">
+		update ordermaster set ordertotal = ordertotal - #{price} where orderNo = #{orderNo};
+	</update>
+	<!-- update -->
+</mapper>
+	
