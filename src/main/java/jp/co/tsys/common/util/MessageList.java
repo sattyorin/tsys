@@ -97,6 +97,13 @@ public final class MessageList {
 	 */
 	public static final String BIZERR105 = "チェックボックスにチェックを入れてください。";
 
+	public static final String BIZERR106 = "予約履歴はありません";
+
+	public static final String BIZERR107 = "現在の予約履歴はありません。";
+
+	public static final String BIZERR108 = "過去の予約履歴はありません。";
+
+
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!! メンバー管理エラーメッセージ
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	/**
