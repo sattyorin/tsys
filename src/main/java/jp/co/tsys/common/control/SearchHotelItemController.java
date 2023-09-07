@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,7 @@ import jp.co.tsys.common.service.SearchHotelItemService;
  * @version 1.0.0
  */
 @SessionAttributes(names = "hotelItemForm")
-@RequestMapping("/hotelItem/retrieve")
+@RequestMapping("/hotelitem/retrieve")
 @Controller
 public class SearchHotelItemController {
 
@@ -35,24 +34,24 @@ public class SearchHotelItemController {
 	@Autowired
 	private SearchHotelItemService service;
 
-	@RequestMapping("entrysearch")
+	@RequestMapping("/entrysearch")
 	// ホテル商品検索画面に遷移
 	public String entryHotelItemSearch(Model model) {
 		// 検索要素入力フォームをモデルに格納
 		model.addAttribute("retrieveHotelItemForm",
 				new RetrieveHotelItemForm());
-		return "/hotelItem/retrieve/search_hotel";
+		return "/hotelitem/retrieve/search_hotel";
 	}
 
-	@RequestMapping("searchlist") // 検索ボタン
+	@RequestMapping("/searchlist") // 検索ボタン
 	// ホテル商品検索画面に遷移しリストを表示する
-	public String searchHotelItemList(Model model,
-			@Validated RetrieveHotelItemForm form, BindingResult result) {
-		// 入力チェック
-		if (result.hasErrors()) {
-			return "/hotelItem/retrieve/view";
-		}
-		// modelから検索フォームの取得、値の取得
+	public String searchHotelItemList(RetrieveHotelItemForm form, Model model,
+			BindingResult result) {
+		// TODO(kano): 入力チェック
+		// if (result.hasErrors()) {
+		// return "/hotelItem/retrieve/view";
+		// }
+
 		String itemCode = form.getItemCode();
 		String hotelName = form.getHotelName();
 		String date = form.getDate();
@@ -60,11 +59,12 @@ public class SearchHotelItemController {
 		List<HotelItemDetailForm> hotelItemList = service
 				.searchHotelItemList(itemCode, hotelName, date);
 		// 取得したListをmodelに格納
-		model.addAttribute("hotelItemList", hotelItemList);
-		return "/hotelItem/retrieve/search_hotel";
+		model.addAttribute("form", form);
+		model.addAttribute("HotelItemList", hotelItemList);
+		return "/hotelitem/retrieve/search_hotel";
 	}
 
-	@RequestMapping("detail/{itemCode}") // 一覧の商品リンク
+	@RequestMapping("/detail/{itemCode}") // 一覧の商品リンク
 	// ホテル商品詳細画面に遷移
 	public String retrieveHotelItem(@PathVariable String itemCode,
 			Model model) {
@@ -72,7 +72,7 @@ public class SearchHotelItemController {
 		HotelItemDetailForm hotelItem = service.retrieveHotelItem(itemCode);
 		// 取得したdetailをsessionに格納→update, deleteで使う
 		model.addAttribute("hotelItemForm", hotelItem);
-		return "/hotelItem/retrieve/itemdetail";
+		return "/hotelitem/retrieve/itemdetail";
 	}
 	// 例外処理（業務エラー）
 	@ExceptionHandler(BusinessException.class)
@@ -80,6 +80,6 @@ public class SearchHotelItemController {
 		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", e.getMessage());
 
-		return "/hotelItem/retrieve/search_hotel";
+		return "/hotelitem/retrieve/search_hotel";
 	}
 }
