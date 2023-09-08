@@ -24,4 +24,6 @@ public class ShoppingCartForm implements Serializable {
 	@NotBlank
 	private List<Order> orders;
 
+	private int orderTotal;
+
 }
