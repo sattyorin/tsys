@@ -2,8 +2,11 @@
 
 package jp.co.tsys.common.service;
 
-import jp.co.tsys.common.entity.Orders;
-import jp.co.tsys.common.exception.BusinessException;;
+import java.util.List;
+
+import jp.co.tsys.common.entity.Order;
+import jp.co.tsys.common.exception.BusinessException;
+import jp.co.tsys.common.form.OrdersForm;;
 
 /**
  * 注文情報登録Service
@@ -21,6 +24,14 @@ public interface PaymentService {
 	 * @throws BusinessException
 	 *             検索結果が存在しない場合
 	 */
-	public String addProduct(Orders orders) throws BusinessException;
+
+	public void insertOrder(OrdersForm ordersForm) throws BusinessException;
+
+	public String getLastOrderNo() throws BusinessException;
+
+	public void insertOrderDetail(List<Order> orders, String orderNo)
+			throws BusinessException;
+
+	public void updateHotelStock(List<Order> orders) throws BusinessException;
 
 }

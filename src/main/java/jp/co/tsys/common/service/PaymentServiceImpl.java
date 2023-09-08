@@ -2,10 +2,13 @@
 
 package jp.co.tsys.common.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.tsys.common.entity.Orders;
+import jp.co.tsys.common.entity.Order;
+import jp.co.tsys.common.form.OrdersForm;
 import jp.co.tsys.common.mapper.PaymentMapper;;
 
 /**
@@ -24,20 +27,33 @@ public class PaymentServiceImpl implements PaymentService {
 	/**
 	 * 登録に成功した場合に予約番号を返す
 	 */
-	@Override
-	public String addProduct(Orders orders) {
-		// MapperのsaveOrderMasterメソッドを呼び出し
-		mapper.insertOrderMaster(orders);
 
+	@Override
+	public void insertOrder(OrdersForm ordersForm) {
+		// MapperのsaveOrderMasterメソッドを呼び出し
+		mapper.insertOrderMaster(ordersForm);
+	}
+
+	@Override
+	public String getLastOrderNo() {
 		// MapperのsaveOrderMasterメソッドを呼び出し
 		// 予約番号を取得して、格納
 		String orderNo = mapper.getLastOrderNo();
-
-		// MapperのsaveOrderMasterメソッドを呼び出し
-		mapper.insertOrderDetail(orders.getOrders(), orderNo);
-
 		return orderNo;
+	}
 
+	@Override
+	// MapperのsaveOrderMasterメソッドを呼び出し
+	public void insertOrderDetail(List<Order> orders, String orderNo) {
+		mapper.insertOrderDetail(orders, orderNo);
+	}
+
+	@Override
+	// MapperのsaveOrderMasterメソッドを呼び出し
+	public void updateHotelStock(List<Order> orders) {
+		for (Order order : orders) {
+			mapper.updateHotelStock(order);
+		}
 	}
 
 }

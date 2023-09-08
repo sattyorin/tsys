@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import jp.co.tsys.common.entity.Order;
-import jp.co.tsys.common.entity.Orders;
+import jp.co.tsys.common.form.OrdersForm;
 
 /**
  * @author FLM
@@ -25,8 +25,7 @@ public interface PaymentMapper {
 	 * @param orders
 	 *            予約情報
 	 */
-	public void insertOrderMaster(Orders orders);
-
+	public void insertOrderMaster(OrdersForm ordersForm);
 	/**
 	 * 最新の予約番号を取得する
 	 *
@@ -42,4 +41,9 @@ public interface PaymentMapper {
 	 */
 	public void insertOrderDetail(@Param("orders") List<Order> orders,
 			@Param("orderNo") String orderNo);
+
+	/**
+	 * ホテルの残室数を更新する
+	 */
+	public void updateHotelStock(Order order);
 }

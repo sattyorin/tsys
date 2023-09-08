@@ -29,4 +29,8 @@ public class Order implements Serializable {
 
 	/** 部屋数 */
 	private int quantity;
+
+	/** 小計 */
+	private int subTotal;
+
 }
