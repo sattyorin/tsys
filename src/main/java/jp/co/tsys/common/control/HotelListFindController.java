@@ -2,20 +2,27 @@
  */
 package jp.co.tsys.common.control;
 
+import static jp.co.tsys.common.util.MessageList.*;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.tsys.common.entity.HotelItem;
 import jp.co.tsys.common.exception.BusinessException;
+import jp.co.tsys.common.exception.NoResultException;
 import jp.co.tsys.common.form.HotelFindForm;
 import jp.co.tsys.common.service.HotelListFindService;
 
+@SessionAttributes(types = HotelFindForm.class)
 @Controller
 @RequestMapping("/hotelfind")
 public class HotelListFindController {
@@ -52,7 +59,9 @@ public class HotelListFindController {
 	 * @return ホテル商品検索画面 (V0802_01HotelFindView.html)
 	 */
 	@RequestMapping("/findhotellist")
-	public String findHotelList(HotelFindForm form, BindingResult result,
+	public String findHotelList(
+			@ModelAttribute("hotelFindForm") @Validated HotelFindForm form,
+			BindingResult result,
 			Model model) {
 
 		// 入力チェック
@@ -61,11 +70,40 @@ public class HotelListFindController {
 			return "hotelsalses/find/hotel_find";
 		}
 
+		// 入力値を取得
+		String inputCityName = form.getInputCityName();
+		String inDate = form.getInDate();
+		String outDate = form.getOutDate();
+
+		// 入力値の補完
+		// 値段（下限）の入力がなかった場合
+		Integer lowPrice = form.getLowPrice();
+		if (lowPrice == null) {
+			// 最小値の0をセットする
+			lowPrice = 0;
+		}
+		// 値段（上限）の入力がなかった場合
+		Integer highPrice = form.getHighPrice();
+		if (highPrice == null) {
+			// 最大値の99999999をセットする
+			highPrice = 99999999;
+		}
+		// グレードの入力がなかった場合
+		String grade = form.getGrade();
+		if (grade.equals("0")) {
+			// 最小値の"1"をセットする
+			grade = "1";
+		}
+
 		// ServiceのfingHotelListメソッドを呼び出し
 		// 戻り値のList<HotelItem>オブジェクトを取得する
 		List<HotelItem> hotelList = service.findHotelList(
-				form.getInputCityName(), form.getInDate(), form.getOutDate(),
-				form.getLowPrice(), form.getHighPrice(), form.getGrade());
+				inputCityName, inDate, outDate, lowPrice, highPrice, grade);
+
+		if (hotelList.size() == 0) {
+			// エラーメッセージをキー名"message"でModelに格納
+			model.addAttribute("message", BIZERR101);
+		}
 
 		// List<HotelItem>オブジェクトをキー名"result"でModelに格納する
 		model.addAttribute("result", hotelList);
@@ -74,7 +112,7 @@ public class HotelListFindController {
 	}
 
 	/**
-	 * 業務例外（検索結果が存在しない場合）のハンドリング
+	 * 業務例外のハンドリング
 	 *
 	 * @param model
 	 *            Modelオブジェクト
@@ -85,7 +123,7 @@ public class HotelListFindController {
 	@ExceptionHandler(BusinessException.class)
 	public String caatchBizException(Model model, Exception e) {
 
-		// memberのroleを取得する
+		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", e.getMessage());
 
 		// フォームオブジェクトをキー名"hotelFindForm"でModelに格納

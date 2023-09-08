@@ -9,7 +9,7 @@
 body {
 	font-size: 12px;
 	margin: 0 auto;
-	width: 450px;
+	width: 500px;
 }
 
 h1 {
@@ -49,6 +49,7 @@ button {
 
 .error-area {
 	text-align: center;
+	color: red;
 }
 </style>
 </head>
@@ -67,7 +68,7 @@ button {
 			<tr>
 				<th>都市名<span class="red">*</span></th>
 				<td><select th:field="*{inputCityName}">
-						<option th:value="none"></option>
+						<option th:value=null></option>
 						<option th:value="札幌">札幌</option>
 						<option th:value="旭川">旭川</option>
 						<option th:value="函館">函館</option>
@@ -90,7 +91,7 @@ button {
 			<tr>
 				<th>グレード</th>
 				<td><select th:field="*{grade}">
-						<option value="none"></option>
+						<option value="0"></option>
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -102,17 +103,20 @@ button {
 		<div class="search">
 			<button type="submit">検索</button>
 		</div>
+		<br>
+		<!--  エラーメッセージエリア -->
+		<div class="error-area">
+			<div class="error" th:if="${#fields.hasErrors('inputCityName')}"
+				th:errors="*{inputCityName}">validation massage</div>
+			<div class="error" th:if="${#fields.hasErrors('inDate')}"
+				th:errors="*{inDate}">validation massage</div>
+			<div class="error" th:if="${#fields.hasErrors('outDate')}"
+				th:errors="*{outDate}">validation massage</div>
+			<div class="error" th:text="${message}">validation massage</div>
+		</div>
+		<br>
 	</form>
 
-	<!--  エラーメッセージエリア -->
-	<!--
-	<div class="error-area">
-		<div class="error" th:if="${#fields.hasErrors('inputCityName')}" th:errors="*{inputCityName}">validation massage</div>
-		<div class="error" th:if="${#fields.hasErrors('inDate')}" th:errors="*{inDate}">validation massage</div>
-		<div class="error" th:if="${#fields.hasErrors('outDate')}" th:errors="*{outDate}">validation massage</div>
-		<div class="error" th:if="${result.size()==0}" th:errors="*{result}">validation massage</div>
-	</div>
-	-->
 
 	<!--  戻るボタン -->
 	<!--  従業員 -->

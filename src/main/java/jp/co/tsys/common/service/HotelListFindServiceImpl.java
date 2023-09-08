@@ -4,8 +4,6 @@
 
 package jp.co.tsys.common.service;
 
-import static jp.co.tsys.common.util.MessageList.BIZERR101;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,19 +47,13 @@ public class HotelListFindServiceImpl implements HotelListFindService {
 	 */
 	@Override
 	public List<HotelItem> findHotelList(String inputCityName, String inDate,
-			String outDate, int lowPrice, int highPrice, String grade)
+			String outDate, Integer lowPrice, Integer highPrice, String grade)
 			throws BusinessException {
 		// MapperのfindHotelListメソッドを呼び出し
 		// ホテル商品情報のリストを格納
 
 		List<HotelItem> result = mapper.findHotelList(inputCityName, inDate,
 				outDate, lowPrice, highPrice, grade);
-		// ホテル商品情報のリストが空の場合
-		if (result.size() == 0) {
-
-			// 業務エラーを明示的に発生させる
-			throw new BusinessException(BIZERR101);
-		}
 
 		return result;
 

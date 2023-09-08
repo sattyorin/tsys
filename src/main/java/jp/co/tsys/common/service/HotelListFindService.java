@@ -37,6 +37,6 @@ public interface HotelListFindService {
 	 *             検索結果が存在しない場合
 	 */
 	public List<HotelItem> findHotelList(String inputCityName, String inDate,
-			String outDate, int lowProce, int highPrice, String grade)
+			String outDate, Integer lowProce, Integer highPrice, String grade)
 			throws BusinessException;
 }

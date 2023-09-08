@@ -6,15 +6,11 @@ package jp.co.tsys.common.mapper;
 
 import java.util.List;
 
-//import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import jp.co.tsys.common.entity.HotelItem;
 import jp.co.tsys.common.form.HotelItemDetailForm;
-
-//import jp.co.tsys.common.entity.Hotelitem;
 
 /**
  * @author FLM
@@ -66,7 +62,7 @@ public interface HotelItemMapper {
 	 *            商品コード
 	 */
 	public List<HotelItem> findHotelList(String inputCityName, String inDate,
-			String outDate, int lowPrice, int highPrice, String grade);
+			String outDate, Integer lowPrice, Integer highPrice, String grade);
 
 	// 商品コードまたはホテル名または日付からホテル商品の検索を行う
 	public List<HotelItemDetailForm> findHotelItemList(String itemCode,

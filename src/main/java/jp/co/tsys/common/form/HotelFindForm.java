@@ -4,6 +4,7 @@
 
 package jp.co.tsys.common.form;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.Max;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HotelFindForm {
+public class HotelFindForm implements Serializable {
 
 	@NotNull
 	@NotBlank
@@ -42,16 +43,15 @@ public class HotelFindForm {
 
 	@Max(99999999)
 	/** 値段（下限） */
-	private int lowPrice;
+	private Integer lowPrice;
 
 	@Max(99999999)
 	/** 値段（上限） */
-	private int highPrice;
+	private Integer highPrice;
 
 	/** グレード */
 	private String grade;
 
 	/** ホテル商品検索結果リスト */
 	private List<HotelItem> result;
-
 }
