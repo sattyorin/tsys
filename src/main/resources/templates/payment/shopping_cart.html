@@ -6,12 +6,14 @@
 <title>カート</title>
 </head>
 <body>
+	<!--	<div th:replace="customerHeader::header"></div> -->
+
 	<h1>ショッピングカート</h1>
-	
+
 	<p th:text="${message}" class="error"></p>
 
-	<form th:object="${shoppingCartForm}" method="post"
-		th:action="@{/payment//confirmation}">
+	<form id="cart" th:object="${shoppingCartForm}" method="post"
+		th:action="@{/payment/confirmation}">
 		<table border="1">
 			<tr>
 				<th>ホテルコード</th>
@@ -21,22 +23,26 @@
 				<th>部屋数</th>
 				<th>小計</th>
 			</tr>
-			<tr th:each="order : *{orders}">
-				<td th:text="*{order.hotelitem.hotel.hotelcode}">hotelCode</td>
-				<td th:text="*{order.hotelitem.hotel.name}">name</td>
-				<td th:text="*{order.hotelitem.date}">date</td>
-				<td th:text="*{order.hotelitem.price}">price</td>
-				<td th:text="*{order.quantity}">quantity</td>
-				<td th:text="*{order.hotelitem.price*order.quantity}">price</td>
-		    </tr>
-
+			<tr th:each="order:*{orders}">
+				<td th:text="${order.hotelItem.hotel.hotelCode}">hotelCode</td>
+				<td th:text="${order.hotelItem.hotel.name}">name</td>
+				<td th:text="${order.hotelItem.date}">date</td>
+				<td th:text="${order.hotelItem.price}">price</td>
+				<td th:text="${order.quantity}">quantity</td>
+				<td th:text="${order.subTotal}">price</td>
+			</tr>
 		</table>
+		<p style="text-align: right;">
+			合計金額<span th:text="*{orderTotal}"></span>
+		</p>
 		<br>
-		<button type="submit">予約</button>
 	</form>
 	<p></p>
-	<form th:action="@{/payment//confirmation}">
-		<button type="submit">ホテル検索画面へ</button>
+	<form th:action="@{/payment/confirmation}" style="float: left;">
+		<button type="submit" class="test">ホテル検索画面へ</button>
 	</form>
+	<div style="text-align: right;">
+		<button form="cart" type="submit">予約</button>
+	</div>
 </body>
 </html>

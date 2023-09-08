@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title>予約確認</title>
+</head>
+<body>
+
+	<div th:replace="customerHeader::header"></div>
+	<h1 style="text-align: center">予約確認</h1>
+
+	<p th:text="${message}" class="error"></p>
+
+	<div th:object="${ordersForm}">
+		<table border="1">
+			<tr>
+				<th>ホテルコード</th>
+				<th>ホテル名</th>
+				<th>宿泊日</th>
+				<th>料金</th>
+				<th>部屋数</th>
+				<th>小計</th>
+			</tr>
+			<tr th:each="order : *{orders}">
+				<td th:text="${order.hotelItem.hotel.hotelCode}">hotelCode</td>
+				<td th:text="${order.hotelItem.hotel.name}">name</td>
+				<td th:text="${order.hotelItem.date}">date</td>
+				<td th:text="${order.hotelItem.price}">price</td>
+				<td th:text="${order.quantity}">quantity</td>
+				<td th:text="${order.subTotal}">price</td>
+			</tr>
+		</table>
+		<p>
+			合計金額<span th:text="*{orderTotal}"></span>
+		</p>
+	</div>
+	<br>
+
+	<p th:if="${loginmember.role == 'Employee'}">
+	<form th:object="${ordersForm}" th:action="@{/payment/findMember}">
+		メンバーコード <input type="text" th:field="*{memberCode}">
+		<div class="error" th:if="${#fields.hasErrors('memberCode')}"
+			th:errors="*{memberCode}"></div>
+		<button type="submit">検索</button>
+	</form>
+	</p>
+
+	<form id="order" th:object="${ordersForm}"
+		th:action="@{/payment/completion}">
+		<table border="1">
+			<tr>
+				<th>名前</th>
+				<td th:text="${displayMemeber.name}"></td>
+			</tr>
+			<tr>
+				<th>送付先</th>
+				<td
+					th:text="${displayMemeber.zipCode + ' '+ displayMemeber.prefecture + displayMemeber.address}"></td>
+			</tr>
+			<tr>
+				<th>電話番号</th>
+				<td th:text="${displayMemeber.tel}"></td>
+			</tr>
+			<tr>
+				<th>決済方法</th>
+				<td><input type="radio" name="pay"
+					th:value="*{payment == '01'}">代金引き換え <input type="radio"
+					name="pay" th:value="*{payment == '02'}">コンビニエンスストア決済</td>
+			</tr>
+		</table>
+	</form>
+	<p></p>
+	<form th:action="@{/payment/cart}"
+		style="text-align: left; float: left;">
+		<button type="submit">戻る</button>
+	</form>
+
+	<div style="text-align: right;">
+		<button form="order" type="submit">予約確定</button>
+	</div>
+</body>
+</html>
