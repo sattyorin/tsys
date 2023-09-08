@@ -31,8 +31,8 @@ public class RetrieveMemberController {
 	private RetrieveMemberService service;
 
 	/**
-	 * ログイン画面の【ログイン】に対応するHandlerメソッド マッピングするURL：/retrieveMember
-	 * 
+	 * ログイン画面の【ログイン】に対応するHandlerメソッド マッピングするURL：/retrievemember
+	 *
 	 * @param memberCode
 	 *            メンバーコード
 	 * @param password
@@ -78,19 +78,20 @@ public class RetrieveMemberController {
 
 	/**
 	 * ヘッダー画面の【ログアウト】に対応するHandlerメソッド マッピングするURL：/logout
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト return ログイン画面(login.html)
 	 */
 	@RequestMapping("/logout")
 	public String logout(Model model, SessionStatus status) {
+		model.addAttribute("loginForm", new LoginForm());
 		status.setComplete();
 		return "/login";
 	}
 
 	/**
-	 * ヘッダー画面の【トップメニュー】に対応するHandlerメソッド マッピングするURL：/topMenu
-	 * 
+	 * ヘッダー画面の【トップメニュー】に対応するHandlerメソッド マッピングするURL：/topmenu
+	 *
 	 * @param model
 	 *            Modelオブジェクト return 従業員メニュー画面(top_menu_emp.html) or
 	 *            トップメニュー(顧客)画面(top_menu.html)
@@ -100,7 +101,7 @@ public class RetrieveMemberController {
 			Model model) {
 
 		// 権限によって画面遷移先を振り分ける
-		if (loginmember.getRole() == "Employee") {
+		if (loginmember.getRole().equals("Employee")) {
 			// RoleがEmployeeの場合の画面遷移先
 			return "/top_menu_emp";
 		} else {
