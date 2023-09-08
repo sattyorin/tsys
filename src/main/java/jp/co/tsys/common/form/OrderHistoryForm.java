@@ -1,19 +1,14 @@
 package jp.co.tsys.common.form;
 
 import java.io.Serializable;
-import java.lang.reflect.Member;
 import java.util.List;
 
+import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.entity.Order;
+import jp.co.tsys.common.util.Pair;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-/**
- * OrderHistoryForm.java
- *
- * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
- */
 
 /**
  *
@@ -27,8 +22,8 @@ import lombok.NoArgsConstructor;
 public class OrderHistoryForm implements Serializable {
 	private Member member;
 
-	private List<Order> currentOrders;
+	private List<Pair<Order, Boolean>> currentOrders;
 
-	private List<Order> pastOrders;
+	private List<Pair<Order, Boolean>> pastOrders;
 
 }

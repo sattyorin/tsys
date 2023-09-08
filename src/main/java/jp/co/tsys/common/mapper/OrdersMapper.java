@@ -22,6 +22,12 @@ public interface OrdersMapper {
 
 	public List<Order> findCurrentOrder(int orderNo);
 
+	public List<Order> findCurrentOrderFromMemberCode(String memberCode,
+			String date);
+
+	// TODO: xml impl
+	public String findOrderDateFromOrderNo(int oderNo);
+
 	public List<Order> findPastOrder(int orderNo);
 
 	public int deleteOrderDetail(@Param("orderNo") int orderNo,
