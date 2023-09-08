@@ -53,14 +53,15 @@
 		</tr>
 		<tr>
 			<th>決済方法</th>
-			<td th:if="*{payment == '01'}" th:text="代金引き換え"></td>
-			<td th:if="*{payment == '02'}" th:text="コンビニエンスストア決済"></td>
+			<td th:if="${ordersForm.payment == '1'}">代金引き換え</td>
+			<td th:if="${ordersForm.payment == '2'}">コンビニエンスストア決済</td>
 		</tr>
 	</table>
 	</p>
 	<p></p>
 	<form th:action="@{/hotelFind/findHotel}" style="text-align: center;">
-		<button type="submit">ホテル検索画面へ</button>
+		<button type="submit" style="width: 150px;">ホテル検索画面へ</button>
 	</form>
+
 </body>
 </html>

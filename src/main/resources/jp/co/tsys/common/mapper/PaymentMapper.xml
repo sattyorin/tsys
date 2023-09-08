@@ -54,4 +54,16 @@
 		</foreach>
 		;
 	</insert>
+	
+	<!-- 在庫を更新 -->
+	<update id="updateHotelStock">
+		update
+			hotel
+		set
+			stock = stock - #{quantity}
+		where
+			itemcode = #{hotelItem.itemCode}
+		;
+	</update>
+	
 </mapper>

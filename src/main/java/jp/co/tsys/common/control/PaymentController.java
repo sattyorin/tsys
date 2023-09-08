@@ -28,7 +28,7 @@ import jp.co.tsys.common.service.PaymentService;
 
 @Controller
 @SessionAttributes(types = {Member.class, HotelDetailForm.class,
-		ShoppingCartForm.class})
+		ShoppingCartForm.class, OrdersForm.class})
 @RequestMapping("/payment")
 public class PaymentController {
 
@@ -127,6 +127,7 @@ public class PaymentController {
 			displayMemeber.setAddress(loginmember.getAddress());
 			displayMemeber.setTel(loginmember.getTel());
 
+			System.out.println(displayMemeber);
 			model.addAttribute("displayMemeber", displayMemeber);
 		}
 
@@ -140,12 +141,9 @@ public class PaymentController {
 			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model) {
 
-		System.out.println(ordersForm.getMemberCode());
-
 		// サービスにメンバーコード投げてメンバーオブジェクトを取得
 		Member targetMember = memberService
 				.findMember(ordersForm.getMemberCode());
-		System.out.println(targetMember);
 
 		// 顧客と従業員の名前衝突回避用にインスタンス作成
 		Member displayMemeber = new Member();
@@ -164,8 +162,8 @@ public class PaymentController {
 
 	@RequestMapping("/completion")
 	@Transactional
-	public String commitResult(OrdersForm ordersForm, BindingResult result,
-			Model model, SessionStatus status) {
+	public String commitResult(@ModelAttribute OrdersForm ordersForm,
+			BindingResult result, Model model, SessionStatus status) {
 
 		// 現在日時を取得する
 		LocalDateTime date1 = LocalDateTime.now();
@@ -186,6 +184,7 @@ public class PaymentController {
 		// カートの中身を破棄
 		model.addAttribute("shoppingCartForm", new ShoppingCartForm());
 
-		return "/payment/order_commit";
+		return "/payment/order_completion";
 	}
+
 }

@@ -6,7 +6,6 @@
 <title>予約確認</title>
 </head>
 <body>
-
 	<div th:replace="customerHeader::header"></div>
 	<h1 style="text-align: center">予約確認</h1>
 
@@ -64,9 +63,9 @@
 			</tr>
 			<tr>
 				<th>決済方法</th>
-				<td><input type="radio" name="pay"
-					th:value="*{payment == '01'}">代金引き換え <input type="radio"
-					name="pay" th:value="*{payment == '02'}">コンビニエンスストア決済</td>
+				<td><input type="radio" name="pay" th:field="*{payment}"
+					th:value="01">代金引き換え <input type="radio" name="pay"
+					th:field="*{payment}" th:value="02">コンビニエンスストア決済</td>
 			</tr>
 		</table>
 	</form>
