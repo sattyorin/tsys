@@ -14,23 +14,22 @@ import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.exception.BusinessException;
+import jp.co.tsys.common.form.HotelDetailForm;
 import jp.co.tsys.common.form.HotelItemDetailForm;
 import jp.co.tsys.common.form.ItemUpdateForm;
 import jp.co.tsys.common.service.HotelItemUpdateService;
 
 /**
  * 商品更新Controller
- * 
+ *
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
-@SessionAttributes(types = HotelItemDetailForm.class)
+@SessionAttributes(names = "hotelItemForm")
 @Controller
 @RequestMapping("/hotelitem/update")
 public class HotelItemUpdateController {
@@ -41,16 +40,16 @@ public class HotelItemUpdateController {
 
 	/**
 	 * 商品詳細画面から商品変更画面へ遷移するHandlerメソッド マッピングするURL： inputupdate
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @return 会員更新画面（/hotelItem/update/view）
 	 */
 	@RequestMapping("inputupdate")
-	public String inputUpdate(Model model) {
-		// sessionからdetailを取得
-		HotelItemDetailForm itemDetail = (HotelItemDetailForm) model
-				.getAttribute("hotelItemForm");
+	public String inputUpdate(
+			@ModelAttribute("hotelItemForm") HotelItemDetailForm itemDetail,
+			Model model) {
+
 		// 変更用フォームの初期値設定
 		ItemUpdateForm updateForm = new ItemUpdateForm(itemDetail.getDate(),
 				itemDetail.getPrice(), itemDetail.getStock());
@@ -58,13 +57,13 @@ public class HotelItemUpdateController {
 		// フォームオブジェクトをキー名"updateForm"でModelに格納
 		model.addAttribute("updateForm", updateForm);
 
-		return "/hotelItem/update/view";
+		return "/hotelitem/update/view";
 	}
 
 	/**
 	 * 商品変更画面の[変更]に対応するHandlerメソッド マッピングするURL： confirmupdate マッピングするHTTPメソッド：
 	 * POST
-	 * 
+	 *
 	 * @param updateMember
 	 *            会員更新情報入力フォームオブジェクト
 	 * @param result
@@ -73,8 +72,9 @@ public class HotelItemUpdateController {
 	 *            Modelオブジェクト
 	 * @return 会員更新確認画面（/hotelItem/update/confirm）
 	 */
-	@RequestMapping(value = "confirmupdate", method = RequestMethod.POST)
-	public String confirmUpdate(@Validated ItemUpdateForm updateForm,
+	@RequestMapping(value = "confirmupdate")
+	public String confirmUpdate(
+			@Validated @ModelAttribute("updateForm") ItemUpdateForm updateForm,
 			BindingResult result, Model model) {
 		// 入力チェック
 		if (result.hasErrors()) {
@@ -86,13 +86,13 @@ public class HotelItemUpdateController {
 		// フォームオブジェクトをキー名"updateForm"でModelに格納
 		model.addAttribute("updateForm", updateForm);
 
-		return "/hotelItem/update/confirm";
+		return "/hotelitem/update/confirm";
 	}
 
 	/**
 	 * 商品変更確認画面の[確定]に対応するHandlerメソッド マッピングするURL： commitupdate マッピングするHTTPメソッド：
 	 * POST
-	 * 
+	 *
 	 * @param updateMember
 	 *            会員更新情報入力フォームオブジェクト
 	 * @param model
@@ -101,10 +101,10 @@ public class HotelItemUpdateController {
 	 *            セッションステータス
 	 * @return 商品変更結果画面（/hotelItem/update/result）
 	 */
-	@RequestMapping(value = "commitupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "commitupdate")
 	public String commitUpdate(
 			@ModelAttribute("updateForm") ItemUpdateForm updateForm,
-			Model model, SessionStatus status) {
+			Model model) {
 		// セッションに格納されているdetailFormの内容を取得する
 		HotelItemDetailForm itemDetail = (HotelItemDetailForm) model
 				.getAttribute("hotelItemForm");
@@ -123,15 +123,15 @@ public class HotelItemUpdateController {
 		// resultオブジェクトをキー名"hotelItemForm"でModelに格納
 		model.addAttribute("hotelItemForm", result);
 
-		// セッションからフォームオブジェクトを削除
-		status.setComplete();
+		// セッションからフォームオブジェクトを削除(空欄に更新)
+		model.addAttribute("hotelItemForm", new HotelDetailForm());
 
-		return "/hotelItem/update/result";
+		return "/hotelitem/update/result";
 	}
 
 	/**
 	 * 商品変更画面の[戻る]に対応するHandlerメソッド マッピングするURL：quitupdate
-	 * 
+	 *
 	 * @param itemDetail
 	 *            商品情報フォームオブジェクト
 	 * @return 商品詳細画面（/hotelItem/retrieve/detail-HTML）
@@ -141,12 +141,12 @@ public class HotelItemUpdateController {
 			@ModelAttribute("hotelItemForm") HotelItemDetailForm itemDetail,
 			Model model) {
 
-		return "/hotelItem/retrieve/itemdetail";
+		return "/hotelitem/retrieve/itemdetail";
 	}
 
 	/**
-	 * 商品変更確認画面の[戻る]に対応するHandlerメソッド マッピングするURL： reviseupdate
-	 * 
+	 * 商品変更確認画面の[修正]に対応するHandlerメソッド マッピングするURL： reviseupdate
+	 *
 	 * @param updateMember
 	 *            会員更新情報入力フォームオブジェクト
 	 * @return 商品変更画面（/hotelItem/update/view）
@@ -155,13 +155,19 @@ public class HotelItemUpdateController {
 	public String reviseUpdate(
 			@ModelAttribute("hotelItemForm") HotelItemDetailForm itemDetail,
 			Model model) {
-		return "/hotelItem/update/view";
+		// updateFormを再設定
+		ItemUpdateForm updateForm = new ItemUpdateForm(itemDetail.getDate(),
+				itemDetail.getPrice(), itemDetail.getStock());
+		// modelに格納
+		model.addAttribute("updateForm", updateForm);
+
+		return "/hotelitem/update/view";
 	}
 
 	/**
 	 * 業務例外のハンドリング レスポンスステータスコード： HttpStatus.BAD_REQUEST ハンドリングする例外クラス：
 	 * BusinessException.class
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @param e
@@ -180,7 +186,7 @@ public class HotelItemUpdateController {
 	/**
 	 * セッションが無効になった場合のハンドリング レスポンスステータスコード： HttpStatus.BAD_GATEWAY
 	 * ハンドリングする例外クラス： HttpSessionRequiredException.class
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @return 商品詳細画面（/hotelItem/retrieve/itemdetail）

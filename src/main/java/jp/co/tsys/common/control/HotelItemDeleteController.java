@@ -12,10 +12,8 @@ import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.HotelItemDetailForm;
@@ -27,7 +25,7 @@ import jp.co.tsys.common.service.HotelItemDeleteService;
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
-@SessionAttributes(types = HotelItemDetailForm.class)
+@SessionAttributes(names = "hotelItemForm")
 @Controller
 @RequestMapping("/hotelitem/delete")
 public class HotelItemDeleteController {
@@ -44,25 +42,26 @@ public class HotelItemDeleteController {
 	 * @return 削除確認画面（/hotelItem/delete/confirmL）
 	 */
 	@RequestMapping("confirmdelete")
-	public String confirmDelete(Model model) {
-
-		return "/hotelItem/delete/confirm";
+	public String confirmDelete(
+			@ModelAttribute("hotelItemForm") HotelItemDetailForm form,
+			Model model) {
+		return "/hotelitem/delete/confirm";
 	}
 
 	/**
 	 * 削除確認画面の[確認]に対応するHandlerメソッド マッピングするURL： /hotelItem/delete/commitdelete
 	 * マッピングするHTTPメソッド： POST
-	 * 
+	 *
 	 * @param hotelItemCode
 	 *            削除対象商品コード
 	 * @param model
 	 *            Modelオブジェクト
 	 * @return 削除結果画面（/hotelItem/delete/result）
 	 */
-	@RequestMapping(value = "commitdelete", method = RequestMethod.POST)
+	@RequestMapping(value = "commitdelete")
 	public String commitDelete(
 			@ModelAttribute("hotelItemForm") HotelItemDetailForm itemDetail,
-			Model model, SessionStatus status) {
+			Model model) {
 		// フォームオブジェクトに格納されたホテル情報をresultオブジェクトに格納する。sessionからrequestに移行するため
 		HotelItemDetailForm result = new HotelItemDetailForm(
 				itemDetail.getItemCode(), itemDetail.getHotelCode(),
@@ -76,10 +75,10 @@ public class HotelItemDeleteController {
 		// resultオブジェクトをキー名"hotelItemForm"でmodelに格納
 		model.addAttribute("hotelItemForm", result);
 
-		// セッションからフォームオブジェクトを削除
-		status.setComplete();
+		// セッションからフォームオブジェクトを削除(空欄で上書き)
+		model.addAttribute("hotelItemForm", new HotelItemDetailForm());
 
-		return "/hotelItem/delete/result";
+		return "/hotelitem/delete/result";
 	}
 
 	/**
@@ -91,9 +90,9 @@ public class HotelItemDeleteController {
 	 */
 	@RequestMapping("quitdelete")
 	public String quitDelete(
-			@ModelAttribute("hotelItemForm") HotelItemDetailForm itemDetail) {
-
-		return "/hotelItem/retrieve/itemdetail";
+			@ModelAttribute("hotelItemForm") HotelItemDetailForm itemDetail,
+			Model model) {
+		return "/hotelitem/retrieve/itemdetail";
 	}
 
 	/**
@@ -113,7 +112,7 @@ public class HotelItemDeleteController {
 		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", e.getMessage());
 
-		return "/hotelItem/retrieve/itemdetail";
+		return "/hotelitem/retrieve/itemdetail";
 	}
 
 	/**
@@ -131,6 +130,6 @@ public class HotelItemDeleteController {
 		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", "エラーメッセージ");
 
-		return "/hotelItem/retrieve/itemdetail";
+		return "/hotelitem/retrieve/itemdetail";
 	}
 }
