@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.exception.BusinessException;
-import jp.co.tsys.common.form.HotelDetailForm;
 import jp.co.tsys.common.form.HotelItemDetailForm;
 import jp.co.tsys.common.form.ItemUpdateForm;
 import jp.co.tsys.common.service.HotelItemUpdateService;
@@ -104,7 +104,7 @@ public class HotelItemUpdateController {
 	@RequestMapping(value = "commitupdate")
 	public String commitUpdate(
 			@ModelAttribute("updateForm") ItemUpdateForm updateForm,
-			Model model) {
+			Model model, SessionStatus status) {
 		// セッションに格納されているdetailFormの内容を取得する
 		HotelItemDetailForm itemDetail = (HotelItemDetailForm) model
 				.getAttribute("hotelItemForm");
@@ -123,8 +123,8 @@ public class HotelItemUpdateController {
 		// resultオブジェクトをキー名"hotelItemForm"でModelに格納
 		model.addAttribute("hotelItemForm", result);
 
-		// セッションからフォームオブジェクトを削除(空欄に更新)
-		model.addAttribute("hotelItemForm", new HotelDetailForm());
+		// セッションからフォームオブジェクトを削除
+		status.setComplete();
 
 		return "/hotelitem/update/result";
 	}
@@ -158,6 +158,7 @@ public class HotelItemUpdateController {
 		// updateFormを再設定
 		ItemUpdateForm updateForm = new ItemUpdateForm(itemDetail.getDate(),
 				itemDetail.getPrice(), itemDetail.getStock());
+
 		// modelに格納
 		model.addAttribute("updateForm", updateForm);
 

@@ -1,11 +1,10 @@
-<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-	<title>商品変更</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title>商品変更</title>
 </head>
 
 <body>
@@ -18,13 +17,13 @@
 		<h1>ホテル商品変更</h1>
 
 		<form th:object="${updateForm}" method="post"
-		th:action="@{/hotelItem/update/confirmupdate}">
+			th:action="@{/hotelitem/update/confirmupdate}">
 			<table border="1" align="center">
 				<tr>
 					<th>商品コード</th>
 					<td>
 						<p th:text="${hotelItemForm.itemCode}">itemCode</p>
-					</td> 
+					</td>
 				</tr>
 				<tr>
 					<th>ホテルコード</th>
@@ -40,9 +39,7 @@
 				</tr>
 				<tr>
 					<th>宿泊日</th>
-					<td>
-						<p th:text="${updateForm.date}">date</p>
-						<imput type="hidden" th:field="*{date}">
+					<td><input type="date" th:field="${updateForm.date}" required>
 					</td>
 				</tr>
 				<tr>
@@ -59,30 +56,26 @@
 				</tr>
 				<tr>
 					<th>料金</th>
-					<td>
-						<p class="digit" th:text="${updateForm.price} + '円'">price</p>
-						<imput type="hidden" th:field="*{price}">
+					<td><input type="text" th:field="${updateForm.price}" required>
 					</td>
 				</tr>
 				<tr>
 					<th>在庫数</th>
-					<td>
-						<p th:text="${updateForm.stock}">stock</p>
-						<imput type="hidden" th:field="*{stock}">
+					<td><input type="text" th:field="${updateForm.stock}" required>
 					</td>
 				</tr>
 			</table>
+
+			<p>
+				<a>
+					<button type="submit">変更</button>
+				</a>
+			</p>
 		</form>
 
 		<p>
-			<a th:href="@{'/hotelItem/update/quitupdate}">
+			<a th:href="@{/hotelitem/update/quitupdate}">
 				<button>戻る</button>
-			</a>
-		</p>
-
-		<p>
-			<a th:href="@{'/hotelItem/update/confirmupdate}">
-				<button>変更</button>
 			</a>
 		</p>
 

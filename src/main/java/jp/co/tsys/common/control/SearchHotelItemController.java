@@ -19,6 +19,7 @@ import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.HotelItemDetailForm;
 import jp.co.tsys.common.form.RetrieveHotelItemForm;
 import jp.co.tsys.common.service.SearchHotelItemService;
+import jp.co.tsys.common.util.MessageList;
 
 /**
  *
@@ -38,8 +39,7 @@ public class SearchHotelItemController {
 	// ホテル商品検索画面に遷移
 	public String entryHotelItemSearch(Model model) {
 		// 検索要素入力フォームをモデルに格納
-		model.addAttribute("retrieveHotelItemForm",
-				new RetrieveHotelItemForm());
+		model.addAttribute("form", new RetrieveHotelItemForm());
 		return "/hotelitem/retrieve/search_hotel";
 	}
 
@@ -47,10 +47,15 @@ public class SearchHotelItemController {
 	// ホテル商品検索画面に遷移しリストを表示する
 	public String searchHotelItemList(RetrieveHotelItemForm form, Model model,
 			BindingResult result) {
-		// TODO(kano): 入力チェック
-		// if (result.hasErrors()) {
-		// return "/hotelItem/retrieve/view";
-		// }
+		// 入力チェック
+		if (form.getItemCode() == "" && form.getHotelName() == ""
+				&& form.getDate() == "") {
+			// 検索要素入力フォームをモデルに格納
+			model.addAttribute("form", new RetrieveHotelItemForm());
+			// エラーメッセージ登録
+			model.addAttribute("message", MessageList.BIZERR303);
+			return "/hotelitem/retrieve/search_hotel";
+		}
 
 		String itemCode = form.getItemCode();
 		String hotelName = form.getHotelName();
@@ -77,6 +82,8 @@ public class SearchHotelItemController {
 	// 例外処理（業務エラー）
 	@ExceptionHandler(BusinessException.class)
 	public String catchBizException(Model model, Exception e) {
+		// 検索要素入力フォームをモデルに格納
+		model.addAttribute("form", new RetrieveHotelItemForm());
 		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", e.getMessage());
 
