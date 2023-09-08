@@ -18,17 +18,14 @@ import jp.co.tsys.common.entity.Order;
  */
 @Mapper
 public interface OrdersMapper {
-	public List<Integer> findMemberOrder(String memberCode);
-
-	public List<Order> findCurrentOrder(int orderNo);
 
 	public List<Order> findCurrentOrderFromMemberCode(String memberCode,
 			String date);
 
-	// TODO: xml impl
-	public String findOrderDateFromOrderNo(int oderNo);
+	public List<Order> findPastOrderFromMemberCode(String memberCode,
+			String date);
 
-	public List<Order> findPastOrder(int orderNo);
+	public String findOrderDateFromOrderNo(int oderNo);
 
 	public int deleteOrderDetail(@Param("orderNo") int orderNo,
 			@Param("itemCode") String itemCode);
@@ -41,4 +38,9 @@ public interface OrdersMapper {
 	public int updateOrderMaster(@Param("orderNo") int orderNo,
 			@Param("price") int price);
 
+	// public List<Integer> findMemberOrder(String memberCode);
+
+	// public List<Order> findCurrentOrder(int orderNo);
+
+	// public List<Order> findPastOrder(int orderNo);
 }

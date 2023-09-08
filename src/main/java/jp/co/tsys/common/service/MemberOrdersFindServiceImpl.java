@@ -4,15 +4,15 @@
 
 package jp.co.tsys.common.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.entity.Order;
 import jp.co.tsys.common.exception.BusinessException;
-import jp.co.tsys.common.mapper.MemberMapper;
 import jp.co.tsys.common.mapper.OrdersMapper;
 
 /**
@@ -25,36 +25,29 @@ public class MemberOrdersFindServiceImpl implements MemberOrdersFindService {
 
 	@Autowired
 	private OrdersMapper ordersMapper;
-	private MemberMapper memberMapper;
+	private String strDate;
 
-	@Override
-	public Member findMember(String memberCode) {
-		Member member = memberMapper.findMember(memberCode);
+	// public List<Integer> findMemberOrder(String memberCode) {
+	// List<Integer> orderNoList = ordersMapper.findMemberOrder(memberCode);
+	//
+	// if (orderNoList.size() == 0) {
+	// throw new BusinessException("BIZERR106");
+	// }
+	//
+	// return orderNoList;
+	// }
 
-		if (member == null) {
-			throw new BusinessException("BIZERR001");
-		}
-
-		return member;
-	}
-
-	@Override
-	public List<Integer> findMemberOrder(String memberCode) {
-		List<Integer> orderNoList = ordersMapper.findMemberOrder(memberCode);
-
-		if (orderNoList.size() == 0) {
-			throw new BusinessException("BIZERR106");
-		}
-
-		return orderNoList;
+	public MemberOrdersFindServiceImpl() {
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		this.strDate = dateFormat.format(date);
 	}
 
 	@Override
 	public List<Order> findCurrentOrder(String memberCode) {
-		// TODO: get date
-		String date = "2023-8-12";
+
 		List<Order> listCurrentOrder = ordersMapper
-				.findCurrentOrderFromMemberCode(memberCode, date);
+				.findCurrentOrderFromMemberCode(memberCode, strDate);
 		if (listCurrentOrder.size() == 0) {
 			throw new BusinessException("BIZERR107");
 		}
@@ -63,8 +56,9 @@ public class MemberOrdersFindServiceImpl implements MemberOrdersFindService {
 	}
 
 	@Override
-	public List<Order> findPastOrder(int orderNo) {
-		List<Order> listPastOrder = ordersMapper.findCurrentOrder(orderNo);
+	public List<Order> findPastOrder(String memberCode) {
+		List<Order> listPastOrder = ordersMapper
+				.findPastOrderFromMemberCode(memberCode, strDate);
 
 		if (listPastOrder.size() == 0) {
 			throw new BusinessException("BIZERR108");

@@ -1,11 +1,10 @@
-/**
- * OrdersDeleteServiceImpl.java
- */
-
 package jp.co.tsys.common.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.tsys.common.mapper.OrdersMapper;
 
 /**
  *
@@ -16,20 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrdersDeleteServiceImpl implements OrdersDeleteService {
 
-	// @Autowired
-	// private OrdersMapper mapper;
+	@Autowired
+	private OrdersMapper mapper;
 
 	@Transactional
 	@Override
-	public void deleteCurrentOrder(String orderNo, String itemCode) {
+	public void deleteCurrentOrder(int orderNo, String itemCode, int quantity,
+			int price) {
 
-		// TODO(soutarou): imple
-		// 受注情報を削除する
-		// mapper.deleteOrderDetail(@Param("orderNo") orderNo,@Param("itemCode")
-		// itemCode);
-		// mapper.deleteOrderMaster(orderNo);
-		// mapper.updateHotel(@Param("quantity") int quantity,@Param("itemCode")
-		// String itemCode);
-		// mapper.updateOrderMaster(price);
+		mapper.deleteOrderDetail(orderNo, itemCode);
+		mapper.deleteOrderMaster(orderNo);
+		mapper.updateHotel(quantity, itemCode);
+		mapper.updateOrderMaster(orderNo, price);
 	};
 }
