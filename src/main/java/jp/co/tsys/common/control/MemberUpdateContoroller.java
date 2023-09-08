@@ -5,21 +5,18 @@
 package jp.co.tsys.common.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.entity.Member;
-import jp.co.tsys.common.exception.BusinessException;
+import jp.co.tsys.common.form.CustomerMemberForm;
+import jp.co.tsys.common.form.EmployeeMemberForm;
 import jp.co.tsys.common.form.MemberForm;
 import jp.co.tsys.common.service.MemberUpdateService;
 
@@ -29,7 +26,8 @@ import jp.co.tsys.common.service.MemberUpdateService;
  * @version 1.0.0
  */
 @Controller
-@SessionAttributes(types = MemberForm.class)
+@SessionAttributes(names = {"memberForm", "customerMemberForm",
+		"employeeMemberForm"})
 @RequestMapping("/member/update")
 public class MemberUpdateContoroller {
 
@@ -38,105 +36,135 @@ public class MemberUpdateContoroller {
 
 	// メンバー変更画面へ遷移するメソッド
 	@RequestMapping("/entry")
-	public String entryMemberUpdate(
-			@ModelAttribute("memberForm") MemberForm memberForm, Model model) {
-		// 更新前の情報をmemberオブジェクトに格納する
-		MemberForm member = new MemberForm();
-		member.setMemberCode(memberForm.getMemberCode());
-		member.setName(memberForm.getName());
-		member.setPassword(memberForm.getPassword());
-		member.setConfirmPassword(memberForm.getConfirmPassword());
-		member.setZipCode(memberForm.getZipCode());
-		member.setPrefecture(memberForm.getPrefecture());
-		member.setAddress(memberForm.getAddress());
-		member.setTel(memberForm.getTel());
-		member.setMail(memberForm.getMail());
+	public String entryMemberUpdate(Model model) {
 
-		model.addAttribute("memberForm", member);
+		// 入力値を取得するmodelを用意
+
+		model.addAttribute("customerMemberForm", new CustomerMemberForm());
+		model.addAttribute("employeeMemberForm", new EmployeeMemberForm());
 		// メンバー変更画面をreturnする
-		return "/member/update-input";
+		return "/member/update/update_input";
 	}
 
-	// 変更内容の確認に対応するHandlerメソッド
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updateMember(
-			@ModelAttribute("memberForm") @Validated MemberForm memberForm,
+	// 顧客情報変更内容の確認に対応するHandlerメソッド
+	@RequestMapping(value = "/customerupdate", method = RequestMethod.POST)
+	public String customerUpdate(
+			@ModelAttribute("customerMemberForm") @Validated CustomerMemberForm customerMemberForm,
 			BindingResult result, Model model) {
 		// 入力チェック
 		if (result.hasErrors()) {
 			// メンバー変更画面をreturnする
-			return "/Member/update-input";
+			model.addAttribute("message", "入力項目が規定を満たしていません");
+			return "/member/update_input";
 		}
 
 		// フォームオブジェクトを"memberForm"でModelに格納
-		model.addAttribute("memberForm", memberForm);
+		model.addAttribute("customerMemberForm", customerMemberForm);
 
 		// 確認画面に遷移する
-		return "/member/update-confirm";
+		return "/member/update/update_confirm";
 	}
 
-	// メンバー情報の確定更新に対応するHandlerメソッド
-	@RequestMapping(value = "/result", method = RequestMethod.POST)
-	public String entryUpdateMember(
-			@ModelAttribute("memberForm") MemberForm memberForm, Model model,
-			SessionStatus status) {
+	// 従業員情報変更内容の確認に対応するHandlerメソッド
+	@RequestMapping(value = "/employeeupdate", method = RequestMethod.POST)
+	public String employeeUpdate(
+			@ModelAttribute("employeeMemberForm") @Validated EmployeeMemberForm employeeMemberForm,
+			BindingResult result, Model model) {
+		// 入力チェック
+		if (result.hasErrors()) {
+			// メンバー変更画面をreturnする
+			model.addAttribute("message", "入力項目が規定を満たしていません");
+			return "/member/update_input";
+		}
+
+		// フォームオブジェクトを"memberForm"でModelに格納
+		model.addAttribute("employeeMemberForm", employeeMemberForm);
+
+		// 確認画面に遷移する
+		return "/member/update/update_confirm";
+	}
+
+	// 顧客情報の確定更新に対応するHandlerメソッド
+	@RequestMapping(value = "/customerresult", method = RequestMethod.POST)
+	public String customerResult(Model model) {
 		// フォームオブジェクトに格納された情報をMemberオブジェクトに設定する
+		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
+		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
+				.getAttribute("customerMemberForm");
 		Member member = new Member();
-		String name = memberForm.getLastName() + memberForm.getFirstName();
-		member.setName(name);
-		// memberCodeのセッションから取得したい
-		member.setMemberCode("AAAAAAAAA");
-		member.setPassword(memberForm.getPassword());
-		member.setRole(memberForm.getRole());
-		member.setMail(memberForm.getMail());
-		member.setZipCode(memberForm.getZipCode());
-		member.setPrefecture(memberForm.getPrefecture());
-		member.setAddress(memberForm.getAddress());
-		member.setTel(memberForm.getTel());
+		member.setMemberCode(memberForm.getMemberCode());
+		member.setRole("Customer");
+		member.setName(customerMemberForm.getName());
+		member.setPassword(customerMemberForm.getPassword());
+		member.setZipCode(customerMemberForm.getZipCode());
+		member.setPrefecture(customerMemberForm.getPrefecture());
+		member.setAddress(customerMemberForm.getAddress());
+		member.setTel(customerMemberForm.getTel());
+		member.setMail(customerMemberForm.getMail());
 
 		// ServiceのupdateMemberメソッドを呼び出す
 		service.updateMember(member);
 
-		// Memberオブジェクトをキー名"member"でModelに格納
-		model.addAttribute("member", member);
+		// 結果確認画面に遷移する
+		return "/member/update/update_complete";
+
+	}
+
+	// 従業員情報の確定更新に対応するHandlerメソッド
+	@RequestMapping(value = "/employeeresult", method = RequestMethod.POST)
+	public String employeeResult(Model model) {
+		// フォームオブジェクトに格納された情報をMemberオブジェクトに設定する
+		Member member = new Member();
+		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
+		EmployeeMemberForm employeeMemberForm = (EmployeeMemberForm) model
+				.getAttribute("employeeMemberForm");
+		member.setMemberCode(memberForm.getMemberCode());
+		member.setRole("Employee");
+		member.setName(employeeMemberForm.getName());
+		member.setPassword(employeeMemberForm.getPassword());
+		member.setMail(employeeMemberForm.getMail());
+		System.out.println(employeeMemberForm);
+		System.out.println(member);
+
+		// ServiceのupdateMemberメソッドを呼び出す
+		service.updateMember(member);
 
 		// 結果確認画面に遷移する
-		return "/member/update-complete";
+		return "/member/update/update_complete";
 
 	}
 
-	// メンバー情報の修正に対応するHandlerメソッド
-	@RequestMapping("/reviseinput")
-	public String reviseInput(
-			@ModelAttribute("memberForm") MemberForm memberForm) {
+	// 顧客情報の修正に対応するHandlerメソッド
+	@RequestMapping("/customerreviseinput")
+	public String customerReviseInput(Model model) {
 		// メンバー変更画面をreturnする
-		return "/member/update-input";
+		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
+				.getAttribute("customerMemberForm");
+		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
+		memberForm.setName(customerMemberForm.getName());
+		memberForm.setPassword(customerMemberForm.getPassword());
+		memberForm.setConfirmPassword(customerMemberForm.getConfirmPassword());
+		memberForm.setZipCode(customerMemberForm.getZipCode());
+		memberForm.setPrefecture(customerMemberForm.getZipCode());
+		memberForm.setAddress(customerMemberForm.getAddress());
+		memberForm.setTel(customerMemberForm.getTel());
+		memberForm.setMail(customerMemberForm.getMail());
+		model.addAttribute("memberForm", memberForm);
+		return "/member/update/update_input";
 	}
 
-	// 業務例外に対応するHandler
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(BusinessException.class)
-	public String catchBizException(Model model, Exception e,
-			@ModelAttribute("memberForm") MemberForm memberForm) {
-		// エラーメッセージをキー名"message"でModelに格納
-		model.addAttribute("message", e.getMessage());
-
-		// 更新前の情報をmemberオブジェクトに格納する
-		MemberForm member = new MemberForm();
-		member.setMemberCode(memberForm.getMemberCode());
-		member.setName(memberForm.getName());
-		member.setPassword(memberForm.getPassword());
-		member.setConfirmPassword(memberForm.getConfirmPassword());
-		member.setZipCode(memberForm.getZipCode());
-		member.setPrefecture(memberForm.getPrefecture());
-		member.setAddress(memberForm.getAddress());
-		member.setTel(memberForm.getTel());
-		member.setMail(memberForm.getMail());
-
-		model.addAttribute("memberForm", member);
+	// 従業員情報の修正に対応するHandlerメソッド
+	@RequestMapping("/employeereviseinput")
+	public String employeereviseInput(Model model) {
 		// メンバー変更画面をreturnする
-		return "/member/update-input";
-
+		EmployeeMemberForm employeeMemberForm = (EmployeeMemberForm) model
+				.getAttribute("employeeMemberForm");
+		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
+		memberForm.setName(employeeMemberForm.getName());
+		memberForm.setPassword(employeeMemberForm.getPassword());
+		memberForm.setConfirmPassword(employeeMemberForm.getConfirmPassword());
+		memberForm.setMail(employeeMemberForm.getMail());
+		model.addAttribute("memberForm", memberForm);
+		return "/member/update/update_input";
 	}
-
 }

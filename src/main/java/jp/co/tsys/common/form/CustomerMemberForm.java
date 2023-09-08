@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerMemberForm implements Serializable {
 
-	@NotBlank
 	private String role;
 
 	@NotBlank

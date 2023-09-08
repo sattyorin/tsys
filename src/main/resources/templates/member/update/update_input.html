@@ -1,0 +1,158 @@
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<title>メンバー情報変更</title>
+</head>
+
+<body>
+	<div style="text-align:center" th:if="${memberForm.role == 'Customer'}">
+
+		<h1>メンバー情報変更</h1>
+		<p>※入力必須項目</p>
+		<p th:text="${message}" class="error">
+			<font color="red">error message</font>
+		</p>
+
+		<form th:object="${memberForm}" method="post" th:action="@{/member/update/customerupdate}">
+			<table align="center" border="1">
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">メンバー名<font color="red" size=1>※</font>
+					</th>
+					<td>
+						<input type="text" th:field="*{name}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">パスワード<font color="red" size=1>※</font>
+						<br>
+						<p>
+							<font size=2>8～15文字で入力してください</font>
+						</p>
+					</th>
+					<td>
+						<input type="text" th:field="*{password}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">確認用パスワード
+						<font color="red" size=1>※</font>
+						<br>
+						<p>
+							<font size=2>8～15文字で入力してください</font>
+						</p>
+					</th>
+					<td>
+						<input type="text" th:field="*{confirmPassword}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">郵便番号<font color="red" size=1>※</font>
+						<br>
+						<p>
+							<font size=2>ハイフン込み8文字</font>
+						</p>
+					</th>
+					<td>
+						<input type="text" th:field="*{zipCode}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">都道府県<font color="red" size=1>※</font>
+					</th>
+					<td>
+						<input type="text" th:field="*{prefecture}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">
+						住所（都道府県以降）<font color="red" size=1>※</font>
+					</th>
+					<td>
+						<input type="text" th:field="*{address}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">電話番号<font color="red" size=1>※</font>
+						<br>
+						<p>ハイフン込み13文字以内</p>
+					</th>
+					<td>
+						<input type="text" th:field="*{tel}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color:rgb(255, 206, 206); ">メールアドレス<font color="red" size=1>※</font>
+					</th>
+					<td>
+						<input type="text" th:field="*{mail}">
+					</td>
+				</tr>
+			</table>
+			<br>
+			<button type="submit" style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; 
+			background-color: rgb(255, 185, 185); border-radius: 5px; border-color :rgb(64, 0, 64); 
+			border-style: solid">変更</button>
+		</form>
+	</div>
+
+	<div style=" text-align:center" th:if="${memberForm.role == 'Employee'}">
+
+				<h1>メンバー情報変更</h1>
+				<p>※入力必須項目</p>
+				<p th:text="${message}" class="error">
+					<font color="red">error message</font>
+				</p>
+
+				<form th:object="${memberForm}" method="post" th:action="@{/member/update/employeeupdate}">
+					<table align="center" border="1">
+						<tr>
+							<th style="background-color:rgb(255, 206, 206); ">メンバー名<font color="red" size=1>※</font>
+							</th>
+							<td>
+								<input type="text" th:field="*{name}">
+							</td>
+						</tr>
+						<tr>
+							<th style="background-color:rgb(255, 206, 206); ">パスワード<font color="red" size=1>※</font>
+								<br>
+								<p>
+									<font size=2>8～15文字で入力してください</font>
+								</p>
+							</th>
+							<td>
+								<input type="text" th:field="*{password}">
+							</td>
+						</tr>
+						<tr>
+							<th style="background-color:rgb(255, 206, 206); ">確認用パスワード
+								<font color="red" size=1>※</font>
+								<br>
+								<p>
+									<font size=2>8～15文字で入力してください</font>
+								</p>
+							</th>
+							<td>
+								<input type="text" th:field="*{confirmPassword}">
+							</td>
+						</tr>
+						<tr>
+							<th style="background-color:rgb(255, 206, 206); ">メールアドレス<font color="red" size=1>※</font>
+							</th>
+							<td>
+								<input type="text" th:field="*{mail}">
+							</td>
+						</tr>
+					</table>
+					<br>
+					<button type="submit" style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; 
+			background-color: rgb(255, 185, 185); border-radius: 5px; 
+			border-color :rgb(64, 0, 64); border-style: solid">変更</button>
+		</form>
+	</div>
+</body>
+
+</html>

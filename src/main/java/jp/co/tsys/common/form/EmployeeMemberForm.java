@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeMemberForm implements Serializable {
 
-	@NotBlank
 	private String role;
 
 	@NotBlank
