@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.tsys.common.entity.HotelItem;
 import jp.co.tsys.common.exception.BusinessException;
@@ -27,6 +28,7 @@ import jp.co.tsys.common.service.HotelReservationServiceImpl;
  * @version 1.0.0
  */
 @Controller
+@SessionAttributes(types = HotelDetailForm.class)
 public class HotelReservationController {
 
 	/** Service */
@@ -51,6 +53,7 @@ public class HotelReservationController {
 		// itemCodeをもとにホテル商品を1件検索する
 		HotelItem hotelItem = service.findHotelDetail(itemCode);
 		// HotelDetailFormに検索したHotelItemを設定する
+		//model.addAttribute("hotelDetailForm", new HotelDetailForm());
 		HotelDetailForm hotelDetailForm = new HotelDetailForm();
 		hotelDetailForm.setHotelItem(hotelItem);
 

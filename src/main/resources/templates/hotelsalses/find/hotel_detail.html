@@ -2,25 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<title>ホテル詳細画面</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title>ホテル詳細画面</title>
 
 </head>
+
 <body>
 	<div style="text-align: right;">
 		<p>
-			<a th:href="@{/payment/cart}">
-				<img th:src="@{/templates/hotelsalses/find/image/cart.png}" width="300" height="300" alt="カート">
+			<a th:href="@{/payment/cart}"> <img
+				th:src="@{/templates/hotelsalses/find/image/cart.png}" width="300"
+				height="300" alt="カート">
 			</a>
 		</p>
 	</div>
 	<div style="text-align: center;">
 		<h1>ホテル詳細</h1>
 		<form method="POST" th:object="${hotelDetailForm}">
-		<div class="error" th:if="${#fields.hasErrors('inputQuantity')}" th:errors="*{inputQuantity}">validation massage
-		</div>
-		<p>*入力必須項目</p>
+			<div class="error" th:if="${#fields.hasErrors('inputQuantity')}"
+				th:errors="*{inputQuantity}">validation massage</div>
+			<p>*入力必須項目</p>
 
 			<table border="1" align="center">
 				<tr>
@@ -41,7 +43,8 @@
 				</tr>
 				<tr>
 					<th>料金</th>
-					<td class="digit" th:text="${hotelDetailForm.hotelItem.price} + '円'">price</td>
+					<td class="digit"
+						th:text="${hotelDetailForm.hotelItem.price} + '円'">price</td>
 				</tr>
 				<tr>
 					<th>グレード</th>
@@ -53,13 +56,16 @@
 				</tr>
 				<tr>
 					<th>予約部屋数</th>
-					<td><input type="text" th:field="${hotelDetailForm.inputQuantity}" maxlength="2">*</td>
+					<td><input type="text"
+						th:field="${hotelDetailForm.inputQuantity}" maxlength="2">*</td>
 				</tr>
 			</table>
 			<div class="button019">
-			<input type="submit" value="戻る" th:formaction="@{/hotelFind/findHotelList}" />
-			<input type="submit" value="カートに入れる" th:formaction="@{/payment/cart}" />
-			<input type="submit" value="今すぐ予約" th:formaction="@{/payment/complition}" />
+				<input type="submit" value="戻る"
+					th:formaction="@{/hotelfind/findhotellist}" /> <input
+					type="submit" value="カートに入れる" th:formaction="@{/payment/cart}" />
+				<input type="submit" value="今すぐ予約"
+					th:formaction="@{/payment/complition}" />
 			</div>
 		</form>
 	</div>
