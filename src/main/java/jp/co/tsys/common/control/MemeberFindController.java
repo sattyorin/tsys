@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.exception.BusinessException;
-import jp.co.tsys.common.form.LoginForm;
+//import jp.co.tsys.common.form.LoginForm;
 import jp.co.tsys.common.form.MemberCodeForm;
 import jp.co.tsys.common.form.MemberForm;
 import jp.co.tsys.common.service.MemberFindService;
 
 /**
  * メンバー検索のController
- * 
+ *
  * @author Yamaguchi
- * @version 1.0.0
+ * @version 2.0.0
  */
-@SessionAttributes(types = MemberForm.class)
+@SessionAttributes(names = {"memberCodeForm", "loginmember", "memberForm"})
 @Controller
 @RequestMapping("/member/find")
 public class MemeberFindController {
@@ -40,16 +40,22 @@ public class MemeberFindController {
 	/**
 	 * 従業員画面のメンバー管理メニューの「メンバー変更・削除」ボタン押下→メンバー検索画面に推移
 	 * マッピングするURL：/member/find/search
-	 * 
+	 *
 	 * @param Model
 	 *            model
 	 * @return 商品検索画面（/V0904_01MemberFindView）
 	 */
 	@RequestMapping("/search")
 	public String entryMemberFind(Model model) {
+
+		// Member loginmember = new Member();//ここから4行テスト用
+		// loginmember.setRole("Employee");
+		// loginmember.setName("××");
+		// model.addAttribute("loginmember", loginmember);//ログインフォームにログインする役職を設定
+
 		model.addAttribute("memberCodeForm", new MemberCodeForm());
 
-		return "/member_find";
+		return "/member/find/member_find";
 	}
 
 	/**
@@ -60,16 +66,30 @@ public class MemeberFindController {
 	 * @return 商品検索画面（V0904_02_MemberDetailView） 見つからない場合、メンバー検索画面にもどる
 	 */
 	@RequestMapping("/result")
-	public String fineMember(@Validated MemberCodeForm form,
+	public String findMember(@Validated MemberCodeForm form,
 			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
-			return "/member_find";
+
+			return "/member/find/member_find";
 		}
 
-		Member member = service.findMember(form.getMemberCode());
-		model.addAttribute("memberForm", member);
-		return "member_detail";
+		Member member = service.findMember(form.getMemberCode());// メンバーコードに一致したメンバー情報を取得
+		MemberForm memberForm = new MemberForm();
+		memberForm.setMemberCode(member.getMemberCode());
+		memberForm.setName(member.getName());
+		memberForm.setRole(member.getRole());
+		memberForm.setPassword(member.getPassword());
+		memberForm.setZipCode(member.getZipCode());
+		memberForm.setPrefecture(member.getPrefecture());
+		memberForm.setAddress(member.getAddress());
+		memberForm.setTel(member.getTel());
+		memberForm.setMail(member.getMail());// new
+												// MemberFormにメンバー情報をセット
+
+		model.addAttribute("memberForm", memberForm);// メンバーフォームをセッションに。
+
+		return "/member/find/member_detail";
 	}
 
 	/**
@@ -81,14 +101,14 @@ public class MemeberFindController {
 	 *         見つからない場合、お客様トップ画面topMenu.htmlにもどる
 	 */
 	@RequestMapping("/retrive")
-	public String fineMember(@Validated LoginForm form, BindingResult result,
+	public String retriveMember(Member loginmember, BindingResult result, // TODO(seiya):結局Form名は正しいの？(memberFormに値を入れる必要あり)
 			Model model) {
 
 		if (result.hasErrors()) {
-			return "/topmenu";
+			return "/top_menu";
 		}
 
-		Member member = service.findMember(form.getMemberCode());
+		Member member = service.findMember(loginmember.getMemberCode());
 		model.addAttribute("memberForm", member);
 		return "member_detail";
 	}
@@ -106,7 +126,7 @@ public class MemeberFindController {
 		model.addAttribute("message", e.getMessage());
 		model.addAttribute("memberCodeForm", new MemberCodeForm());
 
-		return "/member_find";
+		return "/member/find/member_detail";
 	}
 	/**
 	 * メンバー詳細画面にて「戻るボタン」を押された場合、メンバー検索画面に遷移する
@@ -119,7 +139,7 @@ public class MemeberFindController {
 	public String returnFindMember(Model model) {
 		model.addAttribute("memberCodeForm", new MemberCodeForm());
 
-		return "/member_find";
+		return "/member/find/member_find";
 	}
 	/**
 	 * メンバー検索画面にて「戻るボタン」を押された場合、メンバー管理メニュー画面に遷移する
@@ -131,7 +151,7 @@ public class MemeberFindController {
 	@RequestMapping("/return/findtopmenu/emp")
 	public String returnMemberFind(Model model) {
 
-		return "/member_mgr_menu.html"; // TODO(seiya):ここ絶対認識のすり合わせを行う
+		return "/member/regist/member_management";
 	}
 
 	/**
@@ -141,10 +161,10 @@ public class MemeberFindController {
 	 * @param e
 	 * @return/returnTopMenu
 	 */
-	@RequestMapping("/return/findtopmenu/tmpemp")
+	@RequestMapping("/return/findtopmenu/cust")
 	public String returnTopMenu(Model model) {
 
-		return "/TopMenu"; // TODO(siya):ここ絶対認識のすり合わせを行う
+		return "/top_menu";
 	}
 
 }
