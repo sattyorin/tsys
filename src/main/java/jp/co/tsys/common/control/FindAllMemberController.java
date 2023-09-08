@@ -68,13 +68,11 @@ public class FindAllMemberController {
 	@RequestMapping("/search")
 	public String FindAllMember(@Validated FindAllMemberForm form,
 			BindingResult result, Model model) {
-		System.out.println(form);
+		model.addAttribute("form", form);
 
 		List<Member> memberList = new ArrayList<>();
 		memberList = service.findAllMember(form.getRole(), form.getName(),
 				form.getTel(), form.getMail());
-
-		System.out.println(memberList);
 
 		model.addAttribute("memberList", memberList);
 		// model.addAttribute("form", new FindAllMemberForm());
@@ -85,7 +83,6 @@ public class FindAllMemberController {
 
 			return "find_all_member";
 		}
-
 		return "/member/find/find_all_member";
 	}
 

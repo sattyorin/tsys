@@ -6,10 +6,14 @@
 package jp.co.tsys.common.control;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.tsys.common.form.FindAllMemberForm;
 
 /**
  * TOP画面表示Controller
+ * 
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
@@ -17,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TopController {
 
 	/**
-	 * TOP画面を表示するHandlerメソッド
-	 * マッピングするURL： /(コンテキストルート)
+	 * TOP画面を表示するHandlerメソッド マッピングするURL： /(コンテキストルート)
+	 * 
 	 * @return トップ画面（/top）
 	 */
 	@RequestMapping("/")
-	public String handler() {
-		return "/top";
+	public String handler(Model model) {
+		model.addAttribute("form", new FindAllMemberForm());
+		return "/member/find/find_all_member";
 	}
 }
