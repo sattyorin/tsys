@@ -4,20 +4,43 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<style>
+div.btnLeft {
+	text-align: left;
+	float: left;
+}
+
+div.btnRight {
+	text-align: right;
+}
+</style>
+
 </head>
 
 <body>
-	<div id="headerArea" th:fragment="back2Top">
-		<a th:action="@{/topMenu}">
-			<button class="headButton">トップメニュー</button>
-		</a>
-		<div style="text-align: right;">
-			<span th:text="${loginmember.name}+ 'さんようこそ'">name</span> <a
-				th:action="@{/logout}">
-				<button class="headButton">ログアウト</button>
+	<header th:fragment="header">
+		<div class="btnLeft">
+			<div id="headerArea" th:fragment="back2Top">
+				<a th:href="@{/topmenu}">
+					<button
+						style="width: 140px; height: 40px; font-size: 10pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+						class="headButton" class="headButton">トップメニュー</button>
+				</a>
+			</div>
+		</div>
+		<div class="btnRight">
+			<a th:href="@{/logout}">
+				<button
+					style="width: 140px; height: 40px; font-size: 10pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					class="headButton" class="headButton">ログアウト</button>
 			</a>
 		</div>
-	</div>
+		<p style="text-align: right;">
+			<span th:text="${loginmember.name}+ 'さんようこそ'">name</span>
+		</p>
+		<hr
+			style="border-bottom-style: solid; border-bottom-color: rgb(255, 202, 202); border-bottom-width: 7px;"/>
+	</header>
 </body>
 
 </html>
