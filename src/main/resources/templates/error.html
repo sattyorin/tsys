@@ -3,16 +3,21 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <title>エラー画面</title>
 </head>
 <body>
-	<div style="text-align:center;">
-	<h1>システムエラー</h1>
-	<hr>
-	<!--  エラーメッセージ -->
-	<p th:text="${message}" class="error">error message</p>
-	<p>××‐××××‐××</p>
+	<div style="text-align: center;">
+		<h1>システムエラー</h1>
+		<hr>
+		<!--  エラーメッセージ -->
+		<p th:text="${message}" class="error">error message</p>
+		<p>××‐××××‐××</p>
+		<a th:href="@{/logout}">
+			<button
+				style="width: 200px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+				type="submit">ログイン画面に戻る</button>
+		</a>
 	</div>
 </body>
 </html>

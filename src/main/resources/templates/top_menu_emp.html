@@ -8,22 +8,28 @@
 </head>
 <body>
 	​
-	<div th:insert="header::back2Top"></div>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<h1>従業員用メニュー</h1>
 		<p>
-			<a th:href="@{/emphotelreserve}">
-				<button class="menuButton">ホテル予約</button>
+			<a th:href="@{/topmenu/emphotelreserve}">
+				<button
+					style="width: 150px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					type="submit">ホテル予約</button>
 			</a>
 		</p>
 		<p>
-			<a th:href="@{/productmanage}">
-				<button class="menuButton">商品管理</button>
+			<a th:href="@{/topmenu/productmanage}">
+				<button
+					style="width: 150px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					type="submit">商品管理</button>
 			</a>
 		</p>
 		<p>
-			<a th:href="@{/membermanage}">
-				<button class="menuButton">メンバー管理</button>
+			<a th:href="@{/topmenu/membermanage}">
+				<button
+					style="width: 150px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					type="submit">メンバー管理</button>
 			</a>
 		</p>
 	</div>

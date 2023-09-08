@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="utf-8">
+<!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<title>ログイン画面</title>
+</head>
+<body>
+	<div style="text-align: center;">
+		<h1 style="text-align: center; text-decoration: underline 3px;">LOGIN</h1>
+		<p style="color: red;" th:text="${message}">error message</p>
+		<form method="post" th:action="@{/retrievemember}"
+			th:object="${loginForm}">
+			<table style="margin: auto">
+				<tr>
+					<span style="color: red;">※入力必須項目</span>
+					<td>メンバーコード<span style="color: red;">※</span></td>
+					<td><input type="text" th:field="*{memberCode}"></td>
+					<div style="color: red;" th:if="${#fields.hasErrors('memberCode')}"
+						th:errors="*{memberCode}">validation message</div>
+				</tr>
+				<tr>
+					<td>パスワード<span style="color: red;">※</span></td>
+					<td><input type="password" th:field="*{password}"></td>
+					<div style="color: red;" th:if="${#fields.hasErrors('password')}"
+						th:errors="*{password}">validation message</div>
+				</tr>
+			</table>
+			<br>
+			<button
+				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+				type="submit">ログイン</button>
+		</form>
+		<br>
+		<p>
+			メンバーコード・パスワードをお忘れの方はこちらまで <br> →××‐××××‐××
+		</p>
+		<br>
+		<p>
+			アカウントをお持ちでない場合 <a th:href="@{/member/regist/input}">登録はこちら</a>
+		</p>
+	</div>
+</body>
+</html>

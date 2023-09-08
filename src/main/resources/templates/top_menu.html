@@ -8,22 +8,28 @@
 </head>
 <body>
 	​
-	<div th:insert="header::back2Top"></div>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<h1>トップメニュー</h1>
 		<p>
-			<a th:href="@{/customerhotelreserve}">
-				<button class="menuButton">ホテル予約</button>
+			<a th:href="@{/topmenu/customerhotelreserve}">
+				<button
+					style="width: 200px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					type="submit">ホテル予約</button>
 			</a>
 		</p>
 		<p>
-			<a th:href="@{/reservehistory}">
-				<button class="menuButton">予約履歴</button>
+			<a th:href="@{/topmenu/reservehistory}">
+				<button
+					style="width: 200px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					type="submit">予約履歴</button>
 			</a>
 		</p>
 		<p>
-			<a th:href="@{/changemember}">
-				<button class="menuButton">お客様情報 変更・退会</button>
+			<a th:href="@{/topmenu/changemember}">
+				<button
+					style="width: 200px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					type="submit">お客様情報 変更・退会</button>
 			</a>
 		</p>
 	</div>
