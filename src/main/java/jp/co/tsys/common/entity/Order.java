@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Order implements Serializable {
 
-	private String orderNo;
+	private int orderNo;
 
 	/** ホテル商品 */
 	private HotelItem hotelItem;
