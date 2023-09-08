@@ -23,9 +23,10 @@ import jp.co.tsys.common.service.RetrieveMemberService;
 /**
  * ログイン・ログアウトController
  */
-@SessionAttributes(types = Member.class)
+@SessionAttributes(names = "loginmember")
 @Controller
 public class RetrieveMemberController {
+
 	/** Service */
 	@Autowired
 	private RetrieveMemberService service;

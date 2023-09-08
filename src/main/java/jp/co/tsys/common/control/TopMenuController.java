@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * トップメニュー画面遷移Controller
- * 
+ *
  * @author FLM
  * @version 1.0.0
  */
@@ -50,7 +50,7 @@ public class TopMenuController {
 	 */
 	@RequestMapping("/emphotelreserve")
 	public String empHotelReserve() {
-		return "/hotelreservation/sendemployeemenu";
+		return "/hotelsalses/find/item_sales_menu";
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class TopMenuController {
 	 * 従業員用トップメニュー画面の【メンバー管理】に対応するHandlerメソッド マッピングするURL：/membermanage return
 	 * 商品管理画面(/member_mgr)
 	 */
-	@RequestMapping("/membermanage")
+	@RequestMapping("/member/regist/membermanage")
 	public String memberManage() {
-		return "/member_mgr";
+		return "/member_management";
 	}
 }
