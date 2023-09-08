@@ -3,72 +3,135 @@
 
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
 <title>ホテル詳細画面</title>
+<style>
+body {
+	font-size: 12px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+h1 {
+	font-size: 32px;
+	text-align: center;
+}
+
+table {
+	margin: 0 auto;
+}
+
+th {
+	background-color: #ffb7b7;
+}
+
+.input-message {
+	margin-left: 55%;
+}
+
+.red {
+	color: red;
+}
+
+.cart {
+	margin-left: 90%;
+	height: 10%;
+	width: 10%;
+}
+
+.search {
+	text-align: center;
+}
+
+.error-area {
+	text-align: center;
+	color: red;
+}
+
+button {
+	width: fit-content;
+	height: 40px;
+	font-size: 12pt;
+	font-weight: bold;
+	background-color: rgb(255, 185, 185);
+	border-radius: 5px;
+	border-color: rgb(64, 0, 64);
+	border-style: solid"
+}
+
+img.cart {
+	width: 10%;
+	height: 60px;
+}
+</style>
 
 </head>
 
 <body>
 	<div style="text-align: right;">
 		<p>
-			<a th:href="@{/payment/cart}"> <img
-				th:src="@{/templates/hotelsalses/find/image/cart.png}" width="300"
-				height="300" alt="カート">
+			<a th:href="@{/payment/cart}"> <img th:src="@{/images/cart.png}"
+				width="300" height="300" alt="カート" class="cart">
 			</a>
 		</p>
 	</div>
-	<div style="text-align: center;">
-		<h1>ホテル詳細</h1>
-		<form method="POST" th:object="${hotelDetailForm}">
-			<div class="error" th:if="${#fields.hasErrors('inputQuantity')}"
-				th:errors="*{inputQuantity}">validation massage</div>
-			<p>*入力必須項目</p>
 
-			<table border="1" align="center">
-				<tr>
-					<th>商品コード</th>
-					<td th:text="${hotelDetailForm.hotelItem.itemCode}">itemCode</td>
-				</tr>
-				<tr>
-					<th>ホテル名</th>
-					<td th:text="${hotelDetailForm.hotelItem.hotel.name}">hotelCode</td>
-				</tr>
-				<tr>
-					<th>宿泊日</th>
-					<td th:text="${hotelDetailForm.hotelItem.date}">date</td>
-				</tr>
-				<tr>
-					<th>都市名</th>
-					<td th:text="${hotelDetailForm.hotelItem.hotel.cityName}">cityName</td>
-				</tr>
-				<tr>
-					<th>料金</th>
-					<td class="digit"
-						th:text="${hotelDetailForm.hotelItem.price} + '円'">price</td>
-				</tr>
-				<tr>
-					<th>グレード</th>
-					<td th:text="${hotelDetailForm.hotelItem.hotel.grade}">grade</td>
-				</tr>
-				<tr>
-					<th>残室数</th>
-					<td th:text="${hotelDetailForm.hotelItem.stock}">stock</td>
-				</tr>
-				<tr>
-					<th>予約部屋数</th>
-					<td><input type="text"
-						th:field="${hotelDetailForm.inputQuantity}" maxlength="2">*</td>
-				</tr>
-			</table>
-			<div class="button019">
-				<input type="submit" value="戻る"
-					th:formaction="@{/hotelfind/findhotellist}" /> <input
-					type="submit" value="カートに入れる" th:formaction="@{/payment/cart}" />
-				<input type="submit" value="今すぐ予約"
-					th:formaction="@{/payment/complition}" />
-			</div>
-		</form>
-	</div>
+	<h1>ホテル詳細</h1>
+	<form method="POST" th:object="${hotelDetailForm}">
+		<div class="error" th:if="${#fields.hasErrors('inputQuantity')}"
+			th:errors="*{inputQuantity}">validation massage</div>
+		<p class="input-message red">*入力必須項目</p>
+
+		<table border="1" align="center">
+			<tr>
+				<th>商品コード</th>
+				<td th:text="${hotelDetailForm.hotelItem.itemCode}">itemCode</td>
+			</tr>
+			<tr>
+				<th>ホテル名</th>
+				<td th:text="${hotelDetailForm.hotelItem.hotel.name}">hotelCode</td>
+			</tr>
+			<tr>
+				<th>宿泊日</th>
+				<td th:text="${hotelDetailForm.hotelItem.date}">date</td>
+			</tr>
+			<tr>
+				<th>都市名</th>
+				<td th:text="${hotelDetailForm.hotelItem.hotel.cityName}">cityName</td>
+			</tr>
+			<tr>
+				<th>料金</th>
+				<td class="digit" th:text="${hotelDetailForm.hotelItem.price} + '円'">price</td>
+			</tr>
+			<tr>
+				<th>グレード</th>
+				<td th:text="${hotelDetailForm.hotelItem.hotel.grade}">grade</td>
+			</tr>
+			<tr>
+				<th>残室数</th>
+				<td th:text="${hotelDetailForm.hotelItem.stock}">stock</td>
+			</tr>
+			<tr>
+				<th>予約部屋数<span class="red">*</span></th>
+				<td><input type="text"
+					th:field="${hotelDetailForm.inputQuantity}" maxlength="2" size="3"></td>
+			</tr>
+		</table>
+
+		<br> <br>
+		<div style="text-align: center;">
+			<button type="submit" th:formaction="@{/hotelfind/findhotellist}" />
+			戻る
+			</button>
+			<button type="submit" th:formaction="@{/payment/cart}" />
+			カートに入れる
+			</button>
+			<button type="submit" th:formaction="@{/payment/complition}" />
+			今すぐ予約
+			</button>
+		</div>
+	</form>
+
 </body>
 
 </html>

@@ -3,9 +3,62 @@
 
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
 <title>従業員用メニュー</title>
+<style>
+body {
+	font-size: 12px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+h1 {
+	font-size: 32px;
+	text-align: center;
+}
+
+table {
+	margin: 0 auto;
+}
+
+th {
+	background-color: #ffb7b7;
+}
+
+button {
+	width: 120px;
+	height: 40px;
+	font-size: 12pt;
+	font-weight: bold;
+	background-color: rgb(255, 185, 185);
+	border-radius: 5px;
+	border-color: rgb(64, 0, 64);
+	border-style: solid"
+}
+
+.input-message {
+	margin-left: 80%;
+}
+
+.red {
+	color: red;
+}
+
+.cart {
+	margin-left: 50%;
+	height: 100%;
+	width: 100%;
+}
+
+.search {
+	text-align: center;
+}
+
+.error-area {
+	text-align: center;
+	color: red;
+}
+</style>
 </head>
 
 <body>
@@ -14,6 +67,7 @@
 		<form th:action="@{/hotelfind/findhotel}" method="post">
 			<button type="submit">ホテル予約</button>
 		</form>
+		<br>
 		<form th:action="@{/order/find}" method="post">
 			<button type="submit">顧客情報検索</button>
 		</form>
