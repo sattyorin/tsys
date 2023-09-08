@@ -24,7 +24,7 @@ import jp.co.tsys.common.service.MemberDeleteService;
  */
 @Controller
 @RequestMapping("/member/delete")
-@SessionAttributes(names = {"loginmember", "member"})
+@SessionAttributes(names = {"loginmember", "memberForm"})
 public class MemberDeleteController {
 
 	@Autowired
@@ -34,8 +34,8 @@ public class MemberDeleteController {
 	// 顧客が退会する際の「確認」に対応するメソッド
 	@RequestMapping("/confirm")
 	public String deleteMemberConfirm(String memberCode) {
-		return "member/delete/member_delete_confirm";
 
+		return "member/delete/member_delete_confirm";
 	}
 
 	// 従業員がメンバーを削除する際の「確定」に対応するメソッド
@@ -44,7 +44,7 @@ public class MemberDeleteController {
 	public String deleteMember(Model model) {
 		// 削除が失敗した際のエラーをキャッチする
 		try {
-			Member member = (Member) model.getAttribute("member");
+			Member member = (Member) model.getAttribute("memberForm");
 			service.deleteMember(member.getMemberCode());
 		} catch (BusinessException e) {
 			// エラーメッセージをキー名"message"でModelに格納
