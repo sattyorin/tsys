@@ -1,6 +1,5 @@
 /**
  * FindAllMemberService.java
- *
  */
 
 package jp.co.tsys.common.service;

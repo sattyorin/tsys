@@ -40,5 +40,4 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
 			throw new BusinessException(MessageList.BIZERR001);
 		}
 	}
-
 }

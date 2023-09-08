@@ -21,14 +21,14 @@ public interface MemberMapper {
 
 	/**
 	 * テンプレ 上からメンバー登録・検索・更新・削除・一覧/ログインで並べたい
-	 *
+	 * 
 	 * @param
 	 * @return
 	 */
 
 	/**
 	 * [登録]メンバー情報を登録する
-	 *
+	 * 
 	 * @param member
 	 * @return
 	 */
@@ -50,7 +50,7 @@ public interface MemberMapper {
 
 	/**
 	 * [検索]メンバー情報を検索する
-	 *
+	 * 
 	 * @param memberCode
 	 *            メンバーコード
 	 * @return member オブジェクト
@@ -59,7 +59,7 @@ public interface MemberMapper {
 
 	/**
 	 * [更新]メンバー情報を更新する
-	 *
+	 * 
 	 * @param member
 	 *            メンバー
 	 * @return boolean true or false
@@ -68,7 +68,7 @@ public interface MemberMapper {
 
 	/**
 	 * [削除・退会]メンバー情報を削除・退会する
-	 *
+	 * 
 	 * @param memberCode
 	 *            メンバーコード
 	 * @return boolean true or false
@@ -77,7 +77,7 @@ public interface MemberMapper {
 
 	/**
 	 * [一覧]条件によって絞り込んだメンバー情報を取得する
-	 *
+	 * 
 	 * @param role
 	 *            権限 name 名前 tel 電話番号 mail メールアドレス
 	 * @return
@@ -88,12 +88,11 @@ public interface MemberMapper {
 
 	/**
 	 * [ログイン]メンバー情報を検索する
-	 *
+	 * 
 	 * @param memberCode
 	 *            メンバーコード password パスワード
 	 * @return
 	 */
 	public Member findOne(@Param("memberCode") String memberCode,
 			@Param("password") String password);
-
 }

@@ -1,0 +1,102 @@
+<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+	<title>メンバー一覧画面</title>
+</head>
+
+<body>
+
+	<div style="text-align:center">
+		<h1>メンバー一覧</h1>
+		<style>
+			p {
+				color: rgb(255, 0, 0);
+			}
+		</style>
+		<p th:text="${message}">error message</p>
+	</div>
+	<form th:object="${form}" method="post" th:action="@{/member/allview/search}">
+
+
+		<table style="margin:auto">
+			<td>
+
+				<form method="post">
+					<div>
+						<select name="role">
+							<option value="Customer">Customer</option>
+							<option value="Employee">Employee</option>
+						</select>
+					</div>
+				</form>
+			<td>
+				<input type="text" th:field="*{name}" placeholder="名前" /><br />
+				<!--			<div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>-->
+			</td>
+			<td>
+				<input type="text" th:field="*{tel}" placeholder="電話番号" /><br />
+				<div class="error" th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"></div>
+			<td>
+				<input type="text" th:field="*{mail}" placeholder="メールアドレス" /><br />
+				<div class="error" th:if="${#fields.hasErrors('tel')}" th:errors="*{mail}"></div>
+			</td>
+			<td>
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color :rgb(64, 0, 64); border-style: solid"
+					type="submit">検索</button>
+			</td>
+		</table>
+	</form>
+	<br>
+	<div style="text-align:center">
+		<button
+			style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color :rgb(64, 0, 64); border-style: solid"
+			type="submit">戻る</button>
+	</div>
+	<br>
+	<table border="1" style="margin:auto">
+		<style>
+			th {
+				background-color: rgb(255, 185, 185);
+			}
+		</style>
+		<tr>
+			<th>権限</th>
+			<th>メンバーコード</th>
+			<th>メンバー名</th>
+			<th>パスワード</th>
+			<th>郵便番号</th>
+			<th>住所（都道府県）</th>
+			<th>住所（市区町村）</th>
+			<th>電話番号</th>
+			<th>メールアドレス</th>
+		</tr>
+		<tr th:each="member : ${memberList}">
+			<td th:text="${member.role}">role</td>
+
+			<td th:text="${member.memberCode}">memberCode</td>
+
+			<td th:text="${member.name}">name</td>
+
+			<td th:text="${member.password}">password</td>
+
+			<td th:text="${member.zipCode}">zipCode</td>
+
+			<td th:text="${member.prefecture}">prefecture</td>
+
+			<td th:text="${member.address}">address</td>
+
+			<td th:text="${member.tel}">tel</td>
+
+			<td th:text="${member.mail}">mail</td>
+
+		</tr>
+	</table>
+
+</body>
+
+</html>

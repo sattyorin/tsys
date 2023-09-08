@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
  * @author FLM
  * @version 1.0.0
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
