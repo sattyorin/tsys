@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jp.co.tsys.common.form.FindAllMemberForm;
-
 /**
  * TOP画面表示Controller
  * 
@@ -27,7 +25,6 @@ public class TopController {
 	 */
 	@RequestMapping("/")
 	public String handler(Model model) {
-		model.addAttribute("form", new FindAllMemberForm());
-		return "/member/find/find_all_member";
+		return "/top_menu";
 	}
 }
