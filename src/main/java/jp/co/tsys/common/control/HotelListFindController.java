@@ -2,7 +2,7 @@
  */
 package jp.co.tsys.common.control;
 
-import static jp.co.tsys.common.util.MessageList.*;
+import static jp.co.tsys.common.util.MessageList.BIZERR101;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.tsys.common.entity.HotelItem;
+import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.exception.BusinessException;
-import jp.co.tsys.common.exception.NoResultException;
 import jp.co.tsys.common.form.HotelFindForm;
 import jp.co.tsys.common.service.HotelListFindService;
 
-@SessionAttributes(types = HotelFindForm.class)
+@SessionAttributes(types = {Member.class, HotelFindForm.class})
 @Controller
 @RequestMapping("/hotelfind")
 public class HotelListFindController {
@@ -39,10 +39,13 @@ public class HotelListFindController {
 	 * @return ホテル商品検索画面 (V0802_01HotelFindView.html)
 	 */
 	@RequestMapping("/findhotel")
-	public String findHotel(Model model) {
+	public String findHotel(@ModelAttribute("loginmember") Member loginmember,
+			Model model) {
 
 		// フォームオブジェクトをキー名"hotelFindForm"でModelに格納
 		model.addAttribute("hotelFindForm", new HotelFindForm());
+
+		System.out.println(loginmember.getRole());
 
 		return "hotelsalses/find/hotel_find";
 	}
@@ -61,8 +64,7 @@ public class HotelListFindController {
 	@RequestMapping("/findhotellist")
 	public String findHotelList(
 			@ModelAttribute("hotelFindForm") @Validated HotelFindForm form,
-			BindingResult result,
-			Model model) {
+			BindingResult result, Model model) {
 
 		// 入力チェック
 		if (result.hasErrors()) {
@@ -97,8 +99,8 @@ public class HotelListFindController {
 
 		// ServiceのfingHotelListメソッドを呼び出し
 		// 戻り値のList<HotelItem>オブジェクトを取得する
-		List<HotelItem> hotelList = service.findHotelList(
-				inputCityName, inDate, outDate, lowPrice, highPrice, grade);
+		List<HotelItem> hotelList = service.findHotelList(inputCityName, inDate,
+				outDate, lowPrice, highPrice, grade);
 
 		if (hotelList.size() == 0) {
 			// エラーメッセージをキー名"message"でModelに格納
