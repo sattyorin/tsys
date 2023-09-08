@@ -2,46 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-
-	<head>
-		<meta charset="UTF-8">
-		<title>メンバー検索画面</title>
-	</head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<head>
+<meta charset="UTF-8">
+<title>メンバー検索画面</title>
+</head>
 
 <body>
-<!--	<div th:replace="header::header"></div>-->
+	<!--	<div th:replace="header::header"></div>-->
 	<div style="text-align: center">
 		<h1>メンバー検索</h1>
 		<br>
-		<form th:object="${memberCodeForm}" method="post" th:action="@{/member/find/result}">
+		<form th:object="${memberCodeForm}" method="post"
+			th:action="@{/member/find/result}">
 			<p th:text="${message}" class="error">error message</p>
-			<div class="error" th:if="${#fields.hasErrors('memberCode')}" 
-			th:errors="*{memberCode}">Validation massage</div>
+			<div class="error" th:if="${#fields.hasErrors('memberCode')}"
+				th:errors="*{memberCode}">Validation massage</div>
 			<br>
 			<table align="center" border="1">
 				<tr>
-					<th style="background-color:rgb(255, 206, 206); ">
+					<th style="background-color: rgb(255, 206, 206);">
 						<p>メンバーコード</p>
 						<p>
 							<font color="red" size="2">※入力必須項目</font>
 						</p>
 					</th>
-					<td>
-						<input type="text" placeholder="CM○○○○ または 数字6文字" th:field="*{memberCode}">
-					</td>
+					<td><input type="text" placeholder="CM○○○○ または 数字6文字"
+						th:field="*{memberCode}"></td>
 				</tr>
 			</table>
-			<p><button style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color :rgb(64, 0, 64); border-style: solid"
-			 type="submit">検索</button></p>
+			<p>
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					type="submit">検索</button>
+			</p>
 			<!--			<br>-->
 		</form>
 		<form th:action="@{/member/find/return/findtopmenu/emp}">
-			<button style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color :rgb(64, 0, 64); border-style: solid"
-			 type="submit">戻る</button>
-		</form>
-
+			<button
+				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+				type="submit">戻る</button>
 		</form>
 	</div>
 </body>

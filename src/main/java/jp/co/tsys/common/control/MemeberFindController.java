@@ -48,10 +48,17 @@ public class MemeberFindController {
 	@RequestMapping("/search")
 	public String entryMemberFind(Model model) {
 
-		// Member loginmember = new Member();//ここから4行テスト用
-		// loginmember.setRole("Employee");
-		// loginmember.setName("××");
-		// model.addAttribute("loginmember", loginmember);//ログインフォームにログインする役職を設定
+		Member loginmember = new Member();// ここから5行テスト用
+		loginmember.setMemberCode("CM0002");
+		loginmember.setRole("Employee");
+		loginmember.setPassword("鈴木イチロウ");
+		loginmember.setMail("1low@mephone.org");
+		loginmember.setZipCode("108-6112");
+		loginmember.setPrefecture("東京都");
+		loginmember.setTel("港区港南");
+		loginmember.setAddress("03-3334-4455");
+
+		model.addAttribute("loginmember", loginmember);// ログインメンバーにログインする役職を設定
 
 		model.addAttribute("memberCodeForm", new MemberCodeForm());
 
@@ -101,16 +108,54 @@ public class MemeberFindController {
 	 *         見つからない場合、お客様トップ画面topMenu.htmlにもどる
 	 */
 	@RequestMapping("/retrive")
-	public String retriveMember(Member loginmember, BindingResult result, // TODO(seiya):結局Form名は正しいの？(memberFormに値を入れる必要あり)
+	public String retriveMember(Member loginMember, BindingResult result, // TODO(seiya):結局Form名は正しいの？(memberFormに値を入れる必要あり)
 			Model model) {
 
 		if (result.hasErrors()) {
 			return "/top_menu";
 		}
 
-		Member member = service.findMember(loginmember.getMemberCode());
-		model.addAttribute("memberForm", member);
-		return "member_detail";
+		// Member member = service.findMember(loginmember.getMemberCode());
+
+		MemberForm memberForm = new MemberForm();
+		// memberForm.setMemberCode(member.getMemberCode());//ここの塊はテスト時にコメントアウト
+		// memberForm.setName(member.getName());
+		// memberForm.setRole(member.getRole());
+		// memberForm.setPassword(member.getPassword());
+		// memberForm.setZipCode(member.getZipCode());
+		// memberForm.setPrefecture(member.getPrefecture());
+		// memberForm.setAddress(member.getAddress());
+		// memberForm.setTel(member.getTel());
+		// memberForm.setMail(member.getMail());//ここの塊はテスト時にコメントアウト
+
+		Member loginmember = new Member();// ここから(A)までテスト用
+		loginmember.setMemberCode("CM0002");
+		loginmember.setRole("Customer");
+		loginmember.setName("鈴木イチロウ");
+		loginmember.setPassword("pwd");
+		loginmember.setMail("1low@mephone.org");
+		loginmember.setZipCode("108-6112");
+		loginmember.setPrefecture("東京都");
+		loginmember.setTel("港区港南");
+		loginmember.setAddress("03-3334-4455");
+
+		model.addAttribute("loginmember", loginmember);// ログインメンバーにログインする役職を設定
+		// (A)テスト終了
+
+		memberForm.setMemberCode(loginmember.getMemberCode());
+		memberForm.setName(loginmember.getName());
+		memberForm.setRole(loginmember.getRole());
+		memberForm.setPassword(loginmember.getPassword());
+		memberForm.setZipCode(loginmember.getZipCode());
+		memberForm.setPrefecture(loginmember.getPrefecture());
+		memberForm.setAddress(loginmember.getAddress());
+		memberForm.setTel(loginmember.getTel());
+		memberForm.setMail(loginmember.getMail());
+
+		model.addAttribute("memberForm", memberForm);
+		System.out.println(memberForm);
+		System.out.println(loginmember);
+		return "/member/find/member_detail";
 	}
 
 	/**
@@ -126,7 +171,7 @@ public class MemeberFindController {
 		model.addAttribute("message", e.getMessage());
 		model.addAttribute("memberCodeForm", new MemberCodeForm());
 
-		return "/member/find/member_detail";
+		return "/member/find/member_find";
 	}
 	/**
 	 * メンバー詳細画面にて「戻るボタン」を押された場合、メンバー検索画面に遷移する
