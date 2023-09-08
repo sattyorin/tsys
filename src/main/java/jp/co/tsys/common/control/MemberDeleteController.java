@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.exception.BusinessException;
+import jp.co.tsys.common.form.MemberForm;
 import jp.co.tsys.common.service.MemberDeleteService;
 
 /**
@@ -34,8 +34,8 @@ public class MemberDeleteController {
 	// 顧客が退会する際の「確認」に対応するメソッド
 	@RequestMapping("/confirm")
 	public String deleteMemberConfirm(String memberCode) {
-
 		return "member/delete/member_delete_confirm";
+
 	}
 
 	// 従業員がメンバーを削除する際の「確定」に対応するメソッド
@@ -44,7 +44,7 @@ public class MemberDeleteController {
 	public String deleteMember(Model model) {
 		// 削除が失敗した際のエラーをキャッチする
 		try {
-			Member member = (Member) model.getAttribute("memberForm");
+			MemberForm member = (MemberForm) model.getAttribute("memberForm");
 			service.deleteMember(member.getMemberCode());
 		} catch (BusinessException e) {
 			// エラーメッセージをキー名"message"でModelに格納
@@ -61,7 +61,6 @@ public class MemberDeleteController {
 	public String deleteCustomerFinalConfirm(String memberCode) {
 
 		return "member/delete/member_delete_final_confirm";
-
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
