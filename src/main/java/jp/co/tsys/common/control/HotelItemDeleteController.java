@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.HotelItemDetailForm;
 import jp.co.tsys.common.service.HotelItemDeleteService;
+import jp.co.tsys.common.util.MessageList;
 
 /**
  * ホテル商品削除Controller
@@ -73,7 +74,7 @@ public class HotelItemDeleteController {
 		service.deleteHotelItem(itemDetail.getItemCode());
 
 		// resultオブジェクトをキー名"hotelItemForm"でmodelに格納
-		model.addAttribute("hotelItemForm", result);
+		model.addAttribute("hotelItemResult", result);
 
 		// セッションからフォームオブジェクトを削除(空欄で上書き)
 		model.addAttribute("hotelItemForm", new HotelItemDetailForm());
@@ -128,7 +129,7 @@ public class HotelItemDeleteController {
 	@ExceptionHandler(HttpSessionRequiredException.class)
 	public String sessionExpired(Model model) {
 		// エラーメッセージをキー名"message"でModelに格納
-		model.addAttribute("message", "エラーメッセージ");
+		model.addAttribute("message", MessageList.BIZERR000);
 
 		return "/hotelitem/retrieve/itemdetail";
 	}

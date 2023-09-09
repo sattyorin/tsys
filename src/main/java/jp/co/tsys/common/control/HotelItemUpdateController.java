@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.exception.BusinessException;
+import jp.co.tsys.common.form.HotelDetailForm;
 import jp.co.tsys.common.form.HotelItemDetailForm;
 import jp.co.tsys.common.form.ItemUpdateForm;
 import jp.co.tsys.common.service.HotelItemUpdateService;
+import jp.co.tsys.common.util.MessageList;
 
 /**
  * 商品更新Controller
@@ -29,7 +31,7 @@ import jp.co.tsys.common.service.HotelItemUpdateService;
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
-@SessionAttributes(names = "hotelItemForm")
+@SessionAttributes(names = {"hotelItemForm", "updateForm"})
 @Controller
 @RequestMapping("/hotelitem/update")
 public class HotelItemUpdateController {
@@ -73,14 +75,14 @@ public class HotelItemUpdateController {
 	 * @return 会員更新確認画面（/hotelItem/update/confirm）
 	 */
 	@RequestMapping(value = "confirmupdate")
-	public String confirmUpdate(
-			@Validated @ModelAttribute("updateForm") ItemUpdateForm updateForm,
+	public String confirmUpdate(@Validated ItemUpdateForm updateForm,
 			BindingResult result, Model model) {
 		// 入力チェック
 		if (result.hasErrors()) {
-
+			// エラーメッセージをキー名"message"でModelに格納
+			model.addAttribute("message", "料金、在庫の値が不適切です。");
 			// 商品変更画面（/hotelItem/update/view-update-HTML）を返却する
-			return "/hotelItem/update/view";
+			return "/hotelitem/update/view";
 		}
 
 		// フォームオブジェクトをキー名"updateForm"でModelに格納
@@ -103,8 +105,8 @@ public class HotelItemUpdateController {
 	 */
 	@RequestMapping(value = "commitupdate")
 	public String commitUpdate(
-			@ModelAttribute("updateForm") ItemUpdateForm updateForm,
-			Model model, SessionStatus status) {
+			@SessionAttribute("updateForm") ItemUpdateForm updateForm,
+			Model model) {
 		// セッションに格納されているdetailFormの内容を取得する
 		HotelItemDetailForm itemDetail = (HotelItemDetailForm) model
 				.getAttribute("hotelItemForm");
@@ -121,10 +123,11 @@ public class HotelItemUpdateController {
 				updateForm.getPrice(), updateForm.getStock());
 
 		// resultオブジェクトをキー名"hotelItemForm"でModelに格納
-		model.addAttribute("hotelItemForm", result);
+		model.addAttribute("hotelItemResult", result);
 
-		// セッションからフォームオブジェクトを削除
-		status.setComplete();
+		// セッションからフォームオブジェクトを削除(空欄に更新)
+		model.addAttribute("hotelItemForm", new HotelDetailForm());
+		model.addAttribute("updateForm", new ItemUpdateForm());
 
 		return "/hotelitem/update/result";
 	}
@@ -196,7 +199,7 @@ public class HotelItemUpdateController {
 	@ExceptionHandler(HttpSessionRequiredException.class)
 	public String sessionExpired(Model model) {
 		// エラーメッセージをキー名"message"でModelに格納
-		model.addAttribute("message", "エラーメッセージ");
+		model.addAttribute("message", MessageList.BIZERR000);
 
 		return "/hotelItem/retrieve/itemdetail";
 	}

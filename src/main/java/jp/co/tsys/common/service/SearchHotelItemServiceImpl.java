@@ -1,6 +1,5 @@
 /**
  * SearchHotelItemServiceImpl.java
- *
  */
 
 package jp.co.tsys.common.service;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.HotelItemDetailForm;
 import jp.co.tsys.common.mapper.HotelItemMapper;
+import jp.co.tsys.common.util.MessageList;
 
 /**
  *
@@ -37,7 +37,7 @@ public class SearchHotelItemServiceImpl implements SearchHotelItemService {
 		if (hotelItemList.isEmpty()) {
 
 			// 業務エラーを明示的に発生させる
-			throw new BusinessException("エラーメッセージ");
+			throw new BusinessException(MessageList.BIZERR302);
 		}
 		return hotelItemList;
 	}
@@ -51,7 +51,7 @@ public class SearchHotelItemServiceImpl implements SearchHotelItemService {
 		if (hotelItem == null) {
 
 			// 業務エラーを明示的に発生させる
-			throw new BusinessException("エラーメッセージ");
+			throw new BusinessException(MessageList.BIZERR302);
 
 		}
 		return hotelItem;

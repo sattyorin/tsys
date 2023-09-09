@@ -1,10 +1,11 @@
 /**
  * HotelItemDetailForm.java
- *
- * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
  */
 
 package jp.co.tsys.common.form;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,11 +25,13 @@ public class ItemUpdateForm {
 	/** 宿泊日 */
 	private String date;
 
-	// TODO(kano): intに@NonNullは意味ないかな
+	@Max(999999)
+	@Min(1)
 	/** 料金 */
 	private int price;
 
-	// TODO(kano): intに@NonNullは意味ないかな
+	@Max(99)
+	@Min(1)
 	/** 在庫 */
 	private int stock;
 
