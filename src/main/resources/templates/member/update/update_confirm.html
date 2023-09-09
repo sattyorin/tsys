@@ -1,88 +1,83 @@
-<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <title>メンバー情報変更</title>
 </head>
+
 <body>
-	<div style = "text-align:center" th:if="${memberForm.role == 'Customer'}">
-	<h1>メンバー変更確認</h1>
-	<table align = "center" border="1">
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">メンバー名</th>
-			<td th:text="${customerMemberForm.name}">name</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">パスワード</th>
-			<td th:text="${customerMemberForm.password}">password</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">郵便番号</th>
-			<td th:text="${customerMemberForm.zipCode}">zipCode</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">都道府県</th>
-			<td th:text="${customerMemberForm.prefecture}">prefecture</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">住所</th>
-			<td th:text="${customerMemberForm.address}">address</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">電話番号</th>
-			<td th:text="${customerMemberForm.tel}">tel</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">メールアドレス</th>
-			<td th:text="${customerMemberForm.mail}">mail</td>
-		</tr>
-	</table>
-	<br>
-	<a th:href="@{/member/update/customerreviseinput}">
-		<button style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; 
-		background-color: rgb(255, 185, 185); border-radius: 5px; 
-		border-color :rgb(64, 0, 64); border-style: solid">修正</button>
-	</a>
-	<br>
-	<br>
-	<form method="post" th:action="@{/member/update/customerresult}">
-		<button type="submit" style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; 
-		background-color: rgb(255, 185, 185); border-radius: 5px; 
-		border-color :rgb(64, 0, 64); border-style: solid">更新確定</button>
-	</form>
+	<div th:replace="header::header"></div>
+	<div style="text-align: center"
+		th:if="${memberForm.role == 'Customer'}">
+		<h1>メンバー変更確認</h1>
+		<table align="center" border="1">
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
+				<td th:text="${customerMemberForm.name}">name</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">パスワード</th>
+				<td th:text="${customerMemberForm.password}">password</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">郵便番号</th>
+				<td th:text="${customerMemberForm.zipCode}">zipCode</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">都道府県</th>
+				<td th:text="${customerMemberForm.prefecture}">prefecture</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">住所</th>
+				<td th:text="${customerMemberForm.address}">address</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">電話番号</th>
+				<td th:text="${customerMemberForm.tel}">tel</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
+				<td th:text="${customerMemberForm.mail}">mail</td>
+			</tr>
+		</table>
+		<br> <a th:href="@{/member/update/customerreviseinput}">
+			<button
+				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">修正</button>
+		</a> <br> <br>
+		<form method="post" th:action="@{/member/update/customerresult}">
+			<button type="submit"
+				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">更新確定</button>
+		</form>
 	</div>
-	
-	<div style = "text-align:center" th:if="${memberForm.role == 'Employee'}">
-	<h1>メンバー変更確認</h1>
-	<table align = "center" border="1">
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">メンバー名</th>
-			<td th:text="${employeeMemberForm.name}">name</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">パスワード</th>
-			<td th:text="${employeeMemberForm.password}">password</td>
-		</tr>
-		<tr>
-			<th style="background-color:rgb(255, 206, 206); ">メールアドレス</th>
-			<td th:text="${employeeMemberForm.mail}">mail</td>
-		</tr>
-	</table>
-	<br>
-	<a th:href="@{/member/update/employeereviseinput}">
-		<button style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; 
-		background-color: rgb(255, 185, 185); border-radius: 5px; 
-		border-color :rgb(64, 0, 64); border-style: solid">修正</button>
-	</a>
-	<br>
-	<br>
-	<form method="post" th:action="@{/member/update/employeeresult}">
-		<button type="submit" style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; 
-		background-color: rgb(255, 185, 185); border-radius: 5px; border-color :rgb(64, 0, 64); 
-		border-style: solid">更新確定</button>
-	</form>
+
+	<div style="text-align: center"
+		th:if="${memberForm.role == 'Employee'}">
+		<h1>メンバー変更確認</h1>
+		<table align="center" border="1">
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
+				<td th:text="${employeeMemberForm.name}">name</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">パスワード</th>
+				<td th:text="${employeeMemberForm.password}">password</td>
+			</tr>
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
+				<td th:text="${employeeMemberForm.mail}">mail</td>
+			</tr>
+		</table>
+		<br> <a th:href="@{/member/update/employeereviseinput}">
+			<button
+				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">修正</button>
+		</a> <br> <br>
+		<form method="post" th:action="@{/member/update/employeeresult}">
+			<button type="submit"
+				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">更新確定</button>
+		</form>
 	</div>
 </body>
+
 </html>

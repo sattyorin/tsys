@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <head>
 <meta charset="UTF-8">
 <title>従業員メンバー管理メニュー画面</title>
 </head>
+
 <body>
-	<!--	<div th:replace="header::header"></div>-->
+	<div th:replace="header::header"></div>
 	<div style="text-align: center">
 		<h1>メンバー管理メニュー</h1>
 		<br>
@@ -16,7 +18,7 @@
 			<form th:action="@{member/regist/employee/emp/chooserole}">
 				<button
 					style="width: 300px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-					type="submit">メンバー登録</button>
+					7 type="submit">メンバー登録</button>
 			</form>
 		</div>
 		<div>
@@ -35,4 +37,5 @@
 		</div>
 	</div>
 </body>
+
 </html>
