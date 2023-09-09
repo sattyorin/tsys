@@ -4,6 +4,27 @@
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>カート</title>
+<style>
+h1 {
+	font-size: 1.5em;
+	line-height: 1.2em;
+	text-align: center;
+}
+
+div.subtitle {
+	font-size: 1.3em;
+	font-weight: bold;
+	padding-left: 330px;
+	text-align: left;
+}
+
+p.sum {
+	font-size: 1em;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 330px;
+}
+</style>
 </head>
 <body>
 	<!--	<div th:replace="customerHeader::header"></div> -->
@@ -12,9 +33,10 @@
 
 	<p th:text="${message}" class="error"></p>
 
+	<div class="subtitle">予約情報</div>
 	<form id="cart" th:object="${shoppingCartForm}" method="post"
 		th:action="@{/payment/confirmation}">
-		<table border="1">
+		<table border="1" width="600px">
 			<tr>
 				<th>ホテルコード</th>
 				<th>ホテル名</th>
@@ -23,17 +45,20 @@
 				<th>部屋数</th>
 				<th>小計</th>
 			</tr>
-			<tr th:each="order:*{orders}">
+			<tr th:each="order:*{orders}" data-im-format-options="useseparator">
 				<td th:text="${order.hotelItem.hotel.hotelCode}">hotelCode</td>
 				<td th:text="${order.hotelItem.hotel.name}">name</td>
 				<td th:text="${order.hotelItem.date}">date</td>
-				<td th:text="${order.hotelItem.price}">price</td>
+				<td
+					th:text="${#numbers.formatInteger(order.hotelItem.price, 3, 'COMMA')}+'円'">price</td>
 				<td th:text="${order.quantity}">quantity</td>
-				<td th:text="${order.subTotal}">price</td>
+				<td
+					th:text="${#numbers.formatInteger(order.subTotal, 3, 'COMMA')}+'円'">price</td>
 			</tr>
 		</table>
-		<p style="text-align: right;">
-			合計金額<span th:text="*{orderTotal}"></span>
+		<p class="sum">
+			合計金額 <span
+				th:text="*{#numbers.formatInteger(orderTotal, 3, 'COMMA')}+'円'"></span>
 		</p>
 		<br>
 	</form>

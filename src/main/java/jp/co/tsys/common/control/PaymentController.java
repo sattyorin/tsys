@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.entity.Order;
+import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.HotelDetailForm;
 import jp.co.tsys.common.form.OrdersForm;
 import jp.co.tsys.common.form.ShoppingCartForm;
@@ -63,18 +65,7 @@ public class PaymentController {
 
 		if (shoppingCartForm.getOrders() != null) {
 			orderList = shoppingCartForm.getOrders();
-			// ＊shoppingCartFormがnullだと、例外でてしまう
 		}
-
-		// if (shoppingCartForm.getOrders() == null) {
-		// orderList = new ArrayList<Order>();
-		//// System.out.println("テスト");
-		// } else {
-		// orderList = shoppingCartForm.getOrders();
-		//// System.out.println("テスト２");
-		// }
-
-		// System.out.println(hotelDetailForm.getInputQuantity());
 
 		Order order = new Order();
 		order.setHotelItem(hotelDetailForm.getHotelItem());
@@ -89,19 +80,11 @@ public class PaymentController {
 			sum += item.getSubTotal();
 		}
 
-		// *orderList.forEach(e -> {
-		// sum += e.getSubTotal();
-		// });
-		// *map
-
 		shoppingCartForm.setOrders(orderList);
 		shoppingCartForm.setOrderTotal(sum);
 
 		model.addAttribute("shoppingCartForm", shoppingCartForm);
 
-		// for(Order item:shoppingCartForm.getOrders()){
-		// System.out.println("s"+item.getQuantity());
-		// }
 		return "/payment/shopping_cart";
 	}
 
@@ -116,21 +99,18 @@ public class PaymentController {
 		ordersForm.setOrders(shoppingCartForm.getOrders());
 		ordersForm.setOrderTotal(shoppingCartForm.getOrderTotal());
 
-		if (loginmember.getRole() == "Customer") {
-			ordersForm.setMemberCode(loginmember.getMemberCode());
+		// 顧客と従業員の名前衝突回避用にインスタンス作成
+		Member displayMemeber = new Member();
 
-			// 顧客と従業員の名前衝突回避用にインスタンス作成
-			Member displayMemeber = new Member();
+		if ("Customer".equals(loginmember.getRole())) {
+			ordersForm.setMemberCode(loginmember.getMemberCode());
 			displayMemeber.setName(loginmember.getName());
 			displayMemeber.setZipCode(loginmember.getZipCode());
 			displayMemeber.setPrefecture(loginmember.getPrefecture());
 			displayMemeber.setAddress(loginmember.getAddress());
 			displayMemeber.setTel(loginmember.getTel());
-
-			System.out.println(displayMemeber);
-			model.addAttribute("displayMemeber", displayMemeber);
 		}
-
+		model.addAttribute("displayMemeber", displayMemeber);
 		model.addAttribute("ordersForm", ordersForm);
 
 		return "/payment/order_confirmation";
@@ -172,6 +152,7 @@ public class PaymentController {
 		ordersForm.setOrderDate(fdate1);
 
 		// データ登録
+		System.out.println(ordersForm.getMemberCode());
 		paymentService.insertOrder(ordersForm);
 		String lastOrderNo = paymentService.getLastOrderNo();
 		ordersForm.setOrderNo(lastOrderNo);
@@ -181,10 +162,33 @@ public class PaymentController {
 		// 在庫減らす
 		paymentService.updateHotelStock(ordersForm.getOrders());
 
+		System.out.println(ordersForm.getPayment());
+
 		// カートの中身を破棄
 		model.addAttribute("shoppingCartForm", new ShoppingCartForm());
 
 		return "/payment/order_completion";
+	}
+
+	/**
+	 * 業務例外のハンドリング
+	 *
+	 * @param model
+	 *            Modelオブジェクト
+	 * @param e
+	 *            例外オブジェクト
+	 */
+
+	// 未完成メソッド
+	@ExceptionHandler(BusinessException.class)
+	public String caatchBizException(Model model, Exception e) {
+
+		// エラーメッセージをキー名"message"でModelに格納
+		model.addAttribute("message", e.getMessage());
+
+		// フォームオブジェクトをキー名"hotelFindForm"でModelに格納
+		model.addAttribute("shoppingCartForm", new ShoppingCartForm());
+		return "/payment/shopping_cart";
 	}
 
 }

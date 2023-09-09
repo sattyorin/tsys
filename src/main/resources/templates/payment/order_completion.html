@@ -4,15 +4,39 @@
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>予約完了</title>
+<style>
+h1 {
+	font-size: 1.5em;
+	line-height: 1.2em;
+	text-align: center;
+}
+
+div.subtitle {
+	font-size: 1.3em;
+	font-weight: bold;
+	padding-left: 330px;
+	text-align: left;
+}
+
+p.sum {
+	font-size: 1em;
+	font-weight: bold;
+	text-align: right;
+	padding-right: 330px;
+}
+</style>
 </head>
 <body>
 	<div th:replace="customerHeader::header"></div>
-	<h1>予約完了</h1>
+	<h1 style="text-align: center">予約完了</h1>
+
+	<h2 th:text="'予約番号：'+ ${ordersForm.orderNo}"></h2>
 
 	<p th:text="${message}" class="error"></p>
 
+	<div class="subtitle">予約情報</div>
 	<div th:object="${ordersForm}">
-		<table border="1">
+		<table border="1" width="600px">
 			<tr>
 				<th>ホテルコード</th>
 				<th>ホテル名</th>
@@ -25,19 +49,23 @@
 				<td th:text="${order.hotelItem.hotel.hotelCode}">hotelCode</td>
 				<td th:text="${order.hotelItem.hotel.name}">name</td>
 				<td th:text="${order.hotelItem.date}">date</td>
-				<td th:text="${order.hotelItem.price}">price</td>
+				<td
+					th:text="${#numbers.formatInteger(order.hotelItem.price, 3, 'COMMA')}+'円'">price</td>
 				<td th:text="${order.quantity}">quantity</td>
-				<td th:text="${order.subTotal}">price</td>
+				<td
+					th:text="${#numbers.formatInteger(order.subTotal, 3, 'COMMA')}+'円'">price</td>
 			</tr>
 		</table>
-		<p>
-			合計金額<span th:text="*{orderTotal}"></span>
+		<p class="sum">
+			合計金額 <span
+				th:text="*{#numbers.formatInteger(orderTotal, 3, 'COMMA')}+'円'"></span>
 		</p>
 	</div>
 	<br>
 
+	<div class="subtitle">メンバー情報</div>
 	<p th:object="${ordersForm}">
-	<table border="1">
+	<table border="1" width="600px">
 		<tr>
 			<th>名前</th>
 			<td th:text="${displayMemeber.name}"></td>
@@ -45,7 +73,7 @@
 		<tr>
 			<th>送付先</th>
 			<td
-				th:text="${displayMemeber.zipCode + ' '+ displayMemeber.prefecture + displayMemeber.address}"></td>
+				th:text="${displayMemeber.zipCode + '   '+ displayMemeber.prefecture + displayMemeber.address}"></td>
 		</tr>
 		<tr>
 			<th>電話番号</th>
@@ -53,8 +81,8 @@
 		</tr>
 		<tr>
 			<th>決済方法</th>
-			<td th:if="${ordersForm.payment == '1'}">代金引き換え</td>
-			<td th:if="${ordersForm.payment == '2'}">コンビニエンスストア決済</td>
+			<td th:if="${'01'.equals(ordersForm.payment)}">代金引き換え</td>
+			<td th:if="${'02'.equals(ordersForm.payment)}">コンビニエンスストア決済</td>
 		</tr>
 	</table>
 	</p>
