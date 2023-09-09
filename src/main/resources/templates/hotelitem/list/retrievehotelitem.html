@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>ホテル商品一覧画面</title>
 </head>
-
 <body>
 	<div style="text-align: left">
-		<a th:href="@{/templates/top}">
+		<a th:href="@{/hotelitem/list/itemMgrMenu}">
 			<button type="submit">商品管理メニュー</button>
 		</a>
 	</div>
-	<table>
-	</table>
 	<div style="text-align: center">
 		<h1>ホテル商品検索</h1>
 		<p th:text="${message}" class="error">エラーメッセージ</p>
@@ -22,23 +18,24 @@
 	<form th:object="${form}" method="post"
 		th:action="@{/hotelitem/list/retrievehotelitem}">
 		<table>
-			<td>ホテル名</td>
-			<td><input type="text" maxlength="30" placeholder="30文字以内で入力"
-				th:field="${form.name}">
-				<div class="error" th:if="${#fields.hasErrors('name')}"
-					th:errors="*{name}"></div></td>
-			<td>期間</td>
-			<td><input type="date" th:field="*{startdate}">～<input
-				type="date" th:field="*{enddate}">
-				<button type="submit">検索</button>
-				<div class="error" th:if="${#fields.hasErrors('startdate')}"
-					th:errors="*{startdate}"></div>
-				<div class="error" th:if="${#fields.hasErrors('enddate')}"
-					th:errors="*{enddate}"></div></td>
+			<tr>
+				<td>ホテル名</td>
+				<td><input type="text" placeholder="30文字以内で入力"
+					th:field="${form.name}">
+					<div class="error" th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}"></div></td>
+				<td>期間</td>
+				<td><input type="date" th:field="*{startdate}">～<input
+					type="date" th:field="*{enddate}">
+					<button type="submit">検索</button>
+					<div class="error" th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}"></div></td>
+			</tr>
 		</table>
 	</form>
 	<div>
-		<table border="1" align="center">
+		<table border="1" align="center"
+			th:if="${not #strings.isEmpty(HotelItemList)}">
 			<tr>
 				<th>商品コード</th>
 				<th>ホテルコード</th>
@@ -47,22 +44,19 @@
 				<th>料金</th>
 				<th>在庫数</th>
 			</tr>
-
-			<!--			<tr th:each="hotelItem : ${HotelItemList}">-->
+			<!-- <tr th:each="hotelItem : ${HotelItemList}">-->
 			<th:block th:object="${HotelItemDetailForm}"
 				th:each="hotelItem : ${HotelItemList}">
-
-				<!--			<th:block th:object="${HotelItemList}">-->
+				<!-- <th:block th:object="${HotelItemList}">-->
 				<tr>
 					<td th:text="${hotelItem.itemCode}">itemCode</td>
 					<td th:text="${hotelItem.hotelCode}">hotelCode</td>
 					<td th:text="${hotelItem.name}">name</td>
 					<td th:text="${hotelItem.date}">date</td>
-					<!--					<td th:text="${#temporals.format(hotelItem.date, 'yyyy/MM/dd')}">date</td>-->
+					<!-- <td th:text="${#temporals.format(hotelItem.date, 'yyyy/MM/dd')}">date</td>-->
 					<td class="digit" th:text="${hotelItem.price}+'円'">price</td>
 					<td class="digit" th:text="${hotelItem.stock}">stock</td>
 				</tr>
-
 			</th:block>
 		</table>
 	</div>

@@ -36,15 +36,13 @@ public class HotelAllListViewServiceImpl implements HotelAllListViewService {
 			@Param("hotelName") String name,
 			@Param("startdate") String startdate,
 			@Param("enddate") String enddate) throws BusinessException {
-		List<HotelItemDetailForm> hotelitemList = mapper.findHotelItemList(name,
+		List<HotelItemDetailForm> hotelitemList = mapper.findItem(name,
 				startdate, enddate);
 
 		if (hotelitemList == null) {
-			System.out.println("hotelitemList == nullです");
 			throw new BusinessException(MessageList.BIZERR002);
 
 		}
-		System.out.println("serv--------------------------------------");
 		return hotelitemList;
 	}
 
