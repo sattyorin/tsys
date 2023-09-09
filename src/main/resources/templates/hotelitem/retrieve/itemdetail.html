@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-	<title>商品詳細</title>
+<meta charset="utf-8">
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<title>商品詳細</title>
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<p>
 			<a th:href="@{/}">
@@ -43,7 +44,8 @@
 			</tr>
 			<tr>
 				<th>料金</th>
-				<td class="digit" th:text="${hotelItemForm.price} + '円'">price</td>
+				<td class="digit" style="text-align: left;"
+					th:text="${hotelItemForm.price} + '円'">price</td>
 			</tr>
 			<tr>
 				<th>在庫数</th>
@@ -53,13 +55,15 @@
 
 		<p>
 			<a th:href="@{/hotelitem/update/inputupdate}">
-				<button>変更</button>
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">変更</button>
 			</a>
 		</p>
 
 		<p>
 			<a th:href="@{/hotelitem/delete/confirmdelete}">
-				<button>削除</button>
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">削除</button>
 			</a>
 		</p>
 

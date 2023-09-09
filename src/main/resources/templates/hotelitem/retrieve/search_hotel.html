@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 ​
+
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <title>ホテル商品検索画面</title>
 <style type="text/css">
 .search_block {
@@ -33,7 +34,14 @@
 ​
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
+		<p>
+			<a th:href="@{/}">
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
+			</a>
+		</p>
 		<h1>ホテル商品検索</h1>
 		<hr>
 		<p th:text="${message}" class="error">error message</p>
@@ -44,13 +52,13 @@
 				<div class="search_block">
 					<div class="search_title">商品コード</div>
 					<div class="search_input">
-						<input type="text" th:field="${form.itemCode}">
+						<input type="text" maxlength="9" th:field="${form.itemCode}">
 					</div>
 				</div>
 				<div class="search_block">
 					<div class="search_title">ホテル名</div>
 					<div class="search_input">
-						<input type="text" th:field="${form.hotelName}">
+						<input type="text" maxlength="30" th:field="${form.hotelName}">
 					</div>
 				</div>
 				<div class="search_block">
@@ -60,7 +68,9 @@
 					</div>
 				</div>
 				<div style="display: inline-block;">
-					<button type="submit">検索</button>
+					<button
+						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+						type="submit">検索</button>
 				</div>
 			</div>
 		</form>
@@ -86,35 +96,16 @@
 						<td th:text="${hotelItem.hotelCode}">hotelCode</td>
 						<td th:text="${hotelItem.name}">name</td>
 						<td th:text="${hotelItem.date}">date</td>
-						<td class="digit" th:text="${hotelItem.price}+'円'">price</td>
+						<td style="text-align: left;" class="digit"
+							th:text="${hotelItem.price}+'円'">price</td>
 						<td class="digit" th:text="${hotelItem.stock}">stock</td>
 					</tr>
 				</th:block>
 			</table>
 		</div>
 
-		<!--		<script th:inline="javascript">-->
-		<!--			const form = /*[[${hotelItemList}]]*/"hotelItemList";-->
-		<!--			console.log("------------------");-->
-		<!--			console.log(form);-->
-		<!--		</script>-->
-
-		<!--		<script th:inline="javascript">-->
-		<!--			function func1() {-->
-		<!--				//id="alertString1"であるhidden項目の値を取得し、-->
-		<!--				//ダイアログを表示-->
-		<!--				var alertStr = document.getElementById("hotelItemList").value;-->
-		<!--				alert(alertStr);-->
-		<!--			}-->
-		<!--		</script>-->
-		<!--		<input type="button" value="テスト１" onclick="func1();"/>-->
-		<!--		<input type="hidden" id="alertString1" th:value="${alertString1}" />​-->
-
-		<!--		<script type="text/javascript" th:inline="javascript">-->
-		<!--			const variable = /*[[${hotelItemList}]]*/-->
-		<!--			console.log(variable);-->
-		<!--		</script>-->
 	</div>
 </body>
+​
 
 </html>
