@@ -18,6 +18,6 @@ public interface MemberRegistService {
 	 * @param menber
 	 * @throws BusinessException
 	 */
-	public void registMember(Member menber) throws BusinessException;
+	public void registMember(Member member) throws BusinessException;
 
 }
