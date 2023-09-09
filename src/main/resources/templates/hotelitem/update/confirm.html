@@ -3,15 +3,17 @@
 
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <title>商品変更確認</title>
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<p>
-			<a th:href="@{/itemMgrMenu}">
-				<button>商品管理メニュー</button>
+			<a th:href="@{/hotelitem/M0004_00ItemMgrMenu}">
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
 			</a>
 		</p>
 		<h1>ホテル商品変更確認</h1>
@@ -33,8 +35,7 @@
 				</tr>
 				<tr>
 					<th>宿泊日</th>
-					<td><input type="date" th:field="${updateForm.date}">
-					</td>
+					<td th:text="${updateForm.date}">date</td>
 				</tr>
 				<tr>
 					<th>都市名</th>
@@ -46,25 +47,27 @@
 				</tr>
 				<tr>
 					<th>料金</th>
-					<td><input type="text" th:field="${updateForm.price}">
-					</td>
+					<td class="digit" style="text-align: left;"
+						th:text="${updateForm.price} + '円'">price</td>
 				</tr>
 				<tr>
 					<th>在庫数</th>
-					<td><input type="text" th:field="${updateForm.stock}">
-					</td>
+					<td th:text="${updateForm.stock}"></td>
 				</tr>
 			</table>
 
 			<p>
 				<a>
-					<button type="submit">変更</button>
+					<button
+						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+						type="submit">確定</button>
 				</a>
 			</p>
 		</form>
 		<p>
 			<a th:href="@{/hotelitem/update/reviseupdate}">
-				<button>修正</button>
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">修正</button>
 			</a>
 		</p>
 

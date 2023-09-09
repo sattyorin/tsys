@@ -3,18 +3,21 @@
 
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <title>商品変更</title>
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<p>
-			<a th:href="@{/itemMgrMenu}">
-				<button>商品管理メニュー</button>
+			<a th:href="@{/}">
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
 			</a>
 		</p>
 		<h1>ホテル商品変更</h1>
+		<p th:text="${message}" class="error">error message</p>
 
 		<form th:object="${updateForm}" method="post"
 			th:action="@{/hotelitem/update/confirmupdate}">
@@ -56,26 +59,33 @@
 				</tr>
 				<tr>
 					<th>料金</th>
-					<td><input type="text" th:field="${updateForm.price}" required>
-					</td>
+					<td><input type="text" style="text-align: left;"
+						th:field="${updateForm.price}" maxlength="6" required>
+						<div class="error" th:if="${#fields.hasErrors('price')}"
+							th:errors="${updateForm.date}">validation massage</div></td>
 				</tr>
 				<tr>
 					<th>在庫数</th>
-					<td><input type="text" th:field="${updateForm.stock}" required>
-					</td>
+					<td><input type="text" th:field="${updateForm.stock}"
+						maxlength="4" required>
+						<div class="error" th:if="${#fields.hasErrors('price')}"
+							th:errors="${updateForm.stock}">validation massage</div></td>
 				</tr>
 			</table>
 
 			<p>
 				<a>
-					<button type="submit">変更</button>
+					<button
+						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+						type="submit">変更</button>
 				</a>
 			</p>
 		</form>
 
 		<p>
 			<a th:href="@{/hotelitem/update/quitupdate}">
-				<button>戻る</button>
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">戻る</button>
 			</a>
 		</p>
 
