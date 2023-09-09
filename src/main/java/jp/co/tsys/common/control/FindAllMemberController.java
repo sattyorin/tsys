@@ -63,7 +63,6 @@ public class FindAllMemberController {
 
 	/**
 	 * 絞り込み検索結果を表示
-	 *
 	 */
 	@RequestMapping("/search")
 	public String FindAllMember(@Validated FindAllMemberForm form,
@@ -81,14 +80,14 @@ public class FindAllMemberController {
 			// エラーメッセージ[BIZERR204]をキー名"message"でModelに格納
 			model.addAttribute("message", BIZERR204);
 
-			return "find_all_member";
+			return "/member/find/find_all_member";
 		}
 		return "/member/find/find_all_member";
 	}
 
 	/**
 	 * 存在しないメンバーが検索された場合の遷移ページ マッピングするURL：
-	 * 
+	 *
 	 * @return /member/list/retrievemember
 	 */
 	// @RequestMapping("HttpStatus.BAD_REQUEST")
