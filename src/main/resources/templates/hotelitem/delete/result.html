@@ -1,18 +1,19 @@
-<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-	<title>商品削除確認</title>
+<meta charset="utf-8">
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<title>商品削除確認</title>
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<p>
 			<a th:href="@{/}">
-				<button>商品管理メニュー</button>
+				<button
+					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
 			</a>
 		</p>
 		<h1>ホテル商品削除確認</h1>
@@ -21,35 +22,36 @@
 		<table border="1" align="center">
 			<tr>
 				<th>商品コード</th>
-				<td th:text="${hotelItemForm.itemCode}">itemCode</td>
+				<td th:text="${hotelItemResult.itemCode}">itemCode</td>
 			</tr>
 			<tr>
 				<th>ホテルコード</th>
-				<td th:text="${hotelItemForm.hotelCode}">hotelCode</td>
+				<td th:text="${hotelItemResult.hotelCode}">hotelCode</td>
 			</tr>
 			<tr>
 				<th>ホテル名</th>
-				<td th:text="${hotelItemForm.name}">name</td>
+				<td th:text="${hotelItemResult.name}">name</td>
 			</tr>
 			<tr>
 				<th>宿泊日</th>
-				<td th:text="${hotelItemForm.date}">date</td>
+				<td th:text="${hotelItemResult.date}">date</td>
 			</tr>
 			<tr>
 				<th>都市名</th>
-				<td th:text="${hotelItemForm.cityName}">cityName</td>
+				<td th:text="${hotelItemResult.cityName}">cityName</td>
 			</tr>
 			<tr>
 				<th>グレード</th>
-				<td th:text="${hotelItemForm.grade}">grade</td>
+				<td th:text="${hotelItemResult.grade}">grade</td>
 			</tr>
 			<tr>
 				<th>料金</th>
-				<td class="digit" th:text="${hotelItemForm.price} + '円'">price</td>
+				<td class="digit" style="text-align: left;"
+					th:text="${hotelItemResult.price} + '円'">price</td>
 			</tr>
 			<tr>
 				<th>在庫数</th>
-				<td th:text="${hotelItemForm.stock}">stock</td>
+				<td th:text="${hotelItemResult.stock}">stock</td>
 			</tr>
 		</table>
 
