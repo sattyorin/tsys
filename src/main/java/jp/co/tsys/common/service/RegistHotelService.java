@@ -26,4 +26,7 @@ public interface RegistHotelService {
 
 	// データベースの最後の商品コードを取得する
 	public String getLastHotelCode();
+
+	// ホテルコードと宿泊日と料金が一致しているモノがDBに存在するかをチェックする。
+	public int countHotelItem(String hotelCode, String date, int price);
 }
