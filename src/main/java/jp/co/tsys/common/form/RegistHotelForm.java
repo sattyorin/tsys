@@ -6,8 +6,10 @@ package jp.co.tsys.common.form;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,16 +44,18 @@ public class RegistHotelForm implements Serializable {
 	private String city;
 
 	/** グレード */
-	private String grade;
+	private int grade;
 
 	/** 料金 */
-	@NotBlank
-	@Size(max = 10)
+	@Max(999999999)
+	@Min(1)
+	@Digits(fraction = 0, integer = 10)
 	private int price;
 
 	/** 在庫数 */
-	@NotBlank
-	@Size(max = 5)
+	@Max(99999)
+	@Min(1)
+	@Digits(fraction = 0, integer = 6)
 	private int stock;
 
 }
