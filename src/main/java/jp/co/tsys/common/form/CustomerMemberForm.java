@@ -52,6 +52,7 @@ public class CustomerMemberForm implements Serializable {
 	@NotBlank
 	private String address;
 
+	@NotBlank
 	@Pattern(regexp = "0\\d{1,2}-\\d{1,4}-\\d{4}")
 	private String tel;
 }
