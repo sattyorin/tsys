@@ -1,4 +1,3 @@
-
 /**
  * MemberRegistServiceImpl.java
  */
@@ -38,28 +37,29 @@ public class MemberRegistServiceImpl implements MemberRegistService {
 
 		try {
 
-			if (role == "customer") {
+			if (role.equals("Customer")) {
 
 				// MapperのgetLastCustomerCodeメソッドを呼び出し
 				// メンバーコード（顧客）を取得して、格納
 				String customerCode = mapper.getLastCustomerCode();
 
-				// 数字部分のみ切り取りSplit
-				String CM = customerCode.substring(0, 2);
+				// 数字部分のみ切り捨ててSplit
+				String customerCodePrefix = customerCode.substring(0, 2);
 
-				String customernumberCode = customerCode.substring(2);
+				String customerCodeNumber = customerCode.substring(2);
 
 				// 数字変換perseInt
-				int intcustomerCode = Integer.parseInt(customernumberCode);
+				int intCustomerCodeNumber = Integer
+						.parseInt(customerCodeNumber);
 
 				// ＋１
-				int newcustomerCode = intcustomerCode + 1;
+				int newCustomerCodeNumber = intCustomerCodeNumber + 1;
 
-				// 合体
-				String memberCode = CM + Integer.toString(newcustomerCode);
+				String newCustomerCode = String.format("%s%04d",
+						customerCodePrefix, newCustomerCodeNumber);
 
 				// customerCodeをmemberのmemberCodeにいれる
-				member.setMemberCode(memberCode);
+				member.setMemberCode(newCustomerCode);
 
 			} else {
 
@@ -68,14 +68,14 @@ public class MemberRegistServiceImpl implements MemberRegistService {
 				String employeeCode = mapper.getLastEmployeeCode();
 
 				// 数字変換perseInt
-				int intemployeeCode = Integer.parseInt(employeeCode);
+				int intEmployeeCode = Integer.parseInt(employeeCode);
 
 				// ＋１
-				int newemployeeCode = intemployeeCode + 1;
+				int newIntEmployeeCode = intEmployeeCode + 1;
 
-				String memberCode = Integer.toString(newemployeeCode);
+				String newEmployeeCode = Integer.toString(newIntEmployeeCode);
 
-				member.setMemberCode(memberCode);
+				member.setMemberCode(newEmployeeCode);
 
 			}
 
