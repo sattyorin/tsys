@@ -24,6 +24,9 @@ public interface HotelItemMapper {
 
 	public String getLastHotelCode();
 
+	public int countHotelItem(@Param("hotelCode") String HotelCode,
+			@Param("date") String Date, @Param("price") int Price);
+
 	/**
 	 * ホテル情報のリストを更新する
 	 *
@@ -67,6 +70,20 @@ public interface HotelItemMapper {
 	// 商品コードまたはホテル名または日付からホテル商品の検索を行う
 	public List<HotelItemDetailForm> findHotelItemList(String itemCode,
 			String hotelName, String date);
+
 	// 商品コードのリンクから詳細検索
 	public HotelItemDetailForm findDetail(String itemCode);
+
+	/**
+	 * 指定された検索条件に対応するホテル名、日付を取得する
+	 * 
+	 * @param name
+	 *            ホテル名
+	 * @param date
+	 *            期間
+	 * @return ｛@link Hotelitem｝
+	 */
+	public List<HotelItemDetailForm> findItem(@Param("hotelName") String name,
+			@Param("startdate") String startdate,
+			@Param("enddate") String enddate);
 }

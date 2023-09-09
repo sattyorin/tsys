@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- RetrieveProductMapper.xml -->
-<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -28,6 +27,15 @@
 		DESC
 		limit 1;
 	</select>
+	
+	<select id = "countHotelItem" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			hotel
+		WHERE HotelCode = #{hotelCode} AND Date = #{date} AND Price = #{price}
+	</select>
+	
 	<!-- update -->
 	<update id="updateHotelItem">
 		UPDATE
@@ -185,4 +193,55 @@
 		hotel.ItemCode = #{ItemCode}
 		;
 	</select>
+	
+	<select id="findItem" resultType="jp.co.tsys.common.form.HotelItemDetailForm">
+		SELECT
+		hotel.itemCode as itemCode,
+		hotelMaster.HotelCode	as hotelCode,
+		hotelMaster.Name as name,
+		hotel.Date as date,
+		hotel.Price as price,
+		hotel.Stock as stock
+		FROM
+		hotel
+		inner join hotelMaster
+		on	hotel.HotelCode = hotelMaster.HotelCode
+		WHERE
+		(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "*")
+		and
+		(
+		(hotel.date BETWEEN #{startdate} AND #{enddate})
+		or
+		(#{startdate} = "" AND #{enddate} = "")
+		)
+		ORDER BY name,date
+		;
+		</select>
+		
+		<!-- 一覧 -->
+		<!--<select id="findItem" resultMap="hotelItemMap">-->
+		<select id="findItem" resultType="jp.co.tsys.common.form.HotelItemDetailForm">
+		SELECT
+		hotel.itemCode as itemCode,
+		hotelMaster.HotelCode	as hotelCode,
+		hotelMaster.Name as name,
+		hotel.Date as date,
+		hotel.Price as price,
+		hotel.Stock as stock
+		FROM
+		hotel
+		inner join hotelMaster
+		on	hotel.HotelCode = hotelMaster.HotelCode
+		WHERE
+		(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "*")
+		and
+		(
+		(hotel.date BETWEEN #{startdate} AND #{enddate})
+		or
+		(#{startdate} = "" AND #{enddate} = "")
+		)
+		ORDER BY name,date
+		;
+		</select>
+
 </mapper>
