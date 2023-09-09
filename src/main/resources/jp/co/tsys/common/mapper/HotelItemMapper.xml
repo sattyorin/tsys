@@ -217,31 +217,5 @@
 		ORDER BY name,date
 		;
 		</select>
-		
-		<!-- 一覧 -->
-		<!--<select id="findItem" resultMap="hotelItemMap">-->
-		<select id="findItem" resultType="jp.co.tsys.common.form.HotelItemDetailForm">
-		SELECT
-		hotel.itemCode as itemCode,
-		hotelMaster.HotelCode	as hotelCode,
-		hotelMaster.Name as name,
-		hotel.Date as date,
-		hotel.Price as price,
-		hotel.Stock as stock
-		FROM
-		hotel
-		inner join hotelMaster
-		on	hotel.HotelCode = hotelMaster.HotelCode
-		WHERE
-		(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "*")
-		and
-		(
-		(hotel.date BETWEEN #{startdate} AND #{enddate})
-		or
-		(#{startdate} = "" AND #{enddate} = "")
-		)
-		ORDER BY name,date
-		;
-		</select>
 
 </mapper>
