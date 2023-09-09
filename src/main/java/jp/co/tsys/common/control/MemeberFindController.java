@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -48,17 +49,17 @@ public class MemeberFindController {
 	@RequestMapping("/search")
 	public String entryMemberFind(Model model) {
 
-		Member loginmember = new Member();// ここから5行テスト用
-		loginmember.setMemberCode("CM0002");
-		loginmember.setRole("Employee");
-		loginmember.setPassword("鈴木イチロウ");
-		loginmember.setMail("1low@mephone.org");
-		loginmember.setZipCode("108-6112");
-		loginmember.setPrefecture("東京都");
-		loginmember.setTel("港区港南");
-		loginmember.setAddress("03-3334-4455");
-
-		model.addAttribute("loginmember", loginmember);// ログインメンバーにログインする役職を設定
+		// Member loginmember = new Member();//ここから5行テスト用
+		// loginmember.setMemberCode("CM0002");
+		// loginmember.setRole("Employee");
+		// loginmember.setPassword("鈴木イチロウ");
+		// loginmember.setMail("1low@mephone.org");
+		// loginmember.setZipCode("108-6112");
+		// loginmember.setPrefecture("東京都");
+		// loginmember.setTel("港区港南");
+		// loginmember.setAddress("03-3334-4455");
+		//
+		// model.addAttribute("loginmember", loginmember);//ログインメンバーにログインする役職を設定
 
 		model.addAttribute("memberCodeForm", new MemberCodeForm());
 
@@ -108,7 +109,9 @@ public class MemeberFindController {
 	 *         見つからない場合、お客様トップ画面topMenu.htmlにもどる
 	 */
 	@RequestMapping("/retrive")
-	public String retriveMember(Member loginMember, BindingResult result, // TODO(seiya):結局Form名は正しいの？(memberFormに値を入れる必要あり)
+	public String retriveMember(
+			@ModelAttribute("loginmember") Member loginmember,
+			BindingResult result, // TODO(seiya):結局Form名は正しいの？(memberFormに値を入れる必要あり)
 			Model model) {
 
 		if (result.hasErrors()) {
@@ -117,30 +120,31 @@ public class MemeberFindController {
 
 		// Member member = service.findMember(loginmember.getMemberCode());
 
+		System.out.println(loginmember);
 		MemberForm memberForm = new MemberForm();
-		// memberForm.setMemberCode(member.getMemberCode());//ここの塊はテスト時にコメントアウト
-		// memberForm.setName(member.getName());
-		// memberForm.setRole(member.getRole());
-		// memberForm.setPassword(member.getPassword());
-		// memberForm.setZipCode(member.getZipCode());
-		// memberForm.setPrefecture(member.getPrefecture());
-		// memberForm.setAddress(member.getAddress());
-		// memberForm.setTel(member.getTel());
-		// memberForm.setMail(member.getMail());//ここの塊はテスト時にコメントアウト
+		memberForm.setMemberCode(loginmember.getMemberCode());// ここの塊はテスト時にコメントアウト
+		memberForm.setName(loginmember.getName());
+		memberForm.setRole(loginmember.getRole());
+		memberForm.setPassword(loginmember.getPassword());
+		memberForm.setZipCode(loginmember.getZipCode());
+		memberForm.setPrefecture(loginmember.getPrefecture());
+		memberForm.setAddress(loginmember.getAddress());
+		memberForm.setTel(loginmember.getTel());
+		memberForm.setMail(loginmember.getMail());// ここの塊はテスト時にコメントアウト
 
-		Member loginmember = new Member();// ここから(A)までテスト用
-		loginmember.setMemberCode("CM0002");
-		loginmember.setRole("Customer");
-		loginmember.setName("鈴木イチロウ");
-		loginmember.setPassword("pwd");
-		loginmember.setMail("1low@mephone.org");
-		loginmember.setZipCode("108-6112");
-		loginmember.setPrefecture("東京都");
-		loginmember.setTel("港区港南");
-		loginmember.setAddress("03-3334-4455");
-
-		model.addAttribute("loginmember", loginmember);// ログインメンバーにログインする役職を設定
-		// (A)テスト終了
+		// Member loginmember = new Member();//ここから(A)までテスト用
+		// loginmember.setMemberCode("CM0005");
+		// loginmember.setRole("Customer");
+		// loginmember.setName("高橋亜紀");
+		// loginmember.setPassword("pass");
+		// loginmember.setMail("takaaki@aaa.com");
+		// loginmember.setZipCode("146-0083");
+		// loginmember.setPrefecture("東京都");
+		// loginmember.setTel("大田区千鳥");
+		// loginmember.setAddress("090-1111-2222");
+		//
+		// model.addAttribute("loginmember", loginmember);//ログインメンバーにログインする役職を設定
+		// //(A)テスト終了
 
 		memberForm.setMemberCode(loginmember.getMemberCode());
 		memberForm.setName(loginmember.getName());
@@ -211,5 +215,4 @@ public class MemeberFindController {
 
 		return "/top_menu";
 	}
-
 }
