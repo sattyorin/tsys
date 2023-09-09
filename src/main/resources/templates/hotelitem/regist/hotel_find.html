@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>商品登録</title>
+</head>
+
+<body>
+	<div th:replace="header::header"></div>
+	<div style="text-align: left">
+		<a th:href="@{/hotelitem/register/itemmenu}">
+			<button type="submit"
+				style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
+		</a>
+	</div>
+
+	<div style="text-align: center;">
+		<h1>ホテル検索</h1>
+		<p th:text="${message}">error message</p>
+
+		<form th:object="${findHotelForm}" method="post"
+			th:action="@{/hotelitem/register/findHotel}">
+			<table align="center">
+				<tr>
+					<td style="background-color: rgb(255, 206, 206);">ホテルコード</td>
+					<td><input type="text" th:field="${findHotelForm.hotelCode}"></td>
+				</tr>
+				<tr>
+
+					<td style="background-color: rgb(255, 206, 206);">ホテル名</td>
+					<td><input type="text" th:field="*{hotelName}"></td>
+				</tr>
+			</table>
+			<br>
+			<button type="submit"
+				style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">検索</button>
+		</form>
+		<!--				name=hoetlCOde , id=hotelCode , value=hotelCodeみたいになる。で、遷移先のformにhotelCodeがあれば自動格納-->
+		<!--				ここにエラーチェック-->
+		<div class="error" th:if="${#fields.hasErrors('hotelCode')}"
+			th:errors="*{hotelCode}">validation massage</div>
+		<div class="error" th:if="${#fields.hasErrors('hotelName')}"
+			th:errors="*{hotelName}">validation massage</div>
+	</div>
+
+	<br>
+	<br>
+
+	<div th:if="${hotelList != null && hotelList.size() != 0}"
+		style="text-align: center;">
+		登録したいホテルのホテルコードを選択してください。 <br> <br>
+		<table border="1" align="center">
+			<tr>
+				<th style="background-color: rgb(255, 206, 206);">ホテルコード</th>
+				<th style="background-color: rgb(255, 206, 206);">ホテル名</th>
+			</tr>
+			<tr th:each="hotel:${hotelList}">
+				<td><a
+					th:href="@{'/hotelitem/register/confirmhotel/'+${hotel.hotelCode}}"
+					th:text="${hotel.hotelCode}"></a></td>
+				<td th:text="${hotel.name}">name</td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>

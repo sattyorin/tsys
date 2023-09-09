@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="utf-8">
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<title>ホテル商品登録</title>
+</head>
+
+<body>
+	<div th:replace="header::header"></div>
+	<div style="text-align: left">
+		<a th:href="@{/hotelitem/register/itemmenu}">
+			<button type="submit"
+				style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
+		</a>
+	</div>
+
+	<div style="text-align: center;">
+		<p>
+			<!--			<a th:href="@{/itemMgrMenu}">-->
+			<!--				<button>商品管理メニュー</button>-->
+			<!--			</a>-->
+		</p>
+		<h1>ホテル商品登録</h1>
+		<p th:text="${message}" class="error">error message</p>
+		<!--		<span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">validation massage</span>-->
+		<!--		<span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">validation massage</span>-->
+		<!--		<span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">validation massage</span>-->
+
+		<form th:object="${registHotelForm}" method="post">
+			<!--			<div th:each="hotel:${hotelList}">-->
+			<table border="1" align="center">
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">ホテルコード</th>
+					<td><input type="hidden" th:field="*{hotelCode}"> <!--						<p th:text="${hotel.hotelCode}">FKO001</p>-->
+						<p th:text="*{hotelCode}"></p></td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">ホテル名</th>
+					<td><input type="hidden" th:field="*{hotelName}"> <!--						<p th:text="${hotel.name}">hotelName</p>-->
+						<p th:text="*{hotelName}"></p></td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">宿泊日</th>
+					<td>
+						<!--						<p th:text="${registHotelForm.date}">date</p>--> <input
+						type="date" th:field="*{date}">
+						<div class="error" th:if="${#fields.hasErrors('date')}"
+							th:errors="*{date}">validation massage</div>
+
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">都市名</th>
+					<td><input type="hidden" th:field="*{city}"> <!--						<p th:text="${hotel.cityName}">cityName</p>-->
+						<p th:text="*{city}"></p></td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">グレード</th>
+					<td><input type="hidden" th:field="*{grade}"> <!--						<p th:text="${hotel.grade}">grade</p>-->
+						<p th:text="*{grade}"></p></td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">料金</th>
+					<td>
+						<!--						<p class="digit" th:text="${registHotelForm.price} + '円'">price</p>-->
+						<input type="text" th:field="*{price}" maxlength="10">円
+						<div class="error" th:if="${#fields.hasErrors('price')}"
+							th:errors="*{price}">validation massage</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">在庫数</th>
+					<td>
+						<!--						<p th:text="${registHotelForm.stock}">stock</p>--> <input
+						type="text" th:field="*{stock}" maxlength="5">
+						<div class="error" th:if="${#fields.hasErrors('stock')}"
+							th:errors="*{stock}">validation massage</div>
+					</td>
+				</tr>
+			</table>
+
+			<br>
+			<table align="center">
+				<tr>
+					<td>
+						<!--				<a th:href="@{/hotelItem/register/findHotel}">-->
+						<button formaction="/hotelitem/register/findhotel" type="submit"
+							style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">戻る</button>
+					</td>
+					<td>
+						<!--				</a>--> <!--				<a th:href="@{/hotelItem/register/registHotelItem}">-->
+						<!--					<button>登録</button>--> <!--				</a>-->
+						<button formaction="/hotelitem/register/registhotelitem"
+							type="submit"
+							style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">登録</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+	</div>
+
+</body>
+
+</html>

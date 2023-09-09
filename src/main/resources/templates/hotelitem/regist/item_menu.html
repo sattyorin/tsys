@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="utf-8">
+<!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<title>商品管理メニュー画面</title>
+</head>
+<body>
+	<!--	<div th:replace="header::header"></div>-->
+
+	<div style="text-align: center;">
+		<h1>商品管理メニュー</h1>
+		<p>
+			<a th:href="@{/hotelitem/register/entryhotelitemregist}">
+				<button class="menuButton"
+					style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">ホテル商品登録</button>
+			</a>
+		</p>
+		<p>
+			<a th:href="@{/hotelitem/retrieve/entrysearch}">
+				<button class="menuButton"
+					style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">ホテル商品変更・削除</button>
+			</a>
+		</p>
+		<p>
+			<a th:href="@{/hotelitem/list/viewlist}">
+				<button class="menuButton"
+					style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">ホテル商品一覧</button>
+			</a>
+		</p>
+	</div>
+	<div th:insert="footer::back2Top"></div>
+</body>
+</html>

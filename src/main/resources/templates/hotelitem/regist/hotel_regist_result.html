@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="utf-8">
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<title>ホテル商品登録結果画面</title>
+</head>
+
+<body>
+	<div th:replace="header::header"></div>
+	<div style="text-align: left">
+		<a th:href="@{/hotelitem/register/itemmgrmenu}">
+			<button type="submit"
+				style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
+		</a>
+	</div>
+
+	<div style="text-align: center;">
+		<!--		<p>-->
+		<!--			<a th:href="@{/itemMgrMenu}">-->
+		<!--				<button>商品管理メニュー</button>-->
+		<!--			</a>-->
+		<!--		</p>-->
+
+		<h1>ホテル商品登録結果画面</h1>
+		<p>以下のホテル商品情報を登録しました。</p>
+		<form th:object="${registHotelForm}">
+			<table border="1" align="center">
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">商品コード</th>
+					<td>
+						<p th:text="${registHotelForm.hotelItemCode}">hotelItemCode</p> <!--	<input type="hidden"th:field="${registHotelForm.hotelItemCode}" >-->
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">ホテルコード</th>
+					<td>
+						<p th:text="${registHotelForm.hotelCode}">hotelCode</p> <input
+						type="hidden" th:field="${registHotelForm.hotelCode}">
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">ホテル名</th>
+					<td>
+						<p th:text="${registHotelForm.hotelName}">hotelName</p> <!-- <input type="hidden"th:field="${registHotelForm.hotelName}" >-->
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">宿泊日</th>
+					<td>
+						<p th:text="${registHotelForm.date}">date</p> <!--	<input type="hidden" th:field="*{date}">-->
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">都市名</th>
+					<td>
+						<p th:text="${registHotelForm.city}">cityName</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">グレード</th>
+					<td>
+						<p th:text="${registHotelForm.grade}">grade</p>
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">料金</th>
+					<td>
+						<p th:text="${registHotelForm.price} + '円'">price</p> <!--	<input type="hidden" th:field="*{price}">-->
+					</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">在庫数</th>
+					<td>
+						<!--	<input type="hidden" th:field="${registHotelForm.stock}">-->
+						<p th:text="${registHotelForm.stock}">stock</p>
+					</td>
+				</tr>
+			</table>
+
+			<!--		<table border="1" align="center">-->
+			<!--			<tr>-->
+			<!--				<th>商品コード</th> どうやって引っ張ってくる-->
+			<!--				<td>-->
+			<!--					<p th:text="${registHotelForm.hotelItemCode}">hotelItemCode</p>-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--			<tr>-->
+			<!--				<th>ホテルコード</th>-->
+			<!--				<td>-->
+			<!--					<p th:text="${registHotelForm.hotelCode}">hotelCode</p>-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--			<tr>-->
+			<!--				<th>ホテル名</th>-->
+			<!--				<td>-->
+			<!--					<p th:text="${registHotelForm.hotelName}">hotelName</p>-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--			<tr>-->
+			<!--				<th>宿泊日</th>-->
+			<!--				<td>-->
+			<!--					<p th:text="${registHotelForm.date}">date</p>-->
+			<!--					<imput type="hidden" th:field="*{date}">-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--			<tr>-->
+			<!--				<th>都市名</th>-->
+			<!--				<td>-->
+			<!--					<p th:text="${registHotelForm.cityName}">cityName</p>-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--			<tr>-->
+			<!--				<th>グレード</th>-->
+			<!--				<td>-->
+			<!--					<p th:text="${registHotelForm.grade}">grade</p>-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--			<tr>-->
+			<!--				<th>料金</th>-->
+			<!--				<td>-->
+			<!--					<p class="digit" th:text="${registHotelForm.price} + '円'">price</p>-->
+			<!--					<imput type="hidden" th:field="*{price}">-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--			<tr>-->
+			<!--				<th>在庫数</th>-->
+			<!--				<td>-->
+			<!--					<p th:text="${registHotelForm.stock}">stock</p>-->
+			<!--					<imput type="hidden" th:field="*{stock}">-->
+			<!--				</td>-->
+			<!--			</tr>-->
+			<!--		</table>-->
+			<!--		</form>-->
+
+			<br>
+			<table>
+				<tr>
+					<td>
+						<!--				<p>--> <!--					<a th:href="@{/hotelItem/register/confirmHotel/{hotelCode}}">-->
+						<!--						<button>同じホテルで続けて登録</button>--> <!--					</a>-->
+						<button type="submit"
+							th:formaction="@{'/hotelitem/register/confirmhotel/'+${registHotelForm.hotelCode}}"
+							style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">
+							同じホテルで続けて登録</button> <!--				</p>--> <!--				<p>--> <!--				<a th:href="@{hotelItem/register/entryHotelItemRegist}">ホテル検索へ戻る-->
+					</td>
+					<td><button type="submit"
+						th:formaction="/hotelitem/register/entryhotelitemregist"
+						style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">
+						ホテル検索へ戻る</button>
+					<!--				</a>-->
+					<!--				</p>-->
+					</td>
+				</tr>
+			</table>
+		</form>
+
+	</div>
+</body>
+
+</html>
