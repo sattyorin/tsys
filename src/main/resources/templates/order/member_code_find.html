@@ -1,4 +1,3 @@
-<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
@@ -10,10 +9,10 @@
 
 <body>
 	<div style="text-align: center;">
-		<div th:insert="top::back2Top"></div>
+		<!--		<div th:insert="top::back2Top"></div>-->
 		<p>顧客番号を入力してください</p>
 
-		<form th:object="${customerCodeForm}" method="post"
+		<form th:object="${memberCodeForm}" method="post"
 			th:action="@{/order/history/}">
 			<div class="error" th:if="${#fields.hasErrors('memberCode')}"
 				th:errors="*{memberCode}">validation massage</div>
@@ -22,13 +21,13 @@
 				<button type="submit">検索</button>
 			</p>
 		</form>
-		<p>
-			<a th:href="@{'hotelShop/M0005_00ItemSalesMenu'}">
-				<button>戻る</button>
-			</a>
-		</p>
+		<!--		<p>-->
+		<!--		<form th:action="@{/hotelreservation/sendemployeemenu}">-->
+		<!--			<button>戻る</button>-->
+		<!--		</form>-->
+		<!--		</p>-->
 
-		<div th:insert="footer::back2Top"></div>
+		<!--		<div th:insert="footer::back2Top"></div>-->
 	</div>
 </body>
 
