@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.entity.Member;
@@ -20,6 +21,8 @@ import jp.co.tsys.common.form.LoginForm;
 /**
  * ログイン・ログアウトController
  */
+// TODO(sara): confirm that loginMember is necessary.
+@SessionAttributes(names = {"loginMember"})
 @Controller
 public class RetrieveMemberController {
 

@@ -4,9 +4,11 @@ package jp.co.tsys.common.control;
 
 import static jp.co.tsys.common.util.MessageList.BIZERR101;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,14 +24,36 @@ import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.HotelFindForm;
 import jp.co.tsys.common.service.HotelListFindService;
 
-@SessionAttributes(types = {Member.class, HotelFindForm.class})
+// Store these in the session for when you reload
+@SessionAttributes(types = {Member.class, HotelFindForm.class}, names = {
+		"locations", "grades"})
 @Controller
 @RequestMapping("/hotelfind")
 public class HotelListFindController {
+	@Value("${locations}")
+	private String locations;
+
+	@Value("${grades}")
+	private String grades;
 
 	/** Service */
 	@Autowired
 	private HotelListFindService service;
+
+	@ModelAttribute("locations")
+	public List<String> initLocations() {
+		return Arrays.asList(locations.split(","));
+	}
+
+	@ModelAttribute("grades")
+	public List<String> initGrades() {
+		return Arrays.asList(grades.split(","));
+	}
+
+	@ModelAttribute("hotelFindForm")
+	public HotelFindForm initHotelFindForm() {
+		return new HotelFindForm();
+	}
 
 	/**
 	 * 従業員商品販売メニュー画面の[ホテル予約]orトップメニュー画面の[ホテル予約]に対応するHandlerメソッド
@@ -63,51 +87,42 @@ public class HotelListFindController {
 	 */
 	@RequestMapping("/findhotellist")
 	public String findHotelList(
-			@ModelAttribute("hotelFindForm") @Validated HotelFindForm form,
+			@ModelAttribute("hotelFindForm") @Validated HotelFindForm hotelFindForm,
 			BindingResult result, Model model) {
 
-		// 入力チェック
 		if (result.hasErrors()) {
-			// ホテル商品検索画面 (V0802_01HotelFindView.html)を返却する
 			return "hotelsalses/find/hotel_find";
 		}
 
 		// 入力値を取得
-		String inputCityName = form.getInputCityName();
-		String inDate = form.getInDate();
-		String outDate = form.getOutDate();
+		Integer lowPrice = hotelFindForm.getLowPrice();
+		Integer highPrice = hotelFindForm.getHighPrice();
+		String grade = hotelFindForm.getGrade();
+		String inputCityName = hotelFindForm.getInputCityName();
+		String inDate = hotelFindForm.getInDate();
+		String outDate = hotelFindForm.getOutDate();
 
-		// 入力値の補完
 		// 値段（下限）の入力がなかった場合
-		Integer lowPrice = form.getLowPrice();
 		if (lowPrice == null) {
-			// 最小値の0をセットする
-			lowPrice = 0;
+			lowPrice = 0; // 最小値をセットする
 		}
 		// 値段（上限）の入力がなかった場合
-		Integer highPrice = form.getHighPrice();
 		if (highPrice == null) {
-			// 最大値の99999999をセットする
-			highPrice = 99999999;
+			highPrice = 99999999; // 最大値をセットする
 		}
 		// グレードの入力がなかった場合
-		String grade = form.getGrade();
 		if (grade.equals("0")) {
-			// 最小値の"1"をセットする
-			grade = "1";
+			grade = "1"; // 最小値をセットする
 		}
 
 		// ServiceのfingHotelListメソッドを呼び出し
-		// 戻り値のList<HotelItem>オブジェクトを取得する
 		List<HotelItem> hotelList = service.findHotelList(inputCityName, inDate,
 				outDate, lowPrice, highPrice, grade);
 
 		if (hotelList.size() == 0) {
-			// エラーメッセージをキー名"message"でModelに格納
 			model.addAttribute("message", BIZERR101);
 		}
 
-		// List<HotelItem>オブジェクトをキー名"result"でModelに格納する
 		model.addAttribute("result", hotelList);
 
 		return "hotelsalses/find/hotel_find";

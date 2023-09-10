@@ -6,12 +6,13 @@ package jp.co.tsys.common.control;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.tsys.common.form.HotelFindForm;
 
@@ -22,14 +23,32 @@ import jp.co.tsys.common.form.HotelFindForm;
  * @version 1.0.0
  */
 
+@SessionAttributes(types = {HotelFindForm.class}, names = {"locations",
+		"grades"})
 @Controller
 @RequestMapping("/topmenu")
 public class TopMenuController {
+
 	@Value("${locations}")
 	private String locations;
 
 	@Value("${grades}")
 	private String grades;
+
+	@ModelAttribute("locations")
+	public List<String> initLocations() {
+		return Arrays.asList(locations.split(","));
+	}
+
+	@ModelAttribute("grades")
+	public List<String> initGrades() {
+		return Arrays.asList(grades.split(","));
+	}
+
+	@ModelAttribute("hotelFindForm")
+	public HotelFindForm initHotelFindForm() {
+		return new HotelFindForm();
+	}
 
 	/**
 	 * 顧客用トップメニュー画面の【ホテル予約】に対応するHandlerメソッド マッピングするURL：/customerhotelreserve
@@ -37,14 +56,6 @@ public class TopMenuController {
 	 */
 	@RequestMapping("/customerhotelreserve")
 	public String hotelReserve(Model model) {
-		List<String> locationList = Arrays.asList(locations.split(","));
-		List<Integer> gradeList = Arrays.stream(grades.split(","))
-				.map(Integer::parseInt).collect(Collectors.toList());
-		model.addAttribute("locations", locationList);
-		model.addAttribute("grades", gradeList);
-		model.addAttribute("hotelFindForm", new HotelFindForm());
-		System.out.println(model.getAttribute("loginmember"));
-		model.addAttribute("loginmember", model.getAttribute("loginmember"));
 
 		return "/hotelsalses/find/hotel_find";
 	}

@@ -23,15 +23,15 @@ public class GlobalControllerAdvice {
 
 	/**
 	 * @param session
-	 *            ControllerAdviceはModel非対応
-	 * @return userName
+	 * @return loginMember
 	 */
-	@ModelAttribute("userName")
-	public Member userName(HttpSession session, LoginForm loginForm) {
+	@ModelAttribute("loginMember")
+	public Member loginMember(HttpSession session, Model model,
+			LoginForm loginForm) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		if (loginForm == null && loginMember == null) {
-			// TODO(risa): set erorr code
+			// TODO(risa): Set erorr code.
 			// TODO(sara): Separate errors when the session times out and when
 			// the user has not yet logged in.
 			throw new UserNameNotFoundException("ログインしてください。");
@@ -43,6 +43,7 @@ public class GlobalControllerAdvice {
 
 		loginMember = (Member) service.getMember(loginForm.getMemberCode(),
 				loginForm.getPassword());
+		// TODO(sara): Check to see if this needs to be added to the session
 		session.setAttribute("loginMember", loginMember);
 		return loginMember;
 	}

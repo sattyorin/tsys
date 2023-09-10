@@ -106,8 +106,7 @@ input {
 
 	<!--  ホテル商品検索フォーム -->
 	<p class="input-message red">※入力必須項目</p>
-	<form th:object="${hotelFindForm}" method="post"
-		th:action="@{/hotelfind/findhotellist}">
+	<form  method="post" th:action="@{/hotelfind/findhotellist}" th:object="${hotelFindForm}">
 
 		<!--  エラーメッセージエリア -->
 		<div class="error-area">
@@ -131,14 +130,12 @@ input {
 			</tr>
 			<tr>
 				<th>期間<span class="red">*</span></th>
-				<td><input type="date" th:field="*{inDate}"> ～</td>
-				<td><input type="date" th:field="*{outDate}"></td>
+				<td><input type="date" th:field="*{inDate}"> ～<input type="date" th:field="*{outDate}"></td>
 			</tr>
 			<tr>
 				<th>値段</th>
 				<td><input type="text" maxlength="8" th:field="*{lowPrice}">
-					円 ～</td>
-				<td><input type="text" maxlength="8" th:field="*{highPrice}">
+					円 ～<input type="text" maxlength="8" th:field="*{highPrice}">
 					円</td>
 			</tr>
 			<tr>
