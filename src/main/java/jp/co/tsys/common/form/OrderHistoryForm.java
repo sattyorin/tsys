@@ -22,8 +22,8 @@ import lombok.NoArgsConstructor;
 public class OrderHistoryForm implements Serializable {
 	private Member member;
 
-	private List<Pair<Order, Boolean>> currentOrders;
+	private List<Pair<Order, String>> currentOrders;
 
-	private List<Pair<Order, Boolean>> pastOrders;
+	private List<Pair<Order, String>> pastOrders;
 
 }

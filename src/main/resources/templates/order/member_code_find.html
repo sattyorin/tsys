@@ -8,6 +8,7 @@
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<!--		<div th:insert="top::back2Top"></div>-->
 		<p>顧客番号を入力してください</p>
@@ -21,13 +22,11 @@
 				<button type="submit">検索</button>
 			</p>
 		</form>
-		<!--		<p>-->
-		<!--		<form th:action="@{/hotelreservation/sendemployeemenu}">-->
-		<!--			<button>戻る</button>-->
-		<!--		</form>-->
-		<!--		</p>-->
+		<p>
+		<form th:action="@{/hotelreservation/sendemployeemenu}">
+			<button>戻る</button>
+		</form>
 
-		<!--		<div th:insert="footer::back2Top"></div>-->
 	</div>
 </body>
 

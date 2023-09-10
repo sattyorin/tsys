@@ -43,9 +43,11 @@ public class MemberOrdersFindController {
 	private OrdersDeleteService deleteService;
 
 	// 顧客情報検索画面に遷移する。
-	@RequestMapping("order/find")
+	@RequestMapping("/find")
 	public String sendFindMemberOrders(Model model) {
-		return "/order/member_order_find";
+		MemberCodeForm memberCodeForm = new MemberCodeForm();
+		model.addAttribute(memberCodeForm);
+		return "/order/member_code_find";
 	}
 
 	// 顧客情報検索画面の検索ボタンに対応するメソッド
@@ -56,7 +58,7 @@ public class MemberOrdersFindController {
 		// // 初期値
 		Member member = new Member();
 		// セッションから情報取得
-		Member loginMember = (Member) model.getAttribute("loginmember");
+		Member loginMember = (Member) model.getAttribute("loginMember");
 		// member情報から従業員と顧客を条件分岐
 		if ("Employee".equals(loginMember.getRole())) {
 			// 入力チェック
@@ -71,22 +73,24 @@ public class MemberOrdersFindController {
 
 			OrderHistoryForm orderHistoryForm = new OrderHistoryForm();
 
-			List<Order> currentOrder = orderservice
-					.findCurrentOrder(member.getMemberCode());
+			List<Order> currentOrder
+					= orderservice.findCurrentOrder(member.getMemberCode());
 
-			List<Order> pastOrder = orderservice
-					.findPastOrder(member.getMemberCode());
+			List<Order> pastOrder
+					= orderservice.findPastOrder(member.getMemberCode());
 
-			// List<Order> -> List<Pair<Order, Boolean>>
-			List<Pair<Order, Boolean>> currentOrderPairList = currentOrder
-					.stream().map(order -> new Pair<Order, Boolean>(order,
-							Boolean.FALSE))
-					.collect(Collectors.toList());
+			// List<Order> -> List<Pair<Order, String>>
+			List<Pair<Order, String>> currentOrderPairList
+					= currentOrder.stream().map(
+							order -> new Pair<Order, String>(order,
+									"false")).collect(
+											Collectors.toList());
 
-			List<Pair<Order, Boolean>> pastOrderPairList = pastOrder.stream()
-					.map(order -> new Pair<Order, Boolean>(order,
-							Boolean.FALSE))
-					.collect(Collectors.toList());
+			List<Pair<Order, String>> pastOrderPairList
+					= pastOrder.stream().map(
+							order -> new Pair<Order, String>(order,
+									"false")).collect(
+											Collectors.toList());
 
 			orderHistoryForm.setCurrentOrders(currentOrderPairList);
 			orderHistoryForm.setPastOrders(pastOrderPairList);
@@ -98,21 +102,23 @@ public class MemberOrdersFindController {
 		} else {
 			OrderHistoryForm orderHistoryForm = new OrderHistoryForm();
 
-			List<Order> currentOrder = orderservice
-					.findCurrentOrder(loginMember.getMemberCode());
+			List<Order> currentOrder = orderservice.findCurrentOrder(
+					loginMember.getMemberCode());
 
-			List<Order> pastOrder = orderservice
-					.findPastOrder(loginMember.getMemberCode());
-			// List<Order> -> List<Pair<Order, Boolean>>
-			List<Pair<Order, Boolean>> currentOrderPairList = currentOrder
-					.stream().map(order -> new Pair<Order, Boolean>(order,
-							Boolean.FALSE))
-					.collect(Collectors.toList());
+			List<Order> pastOrder
+					= orderservice.findPastOrder(loginMember.getMemberCode());
+			// List<Order> -> List<Pair<Order, String>>
+			List<Pair<Order, String>> currentOrderPairList
+					= currentOrder.stream().map(
+							order -> new Pair<Order, String>(order,
+									"false")).collect(
+											Collectors.toList());
 
-			List<Pair<Order, Boolean>> pastOrderPairList = pastOrder.stream()
-					.map(order -> new Pair<Order, Boolean>(order,
-							Boolean.FALSE))
-					.collect(Collectors.toList());
+			List<Pair<Order, String>> pastOrderPairList
+					= pastOrder.stream().map(
+							order -> new Pair<Order, String>(order,
+									"false")).collect(
+											Collectors.toList());
 
 			orderHistoryForm.setCurrentOrders(currentOrderPairList);
 			orderHistoryForm.setPastOrders(pastOrderPairList);
@@ -120,7 +126,6 @@ public class MemberOrdersFindController {
 
 			model.addAttribute("orderHistoryForm", orderHistoryForm);
 			return "/order/order_history";
-
 		}
 
 		// } else {
@@ -149,16 +154,15 @@ public class MemberOrdersFindController {
 			Model model) {
 		boolean flag = false;
 
-		for (Pair<Order, Boolean> currentOrder : orderHistoryForm
-				.getCurrentOrders()) {
+		for (Pair<Order, String> currentOrder : orderHistoryForm.getCurrentOrders()) {
 			List<HotelItem> hotelItemList = new ArrayList<>();
-			if (currentOrder.getSecond().equals("true")) {
+			if ("True".equals(currentOrder.getSecond())) {
 
 				HotelItem hotelItem = new HotelItem();
 				hotelItem.setDate(
 						currentOrder.getFirst().getHotelItem().getDate());
-				hotelItem.getHotel().setName(currentOrder.getFirst()
-						.getHotelItem().getHotel().getName());
+				hotelItem.getHotel().setName(
+						currentOrder.getFirst().getHotelItem().getHotel().getName());
 				hotelItemList.add(hotelItem);
 
 				deleteService.deleteCurrentOrder(

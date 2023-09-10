@@ -8,6 +8,7 @@
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
 		<!--				<div th:insert="top::back2Top"></div>-->
 		<table align="center">
@@ -77,10 +78,8 @@
 			<tbody>
 				<tr>
 					<th>宿泊予定日</th>
-					<th>注文日
-					</th>
-					<th>ホテル名
-					</th>
+					<th>注文日</th>
+					<th>ホテル名</th>
 				</tr>
 
 				<tr th:if="${!#lists.isEmpty(orderHistoryForm.pastOrders)}"
