@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * TOP画面表示Controller
- * 
+ *
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
@@ -20,11 +20,11 @@ public class TopController {
 
 	/**
 	 * TOP画面を表示するHandlerメソッド マッピングするURL： /(コンテキストルート)
-	 * 
+	 *
 	 * @return トップ画面（/top）
 	 */
 	@RequestMapping("/")
 	public String handler(Model model) {
-		return "/top_menu";
+		return "/login";
 	}
 }

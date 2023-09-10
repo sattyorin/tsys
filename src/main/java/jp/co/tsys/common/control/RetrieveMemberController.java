@@ -6,6 +6,7 @@ package jp.co.tsys.common.control;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.entity.Member;
+import jp.co.tsys.common.exception.UserNotFoundException;
 import jp.co.tsys.common.form.LoginForm;
+import jp.co.tsys.common.service.RetrieveMemberService;
 
 /**
  * ログイン・ログアウトController
@@ -27,8 +30,8 @@ import jp.co.tsys.common.form.LoginForm;
 public class RetrieveMemberController {
 
 	/** Service */
-	// @Autowired
-	// private RetrieveMemberService service;
+	@Autowired
+	private RetrieveMemberService service;
 
 	/**
 	 * ログイン画面の【ログイン】に対応するHandlerメソッド マッピングするURL：/retrievemember
@@ -49,8 +52,22 @@ public class RetrieveMemberController {
 			return "/login";
 		}
 
+		// formの値からloginMemberを取得
+		Member loginMember = (Member) service
+				.getMember(loginForm.getMemberCode(), loginForm.getPassword());
+
+		if (loginMember == null) {
+			// TODO(risa): Set erorr code.
+			throw new UserNotFoundException("ユーザー名もしくはパスワードが間違っています。");
+		}
+
+		// TODO(sara): Check to see if this needs to be added to the session
+		session.setAttribute("loginMember", loginMember);
+
+		// TODO(sara): nullさん?
+		System.out.println(loginMember.getName());
+
 		// 権限によって画面遷移先を振り分ける
-		Member loginMember = (Member) session.getAttribute("loginMember");
 		if (loginMember.getRole().equals("Employee")) {
 			// RoleがEmployeeの場合の画面遷移先
 			return "/top_menu_emp";
