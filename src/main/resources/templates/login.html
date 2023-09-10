@@ -2,27 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
 <meta charset="utf-8">
-<!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>ログイン画面</title>
 </head>
 <body>
 	<div style="text-align: center;">
-		<h1 style="text-align: center; text-decoration: underline 3px;">LOGIN</h1>
+		<h1 style="text-align: center;">LOGIN</h1>
 		<p style="color: red;" th:text="${message}">error message</p>
 		<span style="color: red;">※入力必須項目</span>
-		<div style="color: red;" th:if="${#fields.hasErrors('loginForm.memberCode')}"
+		<div style="color: red;"
+			th:if="${#fields.hasErrors('loginForm.memberCode')}"
 			th:errors="${loginForm.memberCode}">validation message</div>
-		<div style="color: red;" th:if="${#fields.hasErrors('loginForm.password')}"
+		<div style="color: red;"
+			th:if="${#fields.hasErrors('loginForm.password')}"
 			th:errors="${loginForm.password}">validation message</div>
 		<form method="post" th:action="@{/retrievemember}"
 			th:object="${loginForm}">
 			<table style="margin: auto">
 				<tr>
-					<td>メンバーコード<span style="color: red;">※</span></td>
+					<td style="background-color: pink;">メンバーコード<span
+						style="color: red;">※</span></td>
 					<td><input type="text" th:field="*{memberCode}"></td>
 				</tr>
 				<tr>
-					<td>パスワード<span style="color: red;">※</span></td>
+					<td style="background-color: pink;">パスワード<span style="color: red;">※</span></td>
 					<td><input type="password" th:field="*{password}"></td>
 				</tr>
 			</table>

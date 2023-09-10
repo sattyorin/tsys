@@ -21,23 +21,22 @@ body {
 /* 	width: 130px; */
 /* 	height: 130px; */
 /* } */
-a.header {
-	padding: 5px;
-	color: #ffffff;
-}
-
+/* a.header { */
+/* 	padding: 5px; */
+/* 	color: #ffffff; */
+/* } */
 h1 {
-	font-size: 15pt;
+/* 	font-size: 15pt; */
 	margin: 10px;
 	border-bottom: 3px solid rgb(255, 185, 185);
-	text-align: left;
+	text-align: center;
 }
 
 table {
 	margin-left: auto;
 	margin-right: auto;
 	border-collapse: collapse;
-	text-align: left;
+	/* 	text-align: left; */
 }
 
 /* caption { */
@@ -46,8 +45,17 @@ table {
 /*   font-weight: bold; */
 /* } */
 th, td {
+	/* 	padding: 10px; */
+	/* 	position: relative; */
+	font-weight: bold;
+}
+
+td {
+	border: solid 2px;
 	padding: 10px;
-	position: relative;
+	padding-right: 30px;
+	padding-left: 30px;
+	font-weight: bold;
 }
 
 /* th { */
@@ -99,4 +107,8 @@ button {
 /* } */
 .error {
 	color: red
+}
+
+.pink {
+	color: rgb(255, 185, 185);
 }
