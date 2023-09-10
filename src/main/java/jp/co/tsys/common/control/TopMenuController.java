@@ -7,6 +7,8 @@ package jp.co.tsys.common.control;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.form.HotelFindForm;
+import jp.co.tsys.common.form.MemberForm;
 
 /**
  * トップメニュー画面遷移Controller
@@ -66,7 +70,7 @@ public class TopMenuController {
 	 */
 	@RequestMapping("/reservehistory")
 	public String reserveHistory() {
-		return "/V0203_02OrderHistory";
+		return "/order/order_history";
 	}
 
 	/**
@@ -74,8 +78,11 @@ public class TopMenuController {
 	 * return お客様情報詳細画面(/member/find/retrive.html)
 	 */
 	@RequestMapping("/changemember")
-	public String changeMember() {
-		return "/member/find/retrive";
+	public String changeMember(Model model, HttpSession session) {
+		MemberForm memberForm = new MemberForm();
+		memberForm.setMember((Member) session.getAttribute("loginMember"));
+		model.addAttribute("memberForm", memberForm);
+		return "/member/find/member_detail";
 	}
 
 	/**
@@ -93,7 +100,7 @@ public class TopMenuController {
 	 */
 	@RequestMapping("/productmanage")
 	public String productManage() {
-		return "/UC501_regist/M0004_001ItemMgrMenu";
+		return "/hotelitem/regist/item_menu";
 	}
 
 	/**
@@ -102,6 +109,6 @@ public class TopMenuController {
 	 */
 	@RequestMapping("/member/regist/membermanage")
 	public String memberManage() {
-		return "/member_management";
+		return "/member/regist/member_management";
 	}
 }
