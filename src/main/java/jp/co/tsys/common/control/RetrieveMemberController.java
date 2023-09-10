@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -96,11 +95,11 @@ public class RetrieveMemberController {
 	 *            トップメニュー(顧客)画面(top_menu.html)
 	 */
 	@RequestMapping("/topmenu")
-	public String topMenu(@ModelAttribute("loginmember") Member loginmember,
-			Model model) {
+	public String topMenu(Model model, HttpSession session) {
 
+		Member loginMember = (Member) session.getAttribute("loginMember");
 		// 権限によって画面遷移先を振り分ける
-		if (loginmember.getRole().equals("Employee")) {
+		if (loginMember.getRole().equals("Employee")) {
 			// RoleがEmployeeの場合の画面遷移先
 			return "/top_menu_emp";
 		} else {

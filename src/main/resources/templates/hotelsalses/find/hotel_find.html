@@ -158,7 +158,7 @@ input {
 	<form th:action="@{/hotelreservation/sendemployeemenu}">
 		<button th:if="${session.loginMember.role=='Employee'}" type="submit">戻る</button>
 	</form>
-	<form th:action="@{/}">
+	<form th:action="@{/topmenu}">
 		<button th:if="${session.loginMember.role=='Customer'}" type="submit">戻る</button>
 	</form>
 

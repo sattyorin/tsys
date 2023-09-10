@@ -126,6 +126,12 @@ public class PaymentController {
 	@RequestMapping("/confirmation")
 	public String confirmeResult(ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model, HttpSession session) {
+		// TODO(masa): Check this conditon.
+		if (shoppingCartForm.getOrderTotal() <= 0) {
+			// TODO(masa): Set error code.
+			model.addAttribute("message", "カートに商品がありません");
+			return "/payment/shopping_cart";
+		}
 
 		OrdersForm ordersForm = new OrdersForm();
 
@@ -155,13 +161,6 @@ public class PaymentController {
 	public String findMember(@ModelAttribute OrdersForm ordersForm,
 			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model) {
-
-		// TODO(masa): Check this conditon.
-		if (shoppingCartForm.getOrderTotal() <= 0) {
-			// TODO(masa): Set error code.
-			model.addAttribute("message", "カートに商品がありません");
-			return "/payment/order_confirmation";
-		}
 
 		// サービスにメンバーコード投げてメンバーオブジェクトを取得
 		Member targetMember = memberService
