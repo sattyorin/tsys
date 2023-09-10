@@ -63,7 +63,7 @@ public class HotelListFindController {
 	 * @return ホテル商品検索画面 (V0802_01HotelFindView.html)
 	 */
 	@RequestMapping("/findhotel")
-	public String findHotel(@ModelAttribute("loginmember") Member loginmember,
+	public String findHotel(@ModelAttribute("loginMember") Member loginmember,
 			Model model) {
 
 		// フォームオブジェクトをキー名"hotelFindForm"でModelに格納

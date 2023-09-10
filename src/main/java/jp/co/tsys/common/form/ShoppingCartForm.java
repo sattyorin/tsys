@@ -3,8 +3,6 @@ package jp.co.tsys.common.form;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
-
 import jp.co.tsys.common.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +19,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShoppingCartForm implements Serializable {
 
-	@NotBlank
+	// TODO(masa): ListってNotBlank?
+	// @NotBlank
 	private List<Order> orders;
 
 	private int orderTotal;

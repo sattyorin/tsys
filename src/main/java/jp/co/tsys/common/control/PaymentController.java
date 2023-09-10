@@ -8,11 +8,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,24 +37,49 @@ import jp.co.tsys.common.service.PaymentService;
 @RequestMapping("/payment")
 public class PaymentController {
 
+	@ModelAttribute("hotelDetailForm")
+	public HotelDetailForm initHotelDetailForm(HttpSession session) {
+		HotelDetailForm hotelDetailForm = (HotelDetailForm) session
+				.getAttribute("hotelDetailForm");
+		if (hotelDetailForm != null) {
+			return hotelDetailForm;
+		}
+		return new HotelDetailForm();
+	}
+
+	@ModelAttribute("shoppingCartForm")
+	public ShoppingCartForm initShoppingCartForm(HttpSession session) {
+		ShoppingCartForm shoppingCartForm = (ShoppingCartForm) session
+				.getAttribute("shoppingCartForm");
+		if (shoppingCartForm != null) {
+			return shoppingCartForm;
+		}
+		return new ShoppingCartForm();
+	}
+
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
 	private MemberFindService memberService;
 
-	// ホテルフォームとカートフォームがnullならエラーメッセージだす
 	@RequestMapping("/cart")
 	public String inputCart(
-			@ModelAttribute("hotelDetailForm") HotelDetailForm hotelDetailForm,
-			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
-			BindingResult result, Model model) {
+			@Validated @ModelAttribute("hotelDetailForm") HotelDetailForm hotelDetailForm,
+			BindingResult hotelDetailResult,
+			@Validated @ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
+			BindingResult shoppingCartResult, Model model) {
 
-		if (result.hasErrors()) {
-
-			return "ホテル詳細画面";
+		// hotelDetailから飛んて来ているときだけチェック
+		if (hotelDetailForm.getHotelItem() != null
+				&& hotelDetailResult.hasErrors()) {
+			return "/hotelsalses/find/hotel_detail";
 		}
 
-		//// 在庫チェック
+		if (shoppingCartResult.hasErrors()) {
+			// ないはず
+		}
+
+		// TODO(masa): 在庫チェック
 		// if (hotelDetailForm.getInputQuantity() > カートにあるホテルの残室数) {
 		//
 		// // エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
@@ -63,16 +91,21 @@ public class PaymentController {
 
 		List<Order> orderList = new ArrayList<>();
 
+		// shoppingCartFormの中
 		if (shoppingCartForm.getOrders() != null) {
 			orderList = shoppingCartForm.getOrders();
 		}
 
-		Order order = new Order();
-		order.setHotelItem(hotelDetailForm.getHotelItem());
-		order.setQuantity(Integer.parseInt(hotelDetailForm.getInputQuantity()));
-		order.setSubTotal(
-				order.getQuantity() * order.getHotelItem().getPrice());
-		orderList.add(order);
+		// hotelDetailFormの中
+		System.out.println(hotelDetailForm);
+		if (hotelDetailForm.getHotelItem() != null) {
+			Order order = new Order();
+			order.setHotelItem(hotelDetailForm.getHotelItem());
+			order.setQuantity(hotelDetailForm.getInputQuantity());
+			order.setSubTotal(
+					order.getQuantity() * order.getHotelItem().getPrice());
+			orderList.add(order);
+		}
 
 		// 合計を計算
 		int sum = 0;
@@ -83,16 +116,16 @@ public class PaymentController {
 		shoppingCartForm.setOrders(orderList);
 		shoppingCartForm.setOrderTotal(sum);
 
+		// リロードでカートが増えないようにhotelDetailFormをリセット
+		model.addAttribute("hotelDetailForm", new HotelDetailForm());
 		model.addAttribute("shoppingCartForm", shoppingCartForm);
 
 		return "/payment/shopping_cart";
 	}
 
 	@RequestMapping("/confirmation")
-	public String confirmeResult(
-			@ModelAttribute("loginmember") Member loginmember,
-			ShoppingCartForm shoppingCartForm, BindingResult result,
-			Model model) {
+	public String confirmeResult(ShoppingCartForm shoppingCartForm,
+			BindingResult result, Model model, HttpSession session) {
 
 		OrdersForm ordersForm = new OrdersForm();
 
@@ -102,13 +135,15 @@ public class PaymentController {
 		// 顧客と従業員の名前衝突回避用にインスタンス作成
 		Member displayMemeber = new Member();
 
-		if ("Customer".equals(loginmember.getRole())) {
-			ordersForm.setMemberCode(loginmember.getMemberCode());
-			displayMemeber.setName(loginmember.getName());
-			displayMemeber.setZipCode(loginmember.getZipCode());
-			displayMemeber.setPrefecture(loginmember.getPrefecture());
-			displayMemeber.setAddress(loginmember.getAddress());
-			displayMemeber.setTel(loginmember.getTel());
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		System.out.println(loginMember.getRole());
+		if (loginMember.getRole().equals("Customer")) {
+			ordersForm.setMemberCode(loginMember.getMemberCode());
+			displayMemeber.setName(loginMember.getName());
+			displayMemeber.setZipCode(loginMember.getZipCode());
+			displayMemeber.setPrefecture(loginMember.getPrefecture());
+			displayMemeber.setAddress(loginMember.getAddress());
+			displayMemeber.setTel(loginMember.getTel());
 		}
 		model.addAttribute("displayMemeber", displayMemeber);
 		model.addAttribute("ordersForm", ordersForm);
@@ -120,6 +155,13 @@ public class PaymentController {
 	public String findMember(@ModelAttribute OrdersForm ordersForm,
 			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model) {
+
+		// TODO(masa): Check this conditon.
+		if (shoppingCartForm.getOrderTotal() <= 0) {
+			// TODO(masa): Set error code.
+			model.addAttribute("message", "カートに商品がありません");
+			return "/payment/order_confirmation";
+		}
 
 		// サービスにメンバーコード投げてメンバーオブジェクトを取得
 		Member targetMember = memberService

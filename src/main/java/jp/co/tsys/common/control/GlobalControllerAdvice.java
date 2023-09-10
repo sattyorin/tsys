@@ -28,6 +28,7 @@ public class GlobalControllerAdvice {
 
 		// セッションが維持されている
 		if (loginMember != null && loginMember.getMemberCode() != null) {
+			session.setAttribute("loginMember", loginMember);
 			return loginMember;
 		}
 

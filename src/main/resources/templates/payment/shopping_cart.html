@@ -27,7 +27,7 @@ p.sum {
 </style>
 </head>
 <body>
-	<!--	<div th:replace="customerHeader::header"></div> -->
+	<div th:replace="Header::header"></div>
 
 	<h1>ショッピングカート</h1>
 
@@ -61,13 +61,13 @@ p.sum {
 				th:text="*{#numbers.formatInteger(orderTotal, 3, 'COMMA')}+'円'"></span>
 		</p>
 		<br>
+		<div style="text-align: right;">
+			<button form="cart" type="submit">予約</button>
+		</div>
 	</form>
-	<p></p>
-	<form th:action="@{/payment/confirmation}" style="float: left;">
+	<form th:action="@{/hotelfind/findhotel}" style="float: left;">
 		<button type="submit" class="test">ホテル検索画面へ</button>
 	</form>
-	<div style="text-align: right;">
-		<button form="cart" type="submit">予約</button>
-	</div>
+
 </body>
 </html>

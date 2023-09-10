@@ -68,6 +68,7 @@ img.cart {
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<div style="text-align: right;">
 		<p>
 			<a th:href="@{/payment/cart}"> <img th:src="@{/images/cart.png}"
@@ -120,13 +121,13 @@ img.cart {
 
 		<br> <br>
 		<div style="text-align: center;">
-			<button type="submit" th:formaction="@{/hotelfind/findhotellist}" />
+			<button type="submit" th:formaction="@{/hotelfind/findhotellist}" >
 			戻る
 			</button>
-			<button type="submit" th:formaction="@{/payment/cart}" />
+			<button type="submit" th:formaction="@{/payment/cart}" >
 			カートに入れる
 			</button>
-			<button type="submit" th:formaction="@{/payment/complition}" />
+			<button type="submit" th:formaction="@{/payment/complition}" >
 			今すぐ予約
 			</button>
 		</div>

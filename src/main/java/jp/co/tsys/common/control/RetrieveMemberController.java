@@ -61,11 +61,7 @@ public class RetrieveMemberController {
 			throw new UserNotFoundException("ユーザー名もしくはパスワードが間違っています。");
 		}
 
-		// TODO(sara): Check to see if this needs to be added to the session
-		session.setAttribute("loginMember", loginMember);
-
-		// TODO(sara): nullさん?
-		System.out.println(loginMember.getName());
+		model.addAttribute("loginMember", loginMember);
 
 		// 権限によって画面遷移先を振り分ける
 		if (loginMember.getRole().equals("Employee")) {

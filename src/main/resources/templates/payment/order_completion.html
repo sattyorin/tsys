@@ -27,7 +27,7 @@ p.sum {
 </style>
 </head>
 <body>
-	<div th:replace="customerHeader::header"></div>
+	<div th:replace="Header::header"></div>
 	<h1 style="text-align: center">予約完了</h1>
 
 	<h2 th:text="'予約番号：'+ ${ordersForm.orderNo}"></h2>
@@ -85,9 +85,8 @@ p.sum {
 			<td th:if="${'02'.equals(ordersForm.payment)}">コンビニエンスストア決済</td>
 		</tr>
 	</table>
-	</p>
 	<p></p>
-	<form th:action="@{/hotelFind/findHotel}" style="text-align: center;">
+	<form th:action="@{/hotelfind/findhotel}" style="text-align: center;">
 		<button type="submit" style="width: 150px;">ホテル検索画面へ</button>
 	</form>
 

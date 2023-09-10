@@ -40,7 +40,6 @@ public class HotelReservationController {
 	 */
 	@RequestMapping("/hotelreservation/sendemployeemenu")
 	public String sendEmployeeMenu(Model model) {
-		System.out.println("1");
 
 		return "/hotelsalses/find/item_sales_menu";
 	}
@@ -52,8 +51,13 @@ public class HotelReservationController {
 	public String findHotelDetail(@PathVariable String itemCode, Model model) {
 		// itemCodeをもとにホテル商品を1件検索する
 		HotelItem hotelItem = service.findHotelDetail(itemCode);
+		// TODO(risa, yusaku): if hotelItem == null NoResultException?
+		if (hotelItem == null) {
+			// TODO(risa, yusaku):Set error code.
+			throw new NoResultException("ホテルの詳細がありません");
+		}
+
 		// HotelDetailFormに検索したHotelItemを設定する
-		//model.addAttribute("hotelDetailForm", new HotelDetailForm());
 		HotelDetailForm hotelDetailForm = new HotelDetailForm();
 		hotelDetailForm.setHotelItem(hotelItem);
 
@@ -85,7 +89,7 @@ public class HotelReservationController {
 	public String catchNoResultException(Model model, Exception e) {
 		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", e.getMessage());
-
 		return "/hotelfind/findhotel";
+
 	}
 }

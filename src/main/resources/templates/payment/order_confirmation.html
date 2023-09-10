@@ -27,8 +27,7 @@ p.sum {
 </style>
 </head>
 <body>
-
-	<div th:replace="customerHeader::header"></div>
+	<div th:replace="Header::header"></div>
 	<h1 style="text-align: center">予約確認</h1>
 
 	<p th:text="${message}" class="error"></p>
@@ -63,7 +62,7 @@ p.sum {
 	<br>
 
 	<div class="subtitle">メンバー情報</div>
-	<div th:if="${'Employee'.equals(loginmember.role)}">
+	<div th:if="${'Employee'.equals(loginMember.role)}">
 		<form th:object="${ordersForm}" th:action="@{/payment/findMember}">
 			メンバーコード <input type="text" th:field="*{memberCode}">
 			<div class="error" th:if="${#fields.hasErrors('memberCode')}"
@@ -95,6 +94,9 @@ p.sum {
 					th:field="*{payment}" th:value="'02'">コンビニエンスストア決済</td>
 			</tr>
 		</table>
+		<div style="text-align: right;">
+			<button form="order" type="submit">予約確定</button>
+		</div>
 	</form>
 	<p></p>
 	<form th:action="@{/payment/cart}"
@@ -102,8 +104,5 @@ p.sum {
 		<button type="submit">戻る</button>
 	</form>
 
-	<div style="text-align: right;">
-		<button form="order" type="submit">予約確定</button>
-	</div>
 </body>
 </html>
