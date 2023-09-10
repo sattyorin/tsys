@@ -31,6 +31,7 @@ public class GlobalControllerAdvice {
 			// the user has not yet logged in.
 			throw new UserNameNotFoundException("ログインしてください。");
 		}
+		// TODO(sara): get userName insted of MemberCode
 		session.setAttribute("userName", loginForm.getMemberCode());
 		return userName;
 	}
