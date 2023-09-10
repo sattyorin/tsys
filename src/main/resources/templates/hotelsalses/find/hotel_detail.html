@@ -121,15 +121,13 @@ img.cart {
 
 		<br> <br>
 		<div style="text-align: center;">
-			<button type="submit" th:formaction="@{/hotelfind/findhotellist}" >
-			戻る
-			</button>
-			<button type="submit" th:formaction="@{/payment/cart}" >
-			カートに入れる
-			</button>
-			<button type="submit" th:formaction="@{/payment/complition}" >
-			今すぐ予約
-			</button>
+			<button type="submit" th:formaction="@{/hotelfind/findhotellist}">
+				戻る</button>
+			<button type="submit" th:formaction="@{/payment/cart}">
+				カートに入れる</button>
+			<!-- 	TODO(sara): Is this necessary? -->
+			<!-- 			<button type="submit" th:formaction="@{/payment/complition}"> -->
+			<!-- 				今すぐ予約</button> -->
 		</div>
 	</form>
 
