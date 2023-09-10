@@ -12,7 +12,6 @@
 		<span style="color: red;">※入力必須項目</span>
 		<div style="color: red;" th:if="${#fields.hasErrors('loginForm.memberCode')}"
 			th:errors="${loginForm.memberCode}">validation message</div>
-		<div style="color: red;" th:if="${true}">validation message</div>
 		<div style="color: red;" th:if="${#fields.hasErrors('loginForm.password')}"
 			th:errors="${loginForm.password}">validation message</div>
 		<form method="post" th:action="@{/retrievemember}"
