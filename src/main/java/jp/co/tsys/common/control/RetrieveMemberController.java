@@ -6,6 +6,8 @@ package jp.co.tsys.common.control;
 
 import static jp.co.tsys.common.util.MessageList.BIZERR001;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,17 +45,16 @@ public class RetrieveMemberController {
 	 *            トップメニュー(顧客)画面(top_menu.html)
 	 */
 	@RequestMapping("/retrievemember")
-	public String retrieveMember(@Validated LoginForm loginform,
+	public String retrieveMember(@Validated LoginForm loginForm,
 			BindingResult result, Model model) {
 		// 入力チェック
 		if (result.hasErrors()) {
 			return "/login";
 		}
-
 		// ServiceのgetMemberメソッドを呼び出し
 		// 戻り値のMemberオブジェクトを取得する
-		Member loginmember = service.getMember(loginform.getMemberCode(),
-				loginform.getPassword());
+		Member loginmember = service.getMember(loginForm.getMemberCode(),
+				loginForm.getPassword());
 
 		// Memberオブジェクトをキー名"loginmember"でモデルに格納
 		model.addAttribute("loginmember", loginmember);
@@ -84,9 +85,11 @@ public class RetrieveMemberController {
 	 *            Modelオブジェクト return ログイン画面(login.html)
 	 */
 	@RequestMapping("/logout")
-	public String logout(Model model, SessionStatus status) {
+	public String logout(Model model, HttpSession session,
+			SessionStatus status) {
 		model.addAttribute("loginForm", new LoginForm());
 		status.setComplete();
+		session.invalidate();
 		return "/login";
 	}
 

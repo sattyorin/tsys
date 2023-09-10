@@ -28,7 +28,7 @@ public class LoginForm implements Serializable {
 	private String memberCode;
 
 	/** パスワード */
-	@Size(min = 8, max = 15)
+	@Size(min = 3, max = 15)
 	@NotBlank
 	private String password;
 }
