@@ -1,46 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
-<body>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-	<style>
-div.btnLeft {
-	text-align: left;
-	float: left;
-}
+<header th:fragment="header">
+	<div id="headerArea" th:fragment="back2Top">
 
-div.btnRight {
-	text-align: right;
-}
-</style>
-
-	<header th:fragment="header">
-		<div id="headerArea" th:fragment="back2Top">
-
-			<div class="btnLeft" style="float: left;">
-				<a th:href="@{/topmenu}">
-					<button
-						style="width: 140px; height: 40px; font-size: 10pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-						class="headButton">トップメニュー</button>
-				</a>
-			</div>
-
-			<div class="btnRight" style="text-align: right;">
-				<a th:href="@{/logout}">
-					<button
-						style="width: 140px; height: 40px; font-size: 10pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-						class="headButton">ログアウト</button>
-				</a>
-			</div>
+		<div style="float: left;">
+			<a th:href="@{/topmenu}">
+				<button
+					style="width: 140px; height: 40px; font-size: 10pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					class="headButton">トップメニュー</button>
+			</a>
 		</div>
 
-		<p style="text-align: right;">
-			<span th:text="${session.userName}+ 'さんようこそ'">name</span>
-		</p>
-		<hr
-			style="border-bottom-style: solid; border-bottom-color: rgb(255, 202, 202); border-bottom-width: 7px;" />
-	</header>
-</body>
+		<div style="text-align: right;">
+			<a th:href="@{/logout}">
+				<button
+					style="width: 140px; height: 40px; font-size: 10pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+					class="headButton">ログアウト</button>
+			</a>
+		</div>
+	</div>
+
+	<p style="text-align: right;">
+		<span th:text="${session.loginMember.name}+ 'さんようこそ'">name</span>
+	</p>
+	<hr
+		style="border-bottom-style: solid; border-bottom-color: rgb(255, 202, 202); border-bottom-width: 7px;" />
+</header>
 
 </html>
