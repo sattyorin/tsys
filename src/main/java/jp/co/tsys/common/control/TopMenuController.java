@@ -4,8 +4,16 @@
 
 package jp.co.tsys.common.control;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.tsys.common.form.HotelFindForm;
 
 /**
  * トップメニュー画面遷移Controller
@@ -17,13 +25,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/topmenu")
 public class TopMenuController {
+	@Value("${locations}")
+	private String locations;
+
+	@Value("${grades}")
+	private String grades;
+
 	/**
 	 * 顧客用トップメニュー画面の【ホテル予約】に対応するHandlerメソッド マッピングするURL：/customerhotelreserve
 	 * return 顧客ホテル予約画面(findHotel.html)
 	 */
 	@RequestMapping("/customerhotelreserve")
-	public String hotelReserve() {
-		return "/findHotel";
+	public String hotelReserve(Model model) {
+		List<String> locationList = Arrays.asList(locations.split(","));
+		List<Integer> gradeList = Arrays.stream(grades.split(","))
+				.map(Integer::parseInt).collect(Collectors.toList());
+		model.addAttribute("locations", locationList);
+		model.addAttribute("grades", gradeList);
+		model.addAttribute("hotelFindForm", new HotelFindForm());
+		System.out.println(model.getAttribute("loginmember"));
+		model.addAttribute("loginmember", model.getAttribute("loginmember"));
+
+		return "/hotelsalses/find/hotel_find";
 	}
 
 	/**

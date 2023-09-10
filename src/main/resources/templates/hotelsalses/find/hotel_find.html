@@ -3,14 +3,14 @@
 
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>ホテル検索</title>
 <style>
-body {
-	font-size: 14px;
-	margin: 0 auto;
-	width: 90%;
-}
+/* body { */
+/*   font-size: 14px; */
+/*   margin: 0 auto; */
+/*   width: 90%; */
+/* } */
 
 h1 {
 	font-size: 32px;
@@ -32,17 +32,16 @@ input {
 	text-align: right;
 }
 
-button {
-	width: fit-content;
-	height: 40px;
-	font-size: 12pt;
-	font-weight: bold;
-	background-color: rgb(255, 185, 185);
-	border-radius: 5px;
-	border-color: rgb(64, 0, 64);
-	border-style: solid"
-}
-
+/* button { */
+/*   width: fit-content; */
+/*   height: 40px; */
+/*   font-size: 12pt; */
+/*   font-weight: bold; */
+/*   background-color: rgb(255, 185, 185); */
+/*   border-radius: 5px; */
+/*   border-color: rgb(64, 0, 64); */
+/*   border-style: solid" */
+/* } */
 .input-message {
 	font-size: 12px;
 	margin: 0% 0% 0% 20%;
@@ -53,13 +52,21 @@ button {
 }
 
 .cart {
-	margin-left: 90%;
-	height: 7%;
-	width: 7%;
+	position: fixed;
+	top: 115px;
+	right: 110px;
+	/*   margin-left: 90%; */
+	/*   height: 7%; */
+	/*   width: 7%; */
+}
+
+.cart-image {
+	height: 50px;
+	width: 50px;
 }
 
 .search-table {
-	widh: 500px;
+	width: 500px;
 }
 
 .search-table th {
@@ -89,16 +96,19 @@ button {
 </head>
 
 <body>
+	<div th:replace="header::header"></div>
 	<h1>ホテル検索</h1>
 	<!-- ショッピングカートアイコン -->
 	<div class="cart">
-		<a th:href="@{/payment/cart}"><img
-			th:src="@{/image/cart_icon.svg}"></a>
+		<a th:href="@{/payment/cart}"><img class=cart-image
+			th:src="@{/images/cart.png}"></a>
 	</div>
+
 	<!--  ホテル商品検索フォーム -->
 	<p class="input-message red">※入力必須項目</p>
 	<form th:object="${hotelFindForm}" method="post"
 		th:action="@{/hotelfind/findhotellist}">
+
 		<!--  エラーメッセージエリア -->
 		<div class="error-area">
 			<div class="error" th:if="${#fields.hasErrors('inputCityName')}"
@@ -109,25 +119,20 @@ button {
 				th:errors="*{outDate}">validation massage</div>
 			<div class="error" th:text="${message}">validation massage</div>
 		</div>
+
 		<table class="search-table">
 			<tr>
 				<th>都市名<span class="red">*</span>
-				</thborder="1">
 				<td><select th:field="*{inputCityName}">
 						<option th:value=null></option>
-						<option th:value="札幌">札幌</option>
-						<option th:value="旭川">旭川</option>
-						<option th:value="函館">函館</option>
-						<option th:value="福岡">福岡</option>
-						<option th:value="鹿児島">鹿児島</option>
-						<option th:value="那覇">那覇</option>
+						<option th:value="${location}" th:text="${location}"
+							th:each="location : ${locations}"></option>
 				</select></td>
 			</tr>
 			<tr>
 				<th>期間<span class="red">*</span></th>
 				<td><input type="date" th:field="*{inDate}"> ～</td>
 				<td><input type="date" th:field="*{outDate}"></td>
-
 			</tr>
 			<tr>
 				<th>値段</th>
@@ -140,11 +145,8 @@ button {
 				<th>グレード</th>
 				<td><select th:field="*{grade}">
 						<option value="0"></option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
+						<option th:value="${grade}" th:text="${grade}"
+							th:each="grade : ${grades}"></option>
 				</select> 以上</td>
 			</tr>
 		</table>
@@ -154,21 +156,14 @@ button {
 		<br>
 	</form>
 
-
 	<!--  戻るボタン -->
 	<!--  従業員 -->
 	<form th:action="@{/hotelreservation/sendemployeemenu}">
-		<div class="return-button">
-			<button th:if="${loginmember.role=='Employee'}" type="submit">戻る</button>
-		</div>
+		<button th:if="${session.loginMember.role=='Employee'}" type="submit">戻る</button>
 	</form>
-	<!--  従業員 -->
 	<form th:action="@{/}">
-		<div class="return-buttun">
-			<button th:if="${loginmember.role=='Customer'}" type="submit">戻る</button>
-		</div>
+		<button th:if="${session.loginMember.role=='Customer'}" type="submit">戻る</button>
 	</form>
-
 
 	<!--  ホテル商品検索一覧 -->
 
