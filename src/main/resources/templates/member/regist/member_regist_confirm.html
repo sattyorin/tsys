@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title>メンバー登録確認画面</title>
+</head>
+
+<body>
+	<div th:replace="header::header"></div>
+	<!--	従業員画面で顧客を登録したい場合-->
+	<div style="text-align: center;"
+		th:if="${customerMemberForm.role == 'Customer'}">
+
+		<h1>メンバー登録確認</h1>
+		<p>
+			以下の内容でよろしければ確定ボタンを押してください。<br> 登録内容を修正したい場合は修正ボタンを押してください。
+		</p>
+
+		<form method="post">
+			<table border="1" align="center">
+
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">権限</th>
+					<td th:text="${customerMemberForm.role}">role</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
+					<td th:text="${customerMemberForm.name}">name</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">郵便番号</th>
+					<td th:text="${customerMemberForm.zipCode}">zipCode</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">都道府県</th>
+					<td th:text="${customerMemberForm.prefecture}">prefecture</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">住所（都道府県以降）</th>
+					<td th:text="${customerMemberForm.address}">address</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">電話番号</th>
+					<td th:text="${customerMemberForm.tel}">tel</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
+					<td th:text="${customerMemberForm.mail}">mail</td>
+				</tr>
+			</table>
+
+			<table>
+				<tr>
+					<td>
+						<button
+							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+							formaction="/member/regist/returninput">修正</button>
+					</td>
+
+					<td>
+						<button
+							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+							formaction="/member/regist/customercommit">確定</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+	<!--	従業員画面で従業員を登録したい場合-->
+	<div style="text-align: center;"
+		th:if="${employeeMemberForm.role == 'Employee'}">
+		<!--	<div th:replace="header::header"></div>-->
+
+		<h1>メンバー登録確認</h1>
+		<p>
+			以下の内容でよろしければ確定ボタンを押してください。<br> 登録内容を修正したい場合は修正ボタンを押してください。
+		</p>
+
+		<form method="post">
+			<table border="1" align="center">
+
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">権限</th>
+					<td th:text="${employeeMemberForm.role}">role</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
+					<td th:text="${employeeMemberForm.name}">name</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
+					<td th:text="${employeeMemberForm.mail}">mail</td>
+				</tr>
+			</table>
+
+			<table>
+				<tr>
+					<td>
+						<button
+							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+							formaction="/member/regist/returninput">修正</button>
+					</td>
+
+					<td>
+						<button
+							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+							formaction="/member/regist/employeecommit">確定</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+
+	<div style="text-align: center;"
+		th:if="${customerMemberForm.role == 'CustomerC'}">
+		<!--	<div th:replace="header::header"></div>-->
+
+		<h1>メンバー登録確認</h1>
+		<p>
+			以下の内容でよろしければ確定ボタンを押してください。<br> 登録内容を修正したい場合は修正ボタンを押してください。
+		</p>
+
+		<form method="post">
+			<table border="1" align="center">
+
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
+					<td th:text="${customerMemberForm.name}">name</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">郵便番号</th>
+					<td th:text="${customerMemberForm.zipCode}">zipCode</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">都道府県</th>
+					<td th:text="${customerMemberForm.prefecture}">prefecture</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">住所（都道府県以降）</th>
+					<td th:text="${customerMemberForm.address}">address</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">電話番号</th>
+					<td th:text="${customerMemberForm.tel}">tel</td>
+				</tr>
+				<tr>
+					<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
+					<td th:text="${customerMemberForm.mail}">mail</td>
+				</tr>
+			</table>
+
+			<table>
+				<tr>
+					<td>
+						<button
+							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+							formaction="/member/regist/returninput">修正</button>
+					</td>
+
+					<td>
+						<button
+							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+							formaction="/member/regist/customercomfirm">確定</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title>メンバー登録</title>
+</head>
+
+<body>
+	<div th:replace="header::header"></div>
+	<h1 align="center">メンバー登録</h1>
+
+	<table style="border-collapse: collapse" align="center">
+		<tr>
+			<td><a th:href="@{/member/regist/employeeinput}">
+					<button
+						style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;">
+						従業員登録</button>
+			</a></td>
+
+			<td><a th:href="@{/member/regist/customerinput}">
+					<button
+						style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;">
+						お客様登録</button>
+			</a></td>
+		</tr>
+	</table>
+
+	<p>
+		<a th:href="@{/member/regist/returnmenu}">
+			<button
+				style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;">
+				戻る</button>
+		</a>
+	</p>
+</body>
+
+</html>
