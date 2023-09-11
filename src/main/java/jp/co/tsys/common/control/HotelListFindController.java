@@ -6,6 +6,7 @@ import static jp.co.tsys.common.util.MessageList.BIZERR101;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,12 +43,16 @@ public class HotelListFindController {
 
 	@ModelAttribute("locations")
 	public List<String> initLocations() {
-		return Arrays.asList(locations.split(","));
+		// return Arrays.asList(locations.split(","));
+		return Arrays.stream(locations.split(",")).map(String::trim)
+				.collect(Collectors.toList());
 	}
 
 	@ModelAttribute("grades")
 	public List<String> initGrades() {
-		return Arrays.asList(grades.split(","));
+		// return Arrays.asList(grades.split(","));
+		return Arrays.stream(grades.split(",")).map(String::trim)
+				.collect(Collectors.toList());
 	}
 
 	@ModelAttribute("hotelFindForm")

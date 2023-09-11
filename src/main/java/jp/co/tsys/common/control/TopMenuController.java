@@ -6,6 +6,7 @@ package jp.co.tsys.common.control;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,12 +42,14 @@ public class TopMenuController {
 
 	@ModelAttribute("locations")
 	public List<String> initLocations() {
-		return Arrays.asList(locations.split(","));
+		return Arrays.stream(locations.split(",")).map(String::trim)
+				.collect(Collectors.toList());
 	}
 
 	@ModelAttribute("grades")
 	public List<String> initGrades() {
-		return Arrays.asList(grades.split(","));
+		return Arrays.stream(grades.split(",")).map(String::trim)
+				.collect(Collectors.toList());
 	}
 
 	@ModelAttribute("hotelFindForm")
