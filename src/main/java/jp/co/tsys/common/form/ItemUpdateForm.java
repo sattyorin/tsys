@@ -1,5 +1,7 @@
 /**
  * HotelItemDetailForm.java
+ *
+ * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
  */
 
 package jp.co.tsys.common.form;
@@ -25,12 +27,12 @@ public class ItemUpdateForm {
 	/** 宿泊日 */
 	private String date;
 
-	@Max(999999)
+	@Max(999999999)
 	@Min(1)
 	/** 料金 */
 	private int price;
 
-	@Max(99)
+	@Max(99999)
 	@Min(1)
 	/** 在庫 */
 	private int stock;

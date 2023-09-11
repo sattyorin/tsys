@@ -76,12 +76,20 @@ public class HotelItemUpdateController {
 	 */
 	@RequestMapping(value = "confirmupdate")
 	public String confirmUpdate(@Validated ItemUpdateForm updateForm,
+			@ModelAttribute("hotelItemForm") HotelItemDetailForm itemDetail,
 			BindingResult result, Model model) {
 		// 入力チェック
 		if (result.hasErrors()) {
 			// エラーメッセージをキー名"message"でModelに格納
 			model.addAttribute("message", "料金、在庫の値が不適切です。");
 			// 商品変更画面（/hotelItem/update/view-update-HTML）を返却する
+			return "/hotelitem/update/view";
+		}
+		// ホテルコード、宿泊日、料金が一致している場合同じ画面に戻る
+		int count = service.countHotelItem(itemDetail.getHotelCode(),
+				updateForm.getDate(), updateForm.getPrice());
+		if (count != 0) {
+			model.addAttribute("message", MessageList.BIZERR305);
 			return "/hotelitem/update/view";
 		}
 

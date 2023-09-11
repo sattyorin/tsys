@@ -10,6 +10,7 @@ import jp.co.tsys.common.exception.BusinessException;;
 
 /**
  * ホテル情報削除Service
+ * 
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
@@ -17,14 +18,19 @@ public interface HotelItemUpdateService {
 
 	/**
 	 * 商品コードをもとにホテル情報(日付、料金、在庫)を変更する
-	 * @param itemCode 商品コード
+	 * 
+	 * @param itemCode
+	 *            商品コード
 	 * @param date
 	 * @param price
 	 * @param stock
-	 * @throws BusinessException 検索結果が存在しない場合
+	 * @throws BusinessException
+	 *             検索結果が存在しない場合
 	 */
 	public void updateHotelItem(String itemCode, String date, int price,
-			int stock)
-			throws BusinessException;
+			int stock) throws BusinessException;
+
+	// ホテルコードと宿泊日と料金が一致しているモノがDBに存在するかをチェックする。
+	public int countHotelItem(String hotelCode, String date, int price);
 
 }

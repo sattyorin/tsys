@@ -12,7 +12,7 @@ import jp.co.tsys.common.mapper.HotelItemMapper;
 
 /**
  * 商品削除Serviceの実装クラス
- * 
+ *
  * @author FLM
  * @version 1.0 yyyy/mm/dd
  */
@@ -40,6 +40,13 @@ public class HotelItemUpdateServiceImpl implements HotelItemUpdateService {
 			throw new BusinessException("エラーメッセージ");
 		}
 		// return void;
+	}
+
+	@Override
+	// ホテルコードと宿泊日と料金が一致しているモノがDBに存在するかをカウントする。
+	public int countHotelItem(String hotelCode, String date, int price) {
+		int count = mapper.countHotelItem(hotelCode, date, price);
+		return count;
 	}
 
 }
