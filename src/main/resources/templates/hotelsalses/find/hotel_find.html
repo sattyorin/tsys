@@ -3,7 +3,14 @@
 
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" type="text/css"
+	th:href="@{https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js}"></script>
+<script type="text/javascript" th:src="@{/js/paging.js}"></script>
 <title>ホテル検索</title>
 <style>
 /* body { */
@@ -11,7 +18,6 @@
 /*   margin: 0 auto; */
 /*   width: 90%; */
 /* } */
-
 h1 {
 	font-size: 32px;
 	margin-bottom: 0px;
@@ -32,19 +38,8 @@ input {
 	text-align: right;
 }
 
-/* button { */
-/*   width: fit-content; */
-/*   height: 40px; */
-/*   font-size: 12pt; */
-/*   font-weight: bold; */
-/*   background-color: rgb(255, 185, 185); */
-/*   border-radius: 5px; */
-/*   border-color: rgb(64, 0, 64); */
-/*   border-style: solid" */
-/* } */
 .input-message {
 	font-size: 12px;
-	margin: 0% 0% 0% 20%;
 }
 
 .red {
@@ -52,12 +47,9 @@ input {
 }
 
 .cart {
-	position: fixed;
+	position: absolute;
 	top: 115px;
 	right: 110px;
-	/*   margin-left: 90%; */
-	/*   height: 7%; */
-	/*   width: 7%; */
 }
 
 .cart-image {
@@ -76,14 +68,21 @@ input {
 
 .search-button {
 	text-align: center;
+	margin: 10px;
 }
 
 .return-button {
-	margin: 10px 0px 10px 50px;
+	float: left;
+	margin: 10px;
 }
 
-.hotel-list-table {
-	width: 600px;
+.hotel-list-warpper {
+	width: 800px;
+	margin: 0 auto;
+}
+
+#hotel-list-table {
+	width: 800px;
 	border: 1px black solid;
 }
 
@@ -106,7 +105,8 @@ input {
 
 	<!--  ホテル商品検索フォーム -->
 	<p class="input-message red">※入力必須項目</p>
-	<form  method="post" th:action="@{/hotelfind/findhotellist}" th:object="${hotelFindForm}">
+	<form method="post" th:action="@{/hotelfind/findhotellist}"
+		th:object="${hotelFindForm}">
 
 		<!--  エラーメッセージエリア -->
 		<div class="error-area">
@@ -130,7 +130,8 @@ input {
 			</tr>
 			<tr>
 				<th>期間<span class="red">*</span></th>
-				<td><input type="date" th:field="*{inDate}"> ～<input type="date" th:field="*{outDate}"></td>
+				<td><input type="date" th:field="*{inDate}"> ～<input
+					type="date" th:field="*{outDate}"></td>
 			</tr>
 			<tr>
 				<th>値段</th>
@@ -155,37 +156,47 @@ input {
 
 	<!--  戻るボタン -->
 	<!--  従業員 -->
-	<form th:action="@{/hotelreservation/sendemployeemenu}">
-		<button th:if="${session.loginMember.role=='Employee'}" type="submit">戻る</button>
-	</form>
-	<form th:action="@{/topmenu}">
-		<button th:if="${session.loginMember.role=='Customer'}" type="submit">戻る</button>
-	</form>
+	<div class="hotel-list-warpper">
+		<form th:action="@{/hotelreservation/sendemployeemenu}">
+			<button class=return-button
+				th:if="${session.loginMember.role.equals('Employee')}" type="submit">戻る</button>
+		</form>
+		<form th:action="@{/topmenu}">
+			<button class=return-button
+				th:if="${session.loginMember.role.equals('Customer')}" type="submit">戻る</button>
+		</form>
 
-	<!--  ホテル商品検索一覧 -->
+		<!--  ホテル商品検索一覧 -->
 
-	<table class="hotel-list-table" border="1">
-		<tr>
-			<th>商品コード</th>
-			<th>ホテル名</th>
-			<th>日付</th>
-			<th>料金</th>
-			<th>グレード</th>
-			<th>残室数</th>
-		</tr>
-		<th:block th:each="hotelItem : ${result}">
-			<tr>
-				<td th:text="${hotelItem.itemCode}"></td>
-				<td><a
-					th:href="@{'/hotelreservation/findhoteldetail/' + ${hotelItem.itemCode}}"
-					th:text="${hotelItem.hotel.name}"></a></td>
-				<td th:text="${hotelItem.date}"></td>
-				<td th:text="${hotelItem.price}"></td>
-				<td th:text="${hotelItem.hotel.grade}"></td>
-				<td th:text="${hotelItem.stock}"></td>
-			</tr>
-		</th:block>
-	</table>
+		<table id="hotel-list-table" border="1">
+			<thead>
+				<tr>
+					<th>商品コード</th>
+					<th>ホテル名</th>
+					<th>日付</th>
+					<th>料金</th>
+					<th>グレード</th>
+					<th>残室数</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="hotelItem : ${result}">
+					<tr>
+						<td th:text="${hotelItem.itemCode}"></td>
+						<td><a
+							th:href="@{'/hotelreservation/findhoteldetail/' + ${hotelItem.itemCode}}"
+							th:text="${hotelItem.hotel.name}"></a></td>
+						<td th:text="${hotelItem.date}"></td>
+						<td th:text="${hotelItem.price}"></td>
+						<td th:text="${hotelItem.hotel.grade}"></td>
+						<td th:if="${hotelItem.stock>5}" th:text="${hotelItem.stock}"></td>
+						<td class="red" th:if="${hotelItem.stock<=5}"
+							th:text="'残り' + ${hotelItem.stock} +'室！'"></td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
 </body>
 
 </html>
