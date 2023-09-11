@@ -26,6 +26,18 @@ public class MemberRegistServiceImpl implements MemberRegistService {
 	@Autowired
 	private MemberMapper mapper;
 
+
+	/**
+	 * 同じメアドをカウントする
+	 */
+	@Override
+	public int countMail(String mail) {
+
+		int count = mapper.countMail(mail);
+
+		return count;
+	}
+
 	/**
 	 * 登録に成功した場合にメンバーコードを返す
 	 */

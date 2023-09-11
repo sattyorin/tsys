@@ -1,11 +1,11 @@
 /**
  * MemberRegistController.java
- * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
  */
 
 package jp.co.tsys.common.control;
 
 import static jp.co.tsys.common.util.MessageList.BIZERR201;
+import static jp.co.tsys.common.util.MessageList.BIZERR203;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -74,7 +74,9 @@ public class MemberRegistController {
 	@RequestMapping("/customerinput")
 	public String customerInputRegist(Model model) {
 
-		// EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+		MemberForm memberForm = new MemberForm();
+
+		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
 
 		// 入力値を取得するmodelを用意
 		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
@@ -91,7 +93,9 @@ public class MemberRegistController {
 	@RequestMapping("/employeeinput")
 	public String employeeInputRegist(Model model) {
 
-		// CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+		MemberForm memberForm = new MemberForm();
+
+		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
 
 		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
 
@@ -107,7 +111,9 @@ public class MemberRegistController {
 	@RequestMapping("/customercinput")
 	public String inputRegist(Model model) {
 
-		// EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+		MemberForm memberForm = new MemberForm();
+
+		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
 
 		// 入力値を取得するmodelを用意
 		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
@@ -135,6 +141,9 @@ public class MemberRegistController {
 	public String customerConfirmRegist(
 			@ModelAttribute("customerMemberForm") @Validated CustomerMemberForm customerMemberForm,
 			BindingResult result, Model model) {
+
+		int count = service.countMail(customerMemberForm.getMail());
+
 		// 入力チェック
 		if (result.hasErrors()) {
 			// メンバー登録画面（/member_regist）を返却する
@@ -145,7 +154,11 @@ public class MemberRegistController {
 			model.addAttribute("message", BIZERR201);
 			return "/member/regist/member_regist";
 
+		} else if (count != 0) {
+			model.addAttribute("message", BIZERR203);
+			return "/member/regist/member_regist";
 		}
+
 		return "/member/regist/member_regist_confirm";
 	}
 
@@ -154,6 +167,9 @@ public class MemberRegistController {
 	public String employeeConfirmRegist(
 			@ModelAttribute("employeeMemberForm") @Validated EmployeeMemberForm employeeMemberForm,
 			BindingResult result, Model model) {
+
+		int count = service.countMail(employeeMemberForm.getMail());
+
 		// 入力チェック
 		if (result.hasErrors()) {
 			// メンバー登録画面（/member_regist）を返却する
@@ -164,7 +180,11 @@ public class MemberRegistController {
 			model.addAttribute("message", BIZERR201);
 			return "/member/regist/member_regist";
 
+		} else if (count != 0) {
+			model.addAttribute("message", BIZERR203);
+			return "/member/regist/member_regist";
 		}
+
 		return "/member/regist/member_regist_confirm";
 	}
 

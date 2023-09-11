@@ -11,10 +11,12 @@
 	<!--	従業員用画面でお客様を登録する場合-->
 	<div style="text-align: center;"
 		th:if="${customerMemberForm.role == 'Customer'}">
-		<!--	<div th:replace="header::header"></div>-->
+		<div th:replace="header::header"></div>
 
 		<h1>メンバー登録</h1>
 		<p>登録するメンバー情報を入力してください。</p>
+
+		<p th:text="${message}" class="error">error message</p>
 		<p>
 			<font color="red">※は入力必須項目です。</font>
 		</p>
@@ -32,7 +34,9 @@
 					<td><input type="text" placeholder="富士通太郎" th:field="*{name}"
 						maxlength="20">
 						<div class="error" th:if="${#fields.hasErrors('name')}"
-							th:errors="*{name}">validation massage</div></td>
+							th:errors="*{name}">
+							<p color="red">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">パスワード&nbsp;<font
@@ -101,7 +105,10 @@
 				</tr>
 			</table>
 
-			<table>
+			<br>
+
+
+			<table style="border-collapse: collapse" align="center">
 				<tr>
 					<td><a th:href="@{/member/regist/returnrole}">
 							<button
@@ -116,6 +123,7 @@
 					</td>
 				</tr>
 			</table>
+
 		</form>
 	</div>
 
@@ -123,10 +131,13 @@
 	<!--	従業員用画面で従業員を登録する場合-->
 	<div style="text-align: center;"
 		th:if="${employeeMemberForm.role == 'Employee'}">
-		<!--	<div th:replace="header::header"></div>-->
+		<div th:replace="header::header"></div>
 
 		<h1>メンバー登録</h1>
 		<p>登録するメンバー情報を入力してください。</p>
+		<p th:text="${message}" class="error">
+			<font color="red">error message</font>
+		</p>
 		<p>
 			<font color="red">※は入力必須項目です。</font>
 		</p>
@@ -176,7 +187,9 @@
 				</tr>
 			</table>
 
-			<table>
+			<br>
+
+			<table style="border-collapse: collapse" align="center">
 				<tr>
 					<td><a th:href="@{/member/regist/returnrole}">
 							<button
@@ -198,10 +211,13 @@
 	<!--	お客様用画面でお客様を登録する場合-->
 	<div style="text-align: center;"
 		th:if="${customerMemberForm.role == 'CustomerC'}">
-		<div th:replace="header::header"></div>
 
 		<h1>メンバー登録</h1>
 		<p>登録するメンバー情報を入力してください。</p>
+
+		<p th:text="${message}" class="error">
+			<font color="red">error message</font>
+		</p>
 		<p>
 			<font color="red">※は入力必須項目です。</font>
 		</p>
@@ -284,14 +300,16 @@
 				</tr>
 			</table>
 
-			<table>
+			<br>
+
+			<table style="border-collapse: collapse" align="center">
 				<tr>
 					<td>
 						<!--						ログイン画面に戻るように変える--> <a
 						th:href="@{/member/regist/returnrole}">
 							<button
 								style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
-								formaction="/member/regist/returnrole">戻る</button>
+								formaction="/member/regist/returnlogin">ログイン画面へ戻る</button>
 					</a>
 					</td>
 

@@ -20,4 +20,7 @@ public interface MemberRegistService {
 	 */
 	public void registMember(Member member) throws BusinessException;
 
+
+	public int countMail(String mail);
+
 }

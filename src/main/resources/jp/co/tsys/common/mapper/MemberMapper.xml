@@ -49,6 +49,16 @@
 			limit 1;
 	</select>
 	
+	<!-- 同じメールアドレスがあるかカウント -->
+	<select id="countMail" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			member
+		WHERE
+			Mail = #{mail};
+	</select>
+	
 
 	<!-- [検索]メンバー検索 -->
 	<select id="findMember" resultType="jp.co.tsys.common.entity.Member">
@@ -100,7 +110,6 @@
 	SELECT
 		MemberCode AS memberCode,
 		Name AS name,
-		Password AS password,
 		Role AS role,
 		Mail AS mail,
 		ZipCode AS zipCode,
@@ -110,11 +119,10 @@
 	FROM
 		member
 	WHERE
-	Role = #{role} AND
-	(Name = #{name} OR
-	Tel = #{tel} OR
-	Mail = #{mail} OR
-	(#{name} = "" AND #{tel} = "" AND #{mail} = ""));
+		Role = #{role} OR
+		Name = #{name} OR
+		Tel = #{tel} OR
+		Mail = #{mail};
 	</select>
 		
 

@@ -3,15 +3,15 @@
 
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <title>メンバー登録確定画面</title>
 </head>
 
 <body>
-	<div th:replace="header::header"></div>
 	<!--	従業員画面で顧客を登録したい場合-->
 	<div style="text-align: center;"
 		th:if="${customerMemberForm.role == 'Customer'}">
+		<div th:replace="header::header"></div>
 		<h1>メンバー登録確定</h1>
 		<p>
 			<b>以下のメンバー情報を登録しました。</b>
@@ -55,21 +55,12 @@
 				<td th:text="${member.mail}">mail</td>
 			</tr>
 		</table>
-
-		<p>
-			<a th:href="@{/member/regist/returnlogin}">
-				<button
-					style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
-					formaction="/member/regist/returnrole">ログイン画面へ</button>
-			</a>
-		</p>
-
 	</div>
 
 	<!--	従業員画面で従業員を登録したい場合-->
 	<div style="text-align: center;"
 		th:if="${employeeMemberForm.role == 'Employee'}">
-		<!--	<div th:replace="header::header"></div>-->
+		<div th:replace="header::header"></div>
 		<h1>メンバー登録確定</h1>
 		<p>
 			<b>以下のメンバー情報を登録しました。</b>
@@ -97,21 +88,11 @@
 				<td th:text="${member.mail}">mail</td>
 			</tr>
 		</table>
-
-		<p>
-			<a th:href="@{/member/regist/returnlogin}">
-				<button
-					style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
-					formaction="/member/regist/returnrole">ログイン画面へ</button>
-			</a>
-		</p>
-
 	</div>
 
 	<!--	顧客画面で顧客を登録したい場合-->
 	<div style="text-align: center;"
 		th:if="${customerMemberForm.role == 'CustomerC'}">
-		<!--	<div th:replace="header::header"></div>-->
 		<h1>メンバー登録確定</h1>
 		<p>
 			<b>以下のメンバー情報を登録しました。</b>
@@ -152,13 +133,17 @@
 			</tr>
 		</table>
 
-		<p>
-			<a th:href="@{/member/regist/returnlogin}">
-				<button
-					style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
-					formaction="/member/regist/returnrole">ログイン画面へ</button>
-			</a>
-		</p>
+		<br>
+
+		<table style="border-collapse: collapse" align="center">
+			<tr>
+				<td><a th:href="@{/member/regist/returnlogin}">
+						<button
+							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+							formaction="/member/regist/returnrole">ログイン画面へ</button>
+				</a></td>
+			</tr>
+		</table>
 	</div>
 </body>
 
