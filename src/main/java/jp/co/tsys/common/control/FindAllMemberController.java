@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -30,6 +31,17 @@ import jp.co.tsys.common.service.FindAllMemberService;
 @Controller
 @RequestMapping("/member/allview")
 public class FindAllMemberController {
+
+	@ModelAttribute("findAllMemberForm")
+	public FindAllMemberForm initFindAllMemberForm() {
+		return new FindAllMemberForm();
+	}
+
+	@ModelAttribute("memberList")
+	public List<Member> initMemberList() {
+		return new ArrayList<Member>();
+	}
+
 	@Autowired
 	private FindAllMemberService service;
 
@@ -52,7 +64,6 @@ public class FindAllMemberController {
 		// Member member = new Member();
 		// List<Member> memberList = new ArrayList<>();
 		// memberList.add(member);
-		model.addAttribute("form", new FindAllMemberForm());
 		// model.addAttribute("memberList", memberList);
 
 		return "/member/find/find_all_member";
@@ -62,16 +73,18 @@ public class FindAllMemberController {
 	 * 絞り込み検索結果を表示
 	 */
 	@RequestMapping("/search")
-	public String FindAllMember(@Validated FindAllMemberForm form,
+	public String FindAllMember(@Validated FindAllMemberForm findAllMemberForm,
 			BindingResult result, Model model) {
-		model.addAttribute("form", form);
+		// TODO(shino): もしmailのチェックを入れたなら、ここにも!=""を追加
+		if (result.hasErrors() && findAllMemberForm.getTel() != "") {
+			return "/member/find/find_all_member";
+		}
 
-		List<Member> memberList = new ArrayList<>();
-		memberList = service.findAllMember(form.getRole(), form.getName(),
-				form.getTel(), form.getMail());
+		List<Member> memberList = service.findAllMember(
+				findAllMemberForm.getRole(), findAllMemberForm.getName(),
+				findAllMemberForm.getTel(), findAllMemberForm.getMail());
 
 		model.addAttribute("memberList", memberList);
-		// model.addAttribute("form", new FindAllMemberForm());
 
 		if (memberList.size() == 0) {
 			// エラーメッセージ[BIZERR204]をキー名"message"でModelに格納
