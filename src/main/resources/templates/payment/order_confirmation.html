@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -37,6 +38,7 @@ p.sum {
 }
 </style>
 </head>
+
 <body>
 	<div th:replace="Header::header"></div>
 	<h1 style="text-align: center">予約確認</h1>
@@ -73,8 +75,11 @@ p.sum {
 	<br>
 
 	<div class="subtitle">メンバー情報</div>
+
 	<div th:if="${'Employee'.equals(loginMember.role)}">
 		<form th:object="${ordersForm}" th:action="@{/payment/findMember}">
+
+
 			メンバーコード <input type="text" th:field="*{memberCode}">
 			<div class="error" th:if="${#fields.hasErrors('memberCode')}"
 				th:errors="*{memberCode}"></div>
@@ -84,6 +89,8 @@ p.sum {
 
 	<form id="order" th:object="${ordersForm}"
 		th:action="@{/payment/completion}">
+		<div class="error" th:if="${#fields.hasErrors('payment')}"
+			th:errors="*{payment}"></div>
 		<table border="1" width="1000px">
 			<tr>
 				<th>名前</th>
@@ -92,7 +99,8 @@ p.sum {
 			<tr>
 				<th>送付先</th>
 				<td th:if="${displayMemeber.zipCode} != null"
-					th:text="'〒'+${displayMemeber.zipCode + '   '+ displayMemeber.prefecture + displayMemeber.address}"></td>
+					th:text="'〒'+${displayMemeber.zipCode + '   '+ displayMemeber.prefecture + displayMemeber.address}">
+				</td>
 			</tr>
 			<tr>
 				<th>電話番号</th>
@@ -116,4 +124,5 @@ p.sum {
 	</form>
 
 </body>
+
 </html>

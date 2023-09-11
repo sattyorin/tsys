@@ -26,19 +26,15 @@ public class OrdersForm implements Serializable {
 	@Size(max = 6)
 	private String memberCode;
 
-	@NotBlank
 	private String orderNo;
 
-	@NotBlank
 	private String orderDate;
 
-	@NotBlank
 	private int orderTotal;
 
 	@NotBlank
 	private String payment;
 
-	@NotBlank
 	private List<Order> orders;
 
 }

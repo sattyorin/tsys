@@ -3,10 +3,15 @@
  */
 package jp.co.tsys.common.control;
 
+import static jp.co.tsys.common.util.MessageList.BIZERR102;
+import static jp.co.tsys.common.util.MessageList.BIZERR104;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -79,15 +84,17 @@ public class PaymentController {
 			// ないはず
 		}
 
-		// TODO(masa): 在庫チェック
-		// if (hotelDetailForm.getInputQuantity() > カートにあるホテルの残室数) {
-		//
-		// // エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
-		// model.addAttribute("message", BIZERR102);
-		//
-		// // ホテル詳細画面（/hotelfind/sendShoppingCart）を返却する
-		// return "/hotelfind/sendShoppingCart";
-		// }
+		if (hotelDetailForm.getInputQuantity() != null) {
+			// 在庫チェック
+			if (hotelDetailForm.getInputQuantity() > hotelDetailForm
+					.getHotelItem().getStock()) {
+				// エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
+				model.addAttribute("message", BIZERR102);
+
+				// ホテル詳細画面（/hotelfind/sendShoppingCart）を返却する
+				return "/hotelsalses/find/hotel_detail";
+			}
+		}
 
 		List<Order> orderList = new ArrayList<>();
 
@@ -107,13 +114,32 @@ public class PaymentController {
 			orderList.add(order);
 		}
 
+		List<Order> setOrderList = new ArrayList<Order>();
+		Set<String> idSet = new HashSet<>();
+		for (Order order : orderList) {
+			if (idSet.contains(order.getHotelItem().getItemCode())) {
+				for (Order setOrder : setOrderList) {
+					if (setOrder.getHotelItem().getItemCode()
+							.equals(order.getHotelItem().getItemCode())) {
+						setOrder.setQuantity(
+								setOrder.getQuantity() + order.getQuantity());
+						setOrder.setSubTotal(
+								setOrder.getSubTotal() + order.getSubTotal());
+					}
+				}
+			} else {
+				idSet.add(order.getHotelItem().getItemCode());
+				setOrderList.add(order);
+			}
+		}
+
 		// 合計を計算
 		int sum = 0;
-		for (Order item : orderList) {
+		for (Order item : setOrderList) {
 			sum += item.getSubTotal();
 		}
 
-		shoppingCartForm.setOrders(orderList);
+		shoppingCartForm.setOrders(setOrderList);
 		shoppingCartForm.setOrderTotal(sum);
 
 		// リロードでカートが増えないようにhotelDetailFormをリセット
@@ -126,7 +152,7 @@ public class PaymentController {
 	// 予約部屋数の変更
 	@RequestMapping("/changeQuantity")
 	public String changeQuantity(
-			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
+			@ModelAttribute("shoppingCartForm") @Validated ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
@@ -136,7 +162,16 @@ public class PaymentController {
 		List<Order> orderList = shoppingCartForm.getOrders();
 		int sum = 0;
 
+		// 在庫チェック、小計と合計の更新
 		for (Order item : orderList) {
+
+			if (item.getQuantity() > item.getHotelItem().getStock()) {
+				// エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
+				model.addAttribute("message", BIZERR102);
+				// ホテル詳細画面（/hotelfind/sendShoppingCart）を返却する
+				return "/payment/shopping_cart";
+			}
+
 			item.setSubTotal(
 					item.getQuantity() * item.getHotelItem().getPrice());
 			sum += item.getSubTotal();
@@ -151,11 +186,33 @@ public class PaymentController {
 	@RequestMapping("/confirmation")
 	public String confirmeResult(ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model, HttpSession session) {
+
 		// TODO(masa): Check this conditon.
 		if (shoppingCartForm.getOrderTotal() <= 0) {
-			// TODO(masa): Set error code.
-			model.addAttribute("message", "カートに商品がありません");
+			model.addAttribute("message", BIZERR104);
 			return "/payment/shopping_cart";
+		}
+
+		// TODO(masa): 在庫チェック
+		for (Order item : shoppingCartForm.getOrders()) {
+
+			// TODO(masa): 商品重複チェック
+			String check = item.getHotelItem().getItemCode();
+			int totalQuantity = 0;
+			for (Order itemCheck : shoppingCartForm.getOrders()) {
+				if (itemCheck.getHotelItem().getItemCode().equals(check)) {
+					totalQuantity += itemCheck.getQuantity();
+				}
+			}
+
+			if (totalQuantity > item.getHotelItem().getStock()) {
+
+				// エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
+				model.addAttribute("message", BIZERR102);
+
+				// ホテル詳細画面（/hotelfind/sendShoppingCart）を返却する
+				return "/payment/shopping_cart";
+			}
 		}
 
 		OrdersForm ordersForm = new OrdersForm();
@@ -167,7 +224,6 @@ public class PaymentController {
 		Member displayMemeber = new Member();
 
 		Member loginMember = (Member) session.getAttribute("loginMember");
-		System.out.println(loginMember.getRole());
 		if (loginMember.getRole().equals("Customer")) {
 			ordersForm.setMemberCode(loginMember.getMemberCode());
 			displayMemeber.setName(loginMember.getName());
@@ -183,9 +239,14 @@ public class PaymentController {
 	}
 
 	@RequestMapping("/findMember")
-	public String findMember(@ModelAttribute OrdersForm ordersForm,
+	public String findMember(
+			@ModelAttribute("ordersForm") @Validated OrdersForm ordersForm,
 			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			return "/payment/order_confirmation";
+		}
 
 		// サービスにメンバーコード投げてメンバーオブジェクトを取得
 		Member targetMember = memberService
@@ -208,8 +269,25 @@ public class PaymentController {
 
 	@RequestMapping("/completion")
 	@Transactional
-	public String commitResult(@ModelAttribute OrdersForm ordersForm,
+	public String commitResult(
+			@ModelAttribute("ordersForm") @Validated OrdersForm ordersForm,
 			BindingResult result, Model model, SessionStatus status) {
+
+		System.out.println(result.getAllErrors());
+		if (result.hasErrors()) {
+			return "/payment/order_confirmation";
+		}
+
+		// TODO(masa): 在庫チェック
+		for (Order item : ordersForm.getOrders())
+			if (item.getQuantity() > item.getHotelItem().getStock()) {
+
+				// エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
+				model.addAttribute("message", BIZERR102);
+
+				// ホテル詳細画面（/hotelfind/sendShoppingCart）を返却する
+				return "/payment/order_confirmation";
+			}
 
 		// 現在日時を取得する
 		LocalDateTime date1 = LocalDateTime.now();
