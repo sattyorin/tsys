@@ -12,168 +12,168 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center">
-		<div th:if="${loginmember.role == 'Employee'}">
-			<div th:if="${memberForm.role == 'Employee'}">
-				<h1 align="center">メンバー詳細</h1>
-				<br>
+<!-- 		<div th:if="${session.loginMember.role == 'Employee'}"> -->
+<!-- 			<div th:if="${memberForm.role == 'Employee'}"> -->
+<!-- 				<h1 align="center">メンバー詳細</h1> -->
+<!-- 				<br> -->
 
-				<table align="center" border="1">
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">メンバーコード</th>
-						<td th:text="${memberForm.memberCode}">memberCode</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">権限</th>
-						<td th:text="${memberForm.role}">role</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
-						<td th:text="${memberForm.name}">name</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">パスワード</th>
-						<td th:text="${memberForm.password}">password</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
-						<td th:text="${memberForm.mail}">mail</td>
-					</tr>
-				</table>
-				<br>
+<!-- 				<table align="center" border="1"> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">メンバーコード</th> -->
+<!-- 						<td th:text="${memberForm.memberCode}">memberCode</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">権限</th> -->
+<!-- 						<td th:text="${memberForm.role}">role</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">メンバー名</th> -->
+<!-- 						<td th:text="${memberForm.name}">name</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">パスワード</th> -->
+<!-- 						<td th:text="${memberForm.password}">password</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">メールアドレス</th> -->
+<!-- 						<td th:text="${memberForm.mail}">mail</td> -->
+<!-- 					</tr> -->
+<!-- 				</table> -->
+<!-- 				<br> -->
 
-				<table align="center" border="0">
-					<tr>
-						<td>
-							<form method="post" th:action="@{/member/update/entry}">
-								<button
-									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-									type="submit">変更</button>
-							</form>
-						</td>
+<!-- 				<table align="center" border="0"> -->
+<!-- 					<tr> -->
+<!-- 						<td> -->
+<!-- 							<form method="post" th:action="@{/member/update/entry}"> -->
+<!-- 								<button -->
+<!-- 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
+<!-- 									type="submit">変更</button> -->
+<!-- 							</form> -->
+<!-- 						</td> -->
 
-						<td>
-							<form method="post" th:action="@{/member/delete/confirm}">
-								<button
-									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-									type="submit">削除</button>
-							</form>
-						</td>
-					</tr>
-				</table>
-				<form method="post" th:action="@{/member/find/return/memberfind}">
-					<button
-						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-						type="submit">戻る</button>
-				</form>
-			</div>
+<!-- 						<td> -->
+<!-- 							<form method="post" th:action="@{/member/delete/confirm}"> -->
+<!-- 								<button -->
+<!-- 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
+<!-- 									type="submit">削除</button> -->
+<!-- 							</form> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</table> -->
+<!-- 				<form method="post" th:action="@{/member/find/return/memberfind}"> -->
+<!-- 					<button -->
+<!-- 						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
+<!-- 						type="submit">戻る</button> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
 
-			<div th:if="${memberForm.role == 'Customer'}">
-				<h1 align="center">メンバー詳細</h1>
-				<br>
+<!-- 			<div th:if="${memberForm.role == 'Customer'}"> -->
+<!-- 				<h1 align="center">メンバー詳細</h1> -->
+<!-- 				<br> -->
 
-				<table align="center" border="1">
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">メンバーコード</th>
-						<td th:text="${memberForm.memberCode}">memberCode</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">権限</th>
-						<td th:text="${memberForm.role}">role</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
-						<td th:text="${memberForm.name}">name</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">パスワード</th>
-						<td th:text="${memberForm.password}">password</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">郵便番号</th>
-						<td th:text="${memberForm.zipCode}">zipCode</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">都道府県</th>
-						<td th:text="${memberForm.prefecture}">prefecture</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">住所</th>
-						<td th:text="${memberForm.address}">address</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">電話番号</th>
-						<td th:text="${memberForm.tel}">tel</td>
-					</tr>
-					<tr>
-						<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
-						<td th:text="${memberForm.mail}">mail</td>
-					</tr>
-				</table>
-				<br>
+<!-- 				<table align="center" border="1"> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">メンバーコード</th> -->
+<!-- 						<td th:text="${memberForm.memberCode}">memberCode</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">権限</th> -->
+<!-- 						<td th:text="${memberForm.role}">role</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">メンバー名</th> -->
+<!-- 						<td th:text="${memberForm.name}">name</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">パスワード</th> -->
+<!-- 						<td th:text="${memberForm.password}">password</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">郵便番号</th> -->
+<!-- 						<td th:text="${memberForm.zipCode}">zipCode</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">都道府県</th> -->
+<!-- 						<td th:text="${memberForm.prefecture}">prefecture</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">住所</th> -->
+<!-- 						<td th:text="${memberForm.address}">address</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">電話番号</th> -->
+<!-- 						<td th:text="${memberForm.tel}">tel</td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th style="background-color: rgb(255, 206, 206);">メールアドレス</th> -->
+<!-- 						<td th:text="${memberForm.mail}">mail</td> -->
+<!-- 					</tr> -->
+<!-- 				</table> -->
+<!-- 				<br> -->
 
-				<table align="center" border="0">
-					<tr>
-						<td>
-							<form method="post" th:action="@{/member/update/entry}">
-								<button
-									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-									type="submit">変更</button>
-							</form>
-						</td>
+<!-- 				<table align="center" border="0"> -->
+<!-- 					<tr> -->
+<!-- 						<td> -->
+<!-- 							<form method="post" th:action="@{/member/update/entry}"> -->
+<!-- 								<button -->
+<!-- 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
+<!-- 									type="submit">変更</button> -->
+<!-- 							</form> -->
+<!-- 						</td> -->
 
-						<td>
-							<form method="post" th:action="@{/member/delete/confirm}">
-								<button
-									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-									type="submit">削除</button>
-							</form>
-						</td>
-					</tr>
-				</table>
-				<form method="post" th:action="@{/member/find/return/memberfind}">
-					<button
-						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-						type="submit">戻る</button>
-				</form>
-			</div>
-		</div>
+<!-- 						<td> -->
+<!-- 							<form method="post" th:action="@{/member/delete/confirm}"> -->
+<!-- 								<button -->
+<!-- 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
+<!-- 									type="submit">削除</button> -->
+<!-- 							</form> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</table> -->
+<!-- 				<form method="post" th:action="@{/member/find/return/memberfind}"> -->
+<!-- 					<button -->
+<!-- 						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
+<!-- 						type="submit">戻る</button> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 
 
-		<div th:if="${loginmember.role == 'Customer'}">
+		<div th:if="${session.loginMember.role == 'Customer'}">
 			<h1 align="center">メンバー詳細</h1>
 			<br>
 			<table align="center" border="1">
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">メンバーコード</th>
-					<td th:text="${memberForm.memberCode}">memberCode</td>
+					<td th:text="${memberForm.member.memberCode}">memberCode</td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
-					<td th:text="${memberForm.name}">name</td>
+					<td th:text="${memberForm.member.name}">name</td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">パスワード</th>
-					<td th:text="${memberForm.password}">password</td>
+					<td th:text="${memberForm.member.password}">password</td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">郵便番号</th>
-					<td th:text="${memberForm.zipCode}">zipCode</td>
+					<td th:text="${memberForm.member.zipCode}">zipCode</td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">都道府県</th>
-					<td th:text="${memberForm.prefecture}">prefecture</td>
+					<td th:text="${memberForm.member.prefecture}">prefecture</td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">住所</th>
-					<td th:text="${memberForm.address}">address</td>
+					<td th:text="${memberForm.member.address}">address</td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">電話番号</th>
-					<td th:text="${memberForm.tel}">tel</td>
+					<td th:text="${memberForm.member.tel}">tel</td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
-					<td th:text="${memberForm.mail}">mail</td>
+					<td th:text="${memberForm.member.mail}">mail</td>
 				</tr>
 			</table>
 			<br>

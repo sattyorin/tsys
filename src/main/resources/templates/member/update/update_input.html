@@ -10,7 +10,7 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center"
-		th:if="${memberForm.role == 'Customer'}">
+		th:if="${session.loginMember.role == 'Customer'}">
 
 		<h1>メンバー情報変更</h1>
 		<p>※入力必須項目</p>
@@ -18,7 +18,7 @@
 			<font color="red">error message</font>
 		</p>
 
-		<form th:object="${memberForm}" method="post"
+		<form th:object="${customerMemberForm}" method="post"
 			th:action="@{/member/update/customerupdate}">
 			<table align="center" border="1">
 				<tr>
@@ -87,55 +87,55 @@
 		</form>
 	</div>
 
-	<div style="text-align: center"
-		th:if="${memberForm.role == 'Employee'}">
+<!-- 	<div style="text-align: center" -->
+<!-- 		th:if="${memberForm.role == 'Employee'}"> -->
 
-		<h1>メンバー情報変更</h1>
-		<p>※入力必須項目</p>
-		<p th:text="${message}" class="error">
-			<font color="red">error message</font>
-		</p>
+<!-- 		<h1>メンバー情報変更</h1> -->
+<!-- 		<p>※入力必須項目</p> -->
+<!-- 		<p th:text="${message}" class="error"> -->
+<!-- 			<font color="red">error message</font> -->
+<!-- 		</p> -->
 
-		<form th:object="${memberForm}" method="post"
-			th:action="@{/member/update/employeeupdate}">
-			<table align="center" border="1">
-				<tr>
-					<th style="background-color: rgb(255, 206, 206);">メンバー名<font
-						color="red" size=1>※</font>
-					</th>
-					<td><input type="text" th:field="*{name}"></td>
-				</tr>
-				<tr>
-					<th style="background-color: rgb(255, 206, 206);">パスワード<font
-						color="red" size=1>※</font> <br>
-						<p>
-							<font size=2>8～15文字で入力してください</font>
-						</p>
-					</th>
-					<td><input type="text" th:field="*{password}"></td>
-				</tr>
-				<tr>
-					<th style="background-color: rgb(255, 206, 206);">確認用パスワード <font
-						color="red" size=1>※</font> <br>
-						<p>
-							<font size=2>8～15文字で入力してください</font>
-						</p>
-					</th>
-					<td><input type="text" th:field="*{confirmPassword}">
-					</td>
-				</tr>
-				<tr>
-					<th style="background-color: rgb(255, 206, 206);">メールアドレス<font
-						color="red" size=1>※</font>
-					</th>
-					<td><input type="text" th:field="*{mail}"></td>
-				</tr>
-			</table>
-			<br>
-			<button type="submit"
-				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">変更</button>
-		</form>
-	</div>
+<!-- 		<form th:object="${memberForm}" method="post" -->
+<!-- 			th:action="@{/member/update/employeeupdate}"> -->
+<!-- 			<table align="center" border="1"> -->
+<!-- 				<tr> -->
+<!-- 					<th style="background-color: rgb(255, 206, 206);">メンバー名<font -->
+<!-- 						color="red" size=1>※</font> -->
+<!-- 					</th> -->
+<!-- 					<td><input type="text" th:field="*{name}"></td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<th style="background-color: rgb(255, 206, 206);">パスワード<font -->
+<!-- 						color="red" size=1>※</font> <br> -->
+<!-- 						<p> -->
+<!-- 							<font size=2>8～15文字で入力してください</font> -->
+<!-- 						</p> -->
+<!-- 					</th> -->
+<!-- 					<td><input type="text" th:field="*{password}"></td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<th style="background-color: rgb(255, 206, 206);">確認用パスワード <font -->
+<!-- 						color="red" size=1>※</font> <br> -->
+<!-- 						<p> -->
+<!-- 							<font size=2>8～15文字で入力してください</font> -->
+<!-- 						</p> -->
+<!-- 					</th> -->
+<!-- 					<td><input type="text" th:field="*{confirmPassword}"> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<th style="background-color: rgb(255, 206, 206);">メールアドレス<font -->
+<!-- 						color="red" size=1>※</font> -->
+<!-- 					</th> -->
+<!-- 					<td><input type="text" th:field="*{mail}"></td> -->
+<!-- 				</tr> -->
+<!-- 			</table> -->
+<!-- 			<br> -->
+<!-- 			<button type="submit" -->
+<!-- 				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">変更</button> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
 </body>
 
 </html>

@@ -4,13 +4,14 @@
 
 package jp.co.tsys.common.control;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -27,7 +28,8 @@ import jp.co.tsys.common.service.MemberFindService;
  * @author Yamaguchi
  * @version 2.0.0
  */
-@SessionAttributes(names = {"memberCodeForm", "loginmember", "memberForm"})
+@SessionAttributes(types = {MemberForm.class}, names = {"memberCodeForm",
+		"loginmember"})
 @Controller
 @RequestMapping("/member/find")
 public class MemeberFindController {
@@ -84,16 +86,16 @@ public class MemeberFindController {
 
 		Member member = service.findMember(form.getMemberCode());// メンバーコードに一致したメンバー情報を取得
 		MemberForm memberForm = new MemberForm();
-		memberForm.setMemberCode(member.getMemberCode());
-		memberForm.setName(member.getName());
-		memberForm.setRole(member.getRole());
-		memberForm.setPassword(member.getPassword());
-		memberForm.setZipCode(member.getZipCode());
-		memberForm.setPrefecture(member.getPrefecture());
-		memberForm.setAddress(member.getAddress());
-		memberForm.setTel(member.getTel());
-		memberForm.setMail(member.getMail());// new
-												// MemberFormにメンバー情報をセット
+		// memberForm.setMemberCode(member.getMemberCode());
+		// memberForm.setName(member.getName());
+		// memberForm.setRole(member.getRole());
+		// memberForm.setPassword(member.getPassword());
+		// memberForm.setZipCode(member.getZipCode());
+		// memberForm.setPrefecture(member.getPrefecture());
+		// memberForm.setAddress(member.getAddress());
+		// memberForm.setTel(member.getTel());
+		// memberForm.setMail(member.getMail());// new
+		// MemberFormにメンバー情報をセット
 
 		model.addAttribute("memberForm", memberForm);// メンバーフォームをセッションに。
 
@@ -109,28 +111,10 @@ public class MemeberFindController {
 	 *         見つからない場合、お客様トップ画面topMenu.htmlにもどる
 	 */
 	@RequestMapping("/retrive")
-	public String retriveMember(
-			@ModelAttribute("loginmember") Member loginmember,
-			BindingResult result, // TODO(seiya):結局Form名は正しいの？(memberFormに値を入れる必要あり)
-			Model model) {
+	public String retriveMember(Model model, HttpSession session) {
 
-		if (result.hasErrors()) {
-			return "/top_menu";
-		}
-
-		// Member member = service.findMember(loginmember.getMemberCode());
-
-		System.out.println(loginmember);
 		MemberForm memberForm = new MemberForm();
-		memberForm.setMemberCode(loginmember.getMemberCode());// ここの塊はテスト時にコメントアウト
-		memberForm.setName(loginmember.getName());
-		memberForm.setRole(loginmember.getRole());
-		memberForm.setPassword(loginmember.getPassword());
-		memberForm.setZipCode(loginmember.getZipCode());
-		memberForm.setPrefecture(loginmember.getPrefecture());
-		memberForm.setAddress(loginmember.getAddress());
-		memberForm.setTel(loginmember.getTel());
-		memberForm.setMail(loginmember.getMail());// ここの塊はテスト時にコメントアウト
+		memberForm.setMember((Member) session.getAttribute("loginMember"));
 
 		// Member loginmember = new Member();//ここから(A)までテスト用
 		// loginmember.setMemberCode("CM0005");
@@ -146,19 +130,7 @@ public class MemeberFindController {
 		// model.addAttribute("loginmember", loginmember);//ログインメンバーにログインする役職を設定
 		// //(A)テスト終了
 
-		memberForm.setMemberCode(loginmember.getMemberCode());
-		memberForm.setName(loginmember.getName());
-		memberForm.setRole(loginmember.getRole());
-		memberForm.setPassword(loginmember.getPassword());
-		memberForm.setZipCode(loginmember.getZipCode());
-		memberForm.setPrefecture(loginmember.getPrefecture());
-		memberForm.setAddress(loginmember.getAddress());
-		memberForm.setTel(loginmember.getTel());
-		memberForm.setMail(loginmember.getMail());
-
 		model.addAttribute("memberForm", memberForm);
-		System.out.println(memberForm);
-		System.out.println(loginmember);
 		return "/member/find/member_detail";
 	}
 

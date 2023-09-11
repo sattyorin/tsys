@@ -10,7 +10,7 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center"
-		th:if="${memberForm.role == 'Customer'}">
+		th:if="${session.loginMember.role == 'Customer'}">
 		<h1>メンバー変更確定確認</h1>
 		<p>以下の情報に更新しました。</p>
 		<table align="center" border="1">
@@ -45,25 +45,25 @@
 		</table>
 	</div>
 
-	<div style="text-align: center"
-		th:if="${memberForm.role == 'Employee'}">
-		<h1>メンバー変更確定確認</h1>
-		<p>以下の情報に更新しました。</p>
-		<table align="center" border="1">
-			<tr>
-				<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
-				<td th:text="${employeeMemberForm.name}">name</td>
-			</tr>
-			<tr>
-				<th style="background-color: rgb(255, 206, 206);">パスワード</th>
-				<td th:text="${employeeMemberForm.password}">password</td>
-			</tr>
-			<tr>
-				<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
-				<td th:text="${employeeMemberForm.mail}">mail</td>
-			</tr>
-		</table>
-	</div>
+<!-- 	<div style="text-align: center" -->
+<!-- 		th:if="${memberForm.role == 'Employee'}"> -->
+<!-- 		<h1>メンバー変更確定確認</h1> -->
+<!-- 		<p>以下の情報に更新しました。</p> -->
+<!-- 		<table align="center" border="1"> -->
+<!-- 			<tr> -->
+<!-- 				<th style="background-color: rgb(255, 206, 206);">メンバー名</th> -->
+<!-- 				<td th:text="${employeeMemberForm.name}">name</td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<th style="background-color: rgb(255, 206, 206);">パスワード</th> -->
+<!-- 				<td th:text="${employeeMemberForm.password}">password</td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<th style="background-color: rgb(255, 206, 206);">メールアドレス</th> -->
+<!-- 				<td th:text="${employeeMemberForm.mail}">mail</td> -->
+<!-- 			</tr> -->
+<!-- 		</table> -->
+<!-- 	</div> -->
 </body>
 
 </html>

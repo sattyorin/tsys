@@ -26,10 +26,25 @@ import jp.co.tsys.common.service.MemberUpdateService;
  * @version 1.0.0
  */
 @Controller
-@SessionAttributes(names = {"memberForm", "customerMemberForm",
-		"employeeMemberForm"})
+@SessionAttributes(types = {MemberForm.class,
+		CustomerMemberForm.class}, names = {"memberForm", "employeeMemberForm"})
 @RequestMapping("/member/update")
 public class MemberUpdateContoroller {
+
+	@ModelAttribute("memberForm")
+	public MemberForm initMemberForm(Model model) {
+		// TODO(sara) check
+		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
+		if (memberForm != null) {
+			return memberForm;
+		}
+		return new MemberForm();
+	}
+
+	@ModelAttribute("customerMemberForm")
+	public CustomerMemberForm initCustomerMemberForm(Model model) {
+		return new CustomerMemberForm();
+	}
 
 	@Autowired
 	private MemberUpdateService service;
@@ -39,9 +54,20 @@ public class MemberUpdateContoroller {
 	public String entryMemberUpdate(Model model) {
 
 		// 入力値を取得するmodelを用意
+		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
+		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+		customerMemberForm.setName(memberForm.getMember().getName());
+		customerMemberForm.setPassword(memberForm.getMember().getPassword());
+		customerMemberForm.setConfirmPassword(memberForm.getConfirmPassword());
+		customerMemberForm.setMail(memberForm.getMember().getMail());
+		customerMemberForm.setZipCode(memberForm.getMember().getZipCode());
+		customerMemberForm
+				.setPrefecture(memberForm.getMember().getPrefecture());
+		customerMemberForm.setAddress(memberForm.getMember().getAddress());
+		customerMemberForm.setTel(memberForm.getMember().getTel());
 
-		model.addAttribute("customerMemberForm", new CustomerMemberForm());
-		model.addAttribute("employeeMemberForm", new EmployeeMemberForm());
+		model.addAttribute("customerMemberForm", customerMemberForm);
+		// model.addAttribute("employeeMemberForm", new EmployeeMemberForm());
 		// メンバー変更画面をreturnする
 		return "/member/update/update_input";
 	}
@@ -51,15 +77,18 @@ public class MemberUpdateContoroller {
 	public String customerUpdate(
 			@ModelAttribute("customerMemberForm") @Validated CustomerMemberForm customerMemberForm,
 			BindingResult result, Model model) {
+
+		System.out.println(customerMemberForm);
 		// 入力チェック
 		if (result.hasErrors()) {
 			// メンバー変更画面をreturnする
+			// TODO(naoto): Set error code.
 			model.addAttribute("message", "入力項目が規定を満たしていません");
-			return "/member/update_input";
+			return "/member/update/update_input";
 		}
 
-		// フォームオブジェクトを"memberForm"でModelに格納
-		model.addAttribute("customerMemberForm", customerMemberForm);
+		// // フォームオブジェクトを"memberForm"でModelに格納
+		// model.addAttribute("customerMemberForm", customerMemberForm);
 
 		// 確認画面に遷移する
 		return "/member/update/update_confirm";
@@ -91,8 +120,15 @@ public class MemberUpdateContoroller {
 		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
 		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
 				.getAttribute("customerMemberForm");
+
+		// もしセッションがきれたりしていたら
+		if (memberForm == null || customerMemberForm == null) {
+			// TODO(naoto, seiya): throw Exception.
+			return "/member/find/member_detail";
+		}
+
 		Member member = new Member();
-		member.setMemberCode(memberForm.getMemberCode());
+		member.setMemberCode(memberForm.getMember().getMemberCode());
 		member.setRole("Customer");
 		member.setName(customerMemberForm.getName());
 		member.setPassword(customerMemberForm.getPassword());
@@ -118,7 +154,7 @@ public class MemberUpdateContoroller {
 		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
 		EmployeeMemberForm employeeMemberForm = (EmployeeMemberForm) model
 				.getAttribute("employeeMemberForm");
-		member.setMemberCode(memberForm.getMemberCode());
+		member.setMemberCode(memberForm.getMember().getMemberCode());
 		member.setRole("Employee");
 		member.setName(employeeMemberForm.getName());
 		member.setPassword(employeeMemberForm.getPassword());
@@ -138,18 +174,19 @@ public class MemberUpdateContoroller {
 	@RequestMapping("/customerreviseinput")
 	public String customerReviseInput(Model model) {
 		// メンバー変更画面をreturnする
-		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
-				.getAttribute("customerMemberForm");
-		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
-		memberForm.setName(customerMemberForm.getName());
-		memberForm.setPassword(customerMemberForm.getPassword());
-		memberForm.setConfirmPassword(customerMemberForm.getConfirmPassword());
-		memberForm.setZipCode(customerMemberForm.getZipCode());
-		memberForm.setPrefecture(customerMemberForm.getZipCode());
-		memberForm.setAddress(customerMemberForm.getAddress());
-		memberForm.setTel(customerMemberForm.getTel());
-		memberForm.setMail(customerMemberForm.getMail());
-		model.addAttribute("memberForm", memberForm);
+		// CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
+		// .getAttribute("customerMemberForm");
+		// MemberForm memberForm = (MemberForm)
+		// model.getAttribute("memberForm");
+		// memberForm.setName(customerMemberForm.getName());
+		// memberForm.setPassword(customerMemberForm.getPassword());
+		// memberForm.setConfirmPassword(customerMemberForm.getConfirmPassword());
+		// memberForm.setZipCode(customerMemberForm.getZipCode());
+		// memberForm.setPrefecture(customerMemberForm.getZipCode());
+		// memberForm.setAddress(customerMemberForm.getAddress());
+		// memberForm.setTel(customerMemberForm.getTel());
+		// memberForm.setMail(customerMemberForm.getMail());
+		// model.addAttribute("memberForm", memberForm);
 		return "/member/update/update_input";
 	}
 
@@ -160,10 +197,10 @@ public class MemberUpdateContoroller {
 		EmployeeMemberForm employeeMemberForm = (EmployeeMemberForm) model
 				.getAttribute("employeeMemberForm");
 		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
-		memberForm.setName(employeeMemberForm.getName());
-		memberForm.setPassword(employeeMemberForm.getPassword());
+		// memberForm.setName(employeeMemberForm.getName());
+		// memberForm.setPassword(employeeMemberForm.getPassword());
 		memberForm.setConfirmPassword(employeeMemberForm.getConfirmPassword());
-		memberForm.setMail(employeeMemberForm.getMail());
+		// memberForm.setMail(employeeMemberForm.getMail());
 		model.addAttribute("memberForm", memberForm);
 		return "/member/update/update_input";
 	}

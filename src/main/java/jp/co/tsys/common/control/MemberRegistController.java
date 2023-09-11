@@ -39,7 +39,7 @@ public class MemberRegistController {
 	/**
 	 * メンバー管理メニュー画面の[メンバー登録]に対応するHandlerメソッド マッピングするURL：
 	 * /member/regist/chooserole
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @return メンバー登録（権限）画面（/member_regist_role）
@@ -56,7 +56,7 @@ public class MemberRegistController {
 	/**
 	 * メンバー登録（権限）画面の[従業員登録]、[お客様登録]、またはログイン画面の[登録はこちら]に対応するHandlerメソッド
 	 * マッピングするURL： /member/regist/employee/input
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @return メンバー登録画面（/member_regist）
@@ -65,7 +65,7 @@ public class MemberRegistController {
 	public String inputRegist(@PathVariable String role,
 			@ModelAttribute("memberForm") MemberForm form, Model model) {
 		// roleの値（CustomerかEmployee）をformのroleに入れる
-		form.setRole(role);
+		form.getMember().setRole(role);
 		model.addAttribute("memberForm", form);
 
 		return "/member/regist/member_regist";
@@ -74,7 +74,7 @@ public class MemberRegistController {
 	/**
 	 * メンバー登録画面の[確認]に対応するHandlerメソッド マッピングするURL： /member/regist/comfirm
 	 * マッピングするHTTPメソッド： POST
-	 * 
+	 *
 	 * @param form
 	 *            メンバー情報入力フォームオブジェクト
 	 * @param result
@@ -90,7 +90,8 @@ public class MemberRegistController {
 
 			// メンバー登録画面（/member_regist）を返却する
 			return "/member_regist";
-		} else if (!form.getPassword().equals(form.getConfirmPassword())) {
+		} else if (!form.getMember().getPassword()
+				.equals(form.getConfirmPassword())) {
 			model.addAttribute("message", BIZERR201);
 			return "/member_regist";
 		}
@@ -101,7 +102,7 @@ public class MemberRegistController {
 	/**
 	 * メンバー登録確認画面の[確定]に対応するHandlerメソッド マッピングするURL： /member/regist/commit
 	 * マッピングするHTTPメソッド： POST
-	 * 
+	 *
 	 * @param form
 	 *            メンバー情報入力フォームオブジェクト
 	 * @param model
@@ -115,9 +116,11 @@ public class MemberRegistController {
 			Model model, SessionStatus status) {
 
 		// フォームオブジェクトに格納された情報をEmployeeオブジェクトに設定する
-		Member member = new Member("0", form.getName(), form.getPassword(),
-				form.getRole(), form.getMail(), form.getZipCode(),
-				form.getPrefecture(), form.getAddress(), form.getTel());
+		Member member = new Member("0", form.getMember().getName(),
+				form.getMember().getPassword(), form.getMember().getRole(),
+				form.getMember().getMail(), form.getMember().getZipCode(),
+				form.getMember().getPrefecture(), form.getMember().getAddress(),
+				form.getMember().getTel());
 
 		// ServiceのregistEmployeeメソッドを呼び出す
 		service.registMember(member);
@@ -134,7 +137,7 @@ public class MemberRegistController {
 	/**
 	 * メンバー登録（権限）画面の[戻る]に対応するHandlerメソッド メンバー管理メニュー画面へ戻る マッピングするURL：
 	 * /member/regist/returnmenu
-	 * 
+	 *
 	 * @param form
 	 *            メンバー登録情報入力フォームオブジェクト
 	 * @return メンバー管理メニュー画面（/member_mgr_menu）
@@ -148,7 +151,7 @@ public class MemberRegistController {
 	/**
 	 * 従業員が登録するメンバー登録画面の[戻る]に対応するHandlerメソッド メンバー登録（権限）画面へ戻る マッピングするURL：
 	 * /member/regist/returnrole
-	 * 
+	 *
 	 * @param form
 	 *            メンバー登録情報入力フォームオブジェクト
 	 * @return メンバー登録（権限）画面（/member_regist_role）
@@ -161,7 +164,7 @@ public class MemberRegistController {
 	/**
 	 * 顧客が登録する場合、メンバー登録画面の[戻る]、メンバー登録確定画面の[ログイン画面へ]に対応するHandlerメソッド ログイン画面へ戻る
 	 * マッピングするURL： /member/regist/returnlogin
-	 * 
+	 *
 	 * @param form
 	 *            メンバー登録情報入力フォームオブジェクト
 	 * @return ログイン画面（/）
@@ -174,7 +177,7 @@ public class MemberRegistController {
 	/**
 	 * メンバー登録確認画面の[修正]に対応するHandlerメソッド メンバー登録画面へ戻る マッピングするURL：
 	 * /member/regist/returninput
-	 * 
+	 *
 	 * @param form
 	 *            メンバー登録情報入力フォームオブジェクト
 	 * @return メンバー登録画面（/member_regist）
@@ -187,7 +190,7 @@ public class MemberRegistController {
 	/**
 	 * 業務例外（主キー一意制約違反の場合）のハンドリング レスポンスステータスコード： HttpStatus.CONFLICT
 	 * ハンドリングする例外クラス： BusinessException.class
-	 * 
+	 *
 	 * @param model
 	 *            Modelオブジェクト
 	 * @param e

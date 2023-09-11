@@ -44,8 +44,9 @@ public class MemberDeleteController {
 	public String deleteMember(Model model) {
 		// 削除が失敗した際のエラーをキャッチする
 		try {
-			MemberForm member = (MemberForm) model.getAttribute("memberForm");
-			service.deleteMember(member.getMemberCode());
+			MemberForm memberForm = (MemberForm) model
+					.getAttribute("memberForm");
+			service.deleteMember(memberForm.getMember().getMemberCode());
 		} catch (BusinessException e) {
 			// エラーメッセージをキー名"message"でModelに格納
 			model.addAttribute("message", e.getMessage());
