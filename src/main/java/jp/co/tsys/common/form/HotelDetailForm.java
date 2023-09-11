@@ -6,6 +6,7 @@ package jp.co.tsys.common.form;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import jp.co.tsys.common.entity.HotelItem;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,7 @@ public class HotelDetailForm {
 
 	@Max(20)
 	@Min(1)
-	// TODO(risa, yusaku): String? Integer?
-	// TODO(risa, yusaku): set max value
+	@NotNull
 	/** 予約部屋数 */
-	private int inputQuantity;
+	private Integer inputQuantity;
 }

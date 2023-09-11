@@ -209,6 +209,15 @@ public final class MessageList {
 	 */
 	public static final String BIZERR305 = "同じ商品がすでに存在しています。";
 
+	/**
+	 * 業務エラー（商品コードが重複している）時のエラーメッセージ
+	 * <ul>
+	 * <li>メッセージID：BIZERR000</li>
+	 * <li>メッセージ本文：{@value}</li>
+	 * </ul>
+	 */
+	public static final String BIZERR306 = "商品コードが重複しています。";
+
 	/** プライベート・コンストラクター */
 	private MessageList() {
 	}
