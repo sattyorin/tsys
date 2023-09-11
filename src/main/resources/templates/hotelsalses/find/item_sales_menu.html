@@ -62,6 +62,7 @@ button {
 </head>
 
 <body>
+	<div th:replace="Header::header"></div>
 	<div style="text-align: center;">
 		<h1>従業員用メニュー</h1>
 		<form th:action="@{/hotelfind/findhotel}" method="post">
