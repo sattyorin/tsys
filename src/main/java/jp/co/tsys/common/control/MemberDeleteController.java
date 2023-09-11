@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -24,8 +25,17 @@ import jp.co.tsys.common.service.MemberDeleteService;
  */
 @Controller
 @RequestMapping("/member/delete")
-@SessionAttributes(names = {"loginmember", "memberForm"})
+@SessionAttributes(types = {MemberForm.class})
 public class MemberDeleteController {
+
+	@ModelAttribute("memberForm")
+	MemberForm initMemberForm(Model model) {
+		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
+		if (memberForm != null) {
+			return memberForm;
+		}
+		return new MemberForm();
+	}
 
 	@Autowired
 	private MemberDeleteService service;
@@ -34,6 +44,7 @@ public class MemberDeleteController {
 	// 顧客が退会する際の「確認」に対応するメソッド
 	@RequestMapping("/confirm")
 	public String deleteMemberConfirm(String memberCode) {
+		// TODO(sara): if memberForm is empty
 		return "member/delete/member_delete_confirm";
 
 	}
@@ -60,7 +71,7 @@ public class MemberDeleteController {
 	// 顧客が退会する際の「最終確認」に対応するメソッド
 	@RequestMapping("/finalconfirm")
 	public String deleteCustomerFinalConfirm(String memberCode) {
-
+		// TODO(sara): if memberForm is empty
 		return "member/delete/member_delete_final_confirm";
 	}
 

@@ -7,39 +7,39 @@
 </head>
 
 <body>
-	<div th:if="${loginmember.role == 'Customer'}">
-		<div th:replace="header::header"></div>
+	<div th:replace="header::header"></div>
+	<div th:if="${session.loginMember.role == 'Customer'}">
 
 		<h1 align="center">メンバー退会確認</h1>
 
 		<table align="center" border="1">
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">メンバーコード</th>
-				<td th:text="${memberForm.memberCode}">memberCode</td>
+				<td th:text="${memberForm.member.memberCode}">memberCode</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
-				<td th:text="${memberForm.name}">name</td>
+				<td th:text="${memberForm.member.name}">name</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">郵便番号</th>
-				<td th:text="${memberForm.zipCode}">zipCode</td>
+				<td th:text="${memberForm.member.zipCode}">zipCode</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">都道府県</th>
-				<td th:text="${memberForm.prefecture}">prefecture</td>
+				<td th:text="${memberForm.member.prefecture}">prefecture</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">住所</th>
-				<td th:text="${memberForm.address}">address</td>
+				<td th:text="${memberForm.member.address}">address</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">電話番号</th>
-				<td th:text="${memberForm.tel}">tel</td>
+				<td th:text="${memberForm.member.tel}">tel</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
-				<td th:text="${memberForm.mail}">mail</td>
+				<td th:text="${memberForm.member.mail}">mail</td>
 			</tr>
 		</table>
 		<br>
@@ -67,8 +67,7 @@
 	</div>
 
 
-	<div th:if="${loginmember.role == 'Employee'}">
-		<div th:replace="header::header"></div>
+	<div th:if="${session.loginMember.role == 'Employee'}">
 
 		<h1 align="center">メンバー削除確認</h1>
 		<!--  エラーメッセージ -->
@@ -77,35 +76,35 @@
 		<table align="center" border="1">
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">メンバーコード</th>
-				<td th:text="${memberForm.memberCode}">memberCode</td>
+				<td th:text="${memberForm.member.memberCode}">memberCode</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">権限</th>
-				<td th:text="${memberForm.role}">role</td>
+				<td th:text="${memberForm.member.role}">role</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">メンバー名</th>
-				<td th:text="${memberForm.name}">name</td>
+				<td th:text="${memberForm.member.name}">name</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">郵便番号</th>
-				<td th:text="${memberForm.zipCode}">zipCode</td>
+				<td th:text="${memberForm.member.zipCode}">zipCode</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">都道府県</th>
-				<td th:text="${memberForm.prefecture}">prefecture</td>
+				<td th:text="${memberForm.member.prefecture}">prefecture</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">住所</th>
-				<td th:text="${memberForm.address}">address</td>
+				<td th:text="${memberForm.member.address}">address</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">電話番号</th>
-				<td th:text="${memberForm.tel}">tel</td>
+				<td th:text="${memberForm.member.tel}">tel</td>
 			</tr>
 			<tr>
 				<th style="background-color: rgb(255, 206, 206);">メールアドレス</th>
-				<td th:text="${memberForm.mail}">mail</td>
+				<td th:text="${memberForm.member.mail}">mail</td>
 			</tr>
 		</table>
 		<br>
