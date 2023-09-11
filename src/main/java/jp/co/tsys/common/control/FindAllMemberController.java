@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -41,12 +40,10 @@ public class FindAllMemberController {
 	 *            商品情報フォームオブジェクト
 	 * @return 商品詳細画面（/member/retrieve/detail）
 	 */
-	@RequestMapping("return")
-	public String quitUpdate(
-			@ModelAttribute("FindAllMemberForm") FindAllMemberForm form,
-			Model model) {
+	@RequestMapping("/return")
+	public String quitUpdate() {
 
-		return "/member/regist/find_all_member";
+		return "/member/regist/member_management";
 	}
 
 	@RequestMapping("viewlist")

@@ -100,6 +100,7 @@
 	SELECT
 		MemberCode AS memberCode,
 		Name AS name,
+		Password AS password,
 		Role AS role,
 		Mail AS mail,
 		ZipCode AS zipCode,
@@ -109,10 +110,11 @@
 	FROM
 		member
 	WHERE
-		Role = #{role} OR
-		Name = #{name} OR
-		Tel = #{tel} OR
-		Mail = #{mail};
+	Role = #{role} AND
+	(Name = #{name} OR
+	Tel = #{tel} OR
+	Mail = #{mail} OR
+	(#{name} = "" AND #{tel} = "" AND #{mail} = ""));
 	</select>
 		
 

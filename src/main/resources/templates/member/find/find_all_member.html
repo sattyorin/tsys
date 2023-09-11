@@ -5,36 +5,47 @@
 <head>
 <meta charset="utf-8">
 <!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js}"></script>
+<script type="text/javascript" th:src="@{/js/paging.js}"></script>
 <title>メンバー一覧画面</title>
 </head>
 ​
-
-<body>
-	<div style="text-align: center">
-		<h1>メンバー一覧</h1>
-		<style>
-p {
+<style>
+.error {
 	color: rgb(255, 0, 0);
 }
+
+th {
+	background-color: rgb(255, 185, 185);
+}
 </style>
-		<p th:text="${message}">error message</p>
+
+<body>
+	<div th:replace="header::header"></div>
+	<div style="text-align: center">
+		<h1>メンバー一覧</h1>
+		<p class="error" th:text="${message}">error message</p>
 	</div>
 	<form th:object="${form}" method="post"
 		th:action="@{/member/allview/search}">
 		<table style="margin: auto">
 			<tr>
-				<td>​
-					<form method="post">
-						<div>
-							<select name="role">
-								<option value="Customer">Customer</option>
-								<option value="Employee">Employee</option>
-							</select>
-						</div>
-					</form>
+				<td>​ <!-- 					<form method="post"> -->
+					<div>
+						<select name="role">
+							<option value="Customer">Customer</option>
+							<option value="Employee">Employee</option>
+						</select>
+					</div> <!-- 					</form> -->
 				</td>
-				<td><input type="text" th:field="${form.name}" placeholder="名前" /><br />
-				</td>
+				<td><input type="text" th:field="${form.name}"
+					placeholder="富士通　太郎" /><br /></td>
 				<td><input type="text" th:field="*{tel}" placeholder="電話番号" /><br />
 					<div class="error" th:if="${#fields.hasErrors('tel')}"
 						th:errors="*{tel}"></div>
@@ -50,40 +61,41 @@ p {
 		</table>
 	</form>
 	<br>
-	<div style="text-align: center">
-		<button
-			style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-			type="submit">戻る</button>
+	<div style="text-align: left;">
+		<a th:href="@{/member/allview/return}">
+			<button
+				style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+				type="button">戻る</button>
+		</a>
 	</div>
 	<br>
-	<table border="1" style="margin: auto">
-		<style>
-th {
-	background-color: rgb(255, 185, 185);
-}
-</style>
-		<tr>
-			<th>権限</th>
-			<th>メンバーコード</th>
-			<th>メンバー名</th>
-			<th>パスワード</th>
-			<th>郵便番号</th>
-			<th>住所（都道府県）</th>
-			<th>住所（市区町村）</th>
-			<th>電話番号</th>
-			<th>メールアドレス</th>
-		</tr>
-		<tr th:each="member : ${memberList}">
-			<td th:text="${member.role}">role</td> ​
-			<td th:text="${member.memberCode}">memberCode</td> ​
-			<td th:text="${member.name}">name</td> ​
-			<td th:text="${member.password}">password</td> ​
-			<td th:text="${member.zipCode}">zipCode</td> ​
-			<td th:text="${member.prefecture}">prefecture</td> ​
-			<td th:text="${member.address}">address</td> ​
-			<td th:text="${member.tel}">tel</td> ​
-			<td th:text="${member.mail}">mail</td> ​
-		</tr>
+	<table id="memberlist" border="1" style="margin: auto">
+		<thead>
+			<tr>
+				<th>権限</th>
+				<th>メンバーコード</th>
+				<th>メンバー名</th>
+				<th>パスワード</th>
+				<th>郵便番号</th>
+				<th>住所（都道府県）</th>
+				<th>住所（市区町村）</th>
+				<th>電話番号</th>
+				<th>メールアドレス</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="member : ${memberList}">
+				<td th:text="${member.role}">role</td> ​
+				<td th:text="${member.memberCode}">memberCode</td> ​
+				<td th:text="${member.name}">name</td> ​
+				<td th:text="${member.password}">password</td> ​
+				<td th:text="${member.zipCode}">zipCode</td> ​
+				<td th:text="${member.prefecture}">prefecture</td> ​
+				<td th:text="${member.address}">address</td> ​
+				<td th:text="${member.tel}">tel</td> ​
+				<td th:text="${member.mail}">mail</td> ​
+			</tr>
+		</tbody>
 	</table>
 	​
 </body>
