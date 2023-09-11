@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- RetrieveProductMapper.xml -->
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.tsys.common.mapper.OrdersMapper">
-
+	
 	<!-- select orderNo -->
 	<select id = "findMemberOrder" resultType="java.lang.Integer">
 	select
@@ -14,7 +14,7 @@
 	where
 		memberCode = #{memberCode};
 	</select>
-
+	
 	<!-- select current from membercode-->
 	<select id="findCurrentOrderFromMemberCode" resultMap="currentOrderDetailMap">
 		SELECT
@@ -34,9 +34,9 @@
 			city.name as cina
 		FROM
 			orderdetail
-		inner join
-			ordermaster
-		on
+		inner join 
+			ordermaster 
+		on 
 			ordermaster.orderno = orderdetail.orderno
 		inner join
 			hotel
@@ -50,22 +50,23 @@
 			city
 		on
 			hotelmaster.citycode = city.citycode
-		where
+		where 
 			ordermaster.membercode = #{memberCode}
-		and
+		and 
 			hotel.date &gt; #{date};
 		</select>
 		<resultMap id="currentOrderDetailMap" type="jp.co.tsys.common.entity.Order">
 		<id property="orderNo" column="orno"/>
 		<id property="itemCode" column="item"/>
 		<result property="quantity" column="qu"/>
-
+		<result property="orderDate" column="ordate"/>
+		
 		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
 			<id property="itemCode" column="item"/>
 			<result property="date" column="da"/>
 			<result property="price" column="pri"/>
 			<result property="stock" column="st"/>
-
+		
 		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
 			<id property="hotelCode" column="hoco"/>
 			<result property="name" column="na"/>
@@ -76,7 +77,7 @@
 		</association>
 	</resultMap>
 	<!-- select current from membercode-->
-
+	
 <!-- select past from membercode-->
 	<select id="findPastOrderFromMemberCode" resultMap="pastOrderDetailMap">
 		SELECT
@@ -96,9 +97,9 @@
 			city.name as cina
 		FROM
 			orderdetail
-		inner join
-			ordermaster
-		on
+		inner join 
+			ordermaster 
+		on 
 			ordermaster.orderno = orderdetail.orderno
 		inner join
 			hotel
@@ -112,9 +113,9 @@
 			city
 		on
 			hotelmaster.citycode = city.citycode
-		where
+		where 
 			ordermaster.membercode = #{memberCode}
-		and
+		and 
 			(hotel.date &lt; #{date} or hotel.date = #{date}) ;
 		</select>
 		<resultMap id="pastOrderDetailMap" type="jp.co.tsys.common.entity.Order">
@@ -122,13 +123,13 @@
 		<id property="itemCode" column="item"/>
 		<result property="quantity" column="qu"/>
 		<result property="orderDate" column="ordate"/>
-
+		
 		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
 			<id property="itemCode" column="item"/>
 			<result property="date" column="da"/>
 			<result property="price" column="pri"/>
 			<result property="stock" column="st"/>
-
+		
 		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
 			<id property="hotelCode" column="hoco"/>
 			<result property="name" column="na"/>
@@ -139,7 +140,7 @@
 		</association>
 	</resultMap>
 	<!-- select past from membercode-->
-
+	
 	<!-- select find orderDate -->
 	<select id = "findOrderDateFromOrderNo" resultType = "java.lang.String">
 	select
@@ -153,15 +154,15 @@
 
 	<!-- delete -->
 	<delete id = "deleteOrderDetail">
-		delete from orderdetail
-		where
-		orderNo = #{orderNo} and itemCode = #{itemCode};
+	 	delete from orderdetail
+	 	where
+	 	orderNo = #{orderNo} and itemCode = #{itemCode};
 	</delete>
 	<delete id = "deleteOrderMaster">
-		delete from ordermaster where orderNo = #{orderNo};
+		delete from ordermaster where orderNo = #{orderNo};	
 	</delete>
 	<!-- delete -->
-
+	
 	<!-- update -->
 	<update id ="updateHotel">
 		update hotel set stock = stock + #{quantity} where itemcode = #{itemCode};
@@ -173,7 +174,7 @@
 </mapper>
 
 <!-- select orderNo -->
-
+	
 	<!-- select current -->
 <!--	<select id="findCurrentOrder" resultMap="currentorderDetailMap">
 		SELECT
@@ -204,20 +205,20 @@
 		on
 			hotelmaster.citycode = city.citycode
 		where
-			orderno = #{orderNo}
+			orderno = #{orderNo} 
 		and
 			hotel.date &gt; '2023-06-30';
 		</select>
 		<resultMap id="currentorderDetailMap" type="jp.co.tsys.common.entity.Order">
 		<id property="orderNo" column="orno"/>
 		<result property="quantity" column="qu"/>
-
+		
 		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
 			<id property="itemCode" column="item"/>
 			<result property="date" column="da"/>
 			<result property="price" column="pri"/>
 			<result property="stock" column="st"/>
-
+		
 		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
 			<id property="hotelCode" column="hoco"/>
 			<result property="name" column="na"/>
@@ -229,7 +230,7 @@
 	</resultMap>
 	-->
 	<!-- select current -->
-
+	
 	<!-- select past -->
 <!--
 	<select id="findPastOrder" resultMap="pastorderDetailMap">
@@ -261,7 +262,7 @@
 		on
 			hotelmaster.citycode = city.citycode
 		where
-			orderno = #{orderNo}
+			orderno = #{orderNo} 
 		and
 			hotel.date &lt; '2023-09-30';
 		</select>
@@ -270,13 +271,13 @@
 			<id property="orderNo" column="orno"/>
 			<result property="orderDate" column=""/>
 			<result property="quantity" column="qu"/>
-
+		
 		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
 			<id property="itemCode" column="item"/>
 			<result property="date" column="da"/>
 			<result property="price" column="pri"/>
 			<result property="stock" column="st"/>
-
+		
 		<association property="hotel" javaType="jp.co.tsys.common.entity.Hotel">
 			<id property="hotelCode" column="hoco"/>
 			<result property="name" column="na"/>
@@ -288,3 +289,4 @@
 	</resultMap>
 	-->
 	<!-- select past -->
+	

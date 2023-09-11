@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import jp.co.tsys.common.entity.Hotel;
 import jp.co.tsys.common.entity.HotelItem;
 import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.entity.Order;
@@ -154,10 +155,12 @@ public class MemberOrdersFindController {
 			if ("True".equals(currentOrder.getSecond())) {
 
 				HotelItem hotelItem = new HotelItem();
+				Hotel hotel = new Hotel();
+				hotel.setName(currentOrder.getFirst().getHotelItem().getHotel()
+						.getName());
+				hotelItem.setHotel(hotel);
 				hotelItem.setDate(
 						currentOrder.getFirst().getHotelItem().getDate());
-				hotelItem.getHotel().setName(currentOrder.getFirst()
-						.getHotelItem().getHotel().getName());
 				hotelItemList.add(hotelItem);
 
 				deleteService.deleteCurrentOrder(
