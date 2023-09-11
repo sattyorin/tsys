@@ -10,23 +10,24 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
-		<div th:insert="top::back2Top"></div>
 		<p>予約確認キャンセル画面</p>
 
-		<table th:each="hotelItem : ${hotelItemList}">
-			<tr>
+		<table>
+			<tr th:each="hotelItem : ${hotelItemList}">
 				<td th:text="${hotelItem.date}">date</td>
 				<td th:text="${hotelItem.hotel.name}">hotelName</td>
 			</tr>
 		</table>
 		<p>予約キャンセル完了しました</p>
 		<p>
-			<a th:href="@{/order/history/}">
-				<button>予約履歴画面へ</button>
-			</a>
-		</p>
-
-		<div th:insert="footer::back2Top"></div>
+		<form th:if="${loginMember.role.equals('Customer')}"
+			th:action="@{/topmenu/}">
+			<button>戻る</button>
+		</form>
+		<form th:if="${loginMember.role.equals('Employee')}"
+			th:action="@{/order/find/}">
+			<button>戻る</button>
+		</form>
 	</div>
 </body>
 

@@ -34,6 +34,7 @@
 		<form action="#" th:action="@{/order/deletecomfirm}"
 			th:object="${OrderHistoryForm}" method="post">
 			<table align="center">
+				<p th:text="${message}" class="error"></p>
 				<tbody>
 					<tr>
 						<th>宿泊予定日</th>
@@ -89,7 +90,12 @@
 				</tr>
 			</tbody>
 		</table>
-		<form th:action="@{/order/history/}">
+		<form th:if="${loginMember.role.equals('Customer')}"
+			th:action="@{/topmenu/}">
+			<button>戻る</button>
+		</form>
+		<form th:if="${loginMember.role.equals('Employee')}"
+			th:action="@{/order/find/}">
 			<button>戻る</button>
 		</form>
 	</div>
