@@ -43,7 +43,18 @@
 			<td th:text="${memberForm.member.mail}">mail</td>
 		</tr>
 	</table>
+	<br>
+	<div align="center">
+		<a th:href="@{/logout}">
+			<button
+				style="width: 200px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+				type="submit">ログイン画面に戻る</button>
+		</a>
+	</div>
+
 </div>
+
+
 
 <div th:if="${session.loginMember.role == 'Employee'}">
 
@@ -85,13 +96,17 @@
 			<td th:text="${memberForm.member.mail}">mail</td>
 		</tr>
 	</table>
-</div>
 
-<a th:href="@{/logout}">
-	<button
-		style="width: 200px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-		type="submit">ログイン画面に戻る</button>
-</a>
+	<br>
+	<div align="center">
+		<a th:href="@{/logout}">
+			<button
+				style="width: 200px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+				type="submit">ログイン画面に戻る</button>
+		</a>
+	</div>
+
+</div>
 
 </body>
 
