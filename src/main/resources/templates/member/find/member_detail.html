@@ -38,32 +38,32 @@
 						<td th:text="${memberForm.member.mail}">mail</td>
 					</tr>
 				</table>
-<!-- 				<br> -->
+				<br>
 
-<!-- 				<table align="center" border="0"> -->
-<!-- 					<tr> -->
-<!-- 						<td> -->
-<!-- 							<form method="post" th:action="@{/member/update/entry}"> -->
-<!-- 								<button -->
-<!-- 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
-<!-- 									type="submit">変更</button> -->
-<!-- 							</form> -->
-<!-- 						</td> -->
+				<table align="center" border="0">
+					<tr>
+						<td>
+							<form method="post" th:action="@{/member/update/entry}">
+								<button
+									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+									type="submit">変更</button>
+							</form>
+						</td>
 
-<!-- 						<td> -->
-<!-- 							<form method="post" th:action="@{/member/delete/confirm}"> -->
-<!-- 								<button -->
-<!-- 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
-<!-- 									type="submit">削除</button> -->
-<!-- 							</form> -->
-<!-- 						</td> -->
-<!-- 					</tr> -->
-<!-- 				</table> -->
-<!-- 				<form method="post" th:action="@{/member/find/return/memberfind}"> -->
-<!-- 					<button -->
-<!-- 						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
-<!-- 						type="submit">戻る</button> -->
-<!-- 				</form> -->
+						<td>
+							<form method="post" th:action="@{/member/delete/confirm}">
+								<button
+									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+									type="submit">削除</button>
+							</form>
+						</td>
+					</tr>
+				</table>
+				<form method="post" th:action="@{/member/find/return/memberfind}">
+					<button
+						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
+						type="submit">戻る</button>
+				</form>
 			</div>
 
 			<div th:if="${memberForm.member.role == 'Customer'}">
