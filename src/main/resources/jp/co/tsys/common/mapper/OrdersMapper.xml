@@ -20,7 +20,8 @@
 		SELECT
 			orderdetail.orderNo as orno,
 			ordermaster.membercode as mco,
-			ordermaster.OrderDate as ordate,
+			ordermaster.orderDate as ordate,
+			ordermaster.orderTotal as orto,
 			orderdetail.itemcode as item,
 			orderdetail.price as pri,
 			orderdetail.quantity as qu,
@@ -60,6 +61,7 @@
 		<id property="itemCode" column="item"/>
 		<result property="quantity" column="qu"/>
 		<result property="orderDate" column="ordate"/>
+		<result property="subTotal" column="orto"/>
 		
 		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
 			<id property="itemCode" column="item"/>
@@ -84,6 +86,7 @@
 			orderdetail.orderNo as orno,
 			ordermaster.membercode as mco,
 			ordermaster.orderDate as ordate,
+			ordermaster.orderTotal as orto,
 			orderdetail.itemcode as item,
 			orderdetail.price as pri,
 			orderdetail.quantity as qu,
@@ -123,6 +126,7 @@
 		<id property="itemCode" column="item"/>
 		<result property="quantity" column="qu"/>
 		<result property="orderDate" column="ordate"/>
+		<result property="subTotal" column="orto"/>
 		
 		<association property="hotelItem" javaType="jp.co.tsys.common.entity.HotelItem">
 			<id property="itemCode" column="item"/>
@@ -159,7 +163,7 @@
 	 	orderNo = #{orderNo} and itemCode = #{itemCode};
 	</delete>
 	<delete id = "deleteOrderMaster">
-		delete from ordermaster where orderNo = #{orderNo};	
+		delete from ordermaster where orderTotal = 0;
 	</delete>
 	<!-- delete -->
 	
@@ -168,7 +172,7 @@
 		update hotel set stock = stock + #{quantity} where itemcode = #{itemCode};
 	</update>
 	<update id = "updateOrderMaster">
-		update ordermaster set ordertotal = ordertotal - #{price} where orderNo = #{orderNo};
+		update ordermaster set ordertotal = ordertotal - #{price} * #{quantity} where orderNo = #{orderNo};
 	</update>
 	<!-- update -->
 </mapper>

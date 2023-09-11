@@ -25,18 +25,16 @@ public interface OrdersMapper {
 	public List<Order> findPastOrderFromMemberCode(String memberCode,
 			String date);
 
-	public String findOrderDateFromOrderNo(int oderNo);
-
 	public int deleteOrderDetail(@Param("orderNo") int orderNo,
 			@Param("itemCode") String itemCode);
 
-	public int deleteOrderMaster(int orderNo);
+	public int deleteOrderMaster();
 
 	public int updateHotel(@Param("quantity") int quantity,
 			@Param("itemCode") String itemCode);
 
 	public int updateOrderMaster(@Param("orderNo") int orderNo,
-			@Param("price") int price);
+			@Param("price") int price, @Param("quantity") int quantity);
 
 	// public List<Integer> findMemberOrder(String memberCode);
 

@@ -20,7 +20,6 @@ import jp.co.tsys.common.entity.Hotel;
 import jp.co.tsys.common.entity.HotelItem;
 import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.entity.Order;
-import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.MemberCodeForm;
 import jp.co.tsys.common.form.OrderHistoryForm;
 import jp.co.tsys.common.service.MemberFindService;
@@ -57,24 +56,31 @@ public class MemberOrdersFindController {
 	// 受注一覧画面に遷移する。
 	@RequestMapping("/history")
 	public String findMemberOrders(@Validated MemberCodeForm memberCodeForm,
-			BindingResult result, Model model) {
+			OrderHistoryForm orderHistoryForm, BindingResult result,
+			Model model) {
 		// // 初期値
 		Member member = new Member();
+		String memberCode;
 		// セッションから情報取得
 		Member loginMember = (Member) model.getAttribute("loginMember");
 		// member情報から従業員と顧客を条件分岐
 		if ("Employee".equals(loginMember.getRole())) {
-			// 入力チェック
-			if (result.hasErrors()) {
-				// 受注一覧画面
-				return "/order/member_order_find";
+			// nullだった場合：二週目
+			if (orderHistoryForm.getMember() == null) {
+				// 入力チェック
+				if (result.hasErrors()) {
+					// 受注一覧画面
+					return "/order/member_code_find";
+				}
+				memberCode = memberCodeForm.getMemberCode();
+
+			} else {
+				memberCode = orderHistoryForm.getMember().getMemberCode();
 			}
 			//
 			// // Service で各メソッドを呼び出し
 			// // 戻り値Memberオブジェクトを取得する
-			member = memberservice.findMember(memberCodeForm.getMemberCode());
-			// member = memberservice.findMember("CM0002");
-			OrderHistoryForm orderHistoryForm = new OrderHistoryForm();
+			member = memberservice.findMember(memberCode);
 			List<Order> currentOrder = orderservice
 					.findCurrentOrder(member.getMemberCode());
 
@@ -98,7 +104,6 @@ public class MemberOrdersFindController {
 			return "/order/order_history";
 
 		} else {
-			OrderHistoryForm orderHistoryForm = new OrderHistoryForm();
 
 			List<Order> currentOrder = orderservice
 					.findCurrentOrder(loginMember.getMemberCode());
@@ -117,29 +122,12 @@ public class MemberOrdersFindController {
 
 			orderHistoryForm.setCurrentOrders(currentOrderPairList);
 			orderHistoryForm.setPastOrders(pastOrderPairList);
-			orderHistoryForm.setMember(member);
+			orderHistoryForm.setMember(loginMember);
 
 			model.addAttribute("orderHistoryForm", orderHistoryForm);
 			return "/order/order_history";
 		}
 
-		// } else {
-		// // Service で各メソッドを呼び出し
-		// // 戻り値Memberオブジェクトを取得する
-		// member = service.findMember(loginMember.getMemberCode());
-		// List<Integer> orderNolist = service
-		// .findMemberOrder(member.getMemberCode());
-		// for (Integer oneorderNo : orderNolist) {
-		// listCurrentOrder = service.findCurrentOrder(oneorderNo);
-		// listPastOrder = service.findPastOrder(oneorderNo);
-		// }
-		// }
-		// // memberオブジェクトをキー名"member"でModelに格納
-		// model.addAttribute("member", member);
-		// // Listオブジェクトをキー名"listPastOrder"でModelに格納
-		// model.addAttribute("listPastOrder", listPastOrder);
-		// // Listオブジェクトをキー名"listCurrentOrder"でModelに格納
-		// model.addAttribute("listCurrentOrder", listCurrentOrder);
 	}
 
 	// 受注履歴を削除して確認画面に遷移。
@@ -148,12 +136,11 @@ public class MemberOrdersFindController {
 			@Validated OrderHistoryForm orderHistoryForm, BindingResult result,
 			Model model) {
 		boolean flag = false;
-
+		List<HotelItem> hotelItemList = new ArrayList<>();
 		for (Pair<Order, String> currentOrder : orderHistoryForm
 				.getCurrentOrders()) {
-			List<HotelItem> hotelItemList = new ArrayList<>();
-			if ("True".equals(currentOrder.getSecond())) {
 
+			if ("True".equals(currentOrder.getSecond())) {
 				HotelItem hotelItem = new HotelItem();
 				Hotel hotel = new Hotel();
 				hotel.setName(currentOrder.getFirst().getHotelItem().getHotel()
@@ -170,13 +157,19 @@ public class MemberOrdersFindController {
 						currentOrder.getFirst().getHotelItem().getPrice());
 				flag = true;
 
+				deleteService.deleteOrderMaster();
+
 			}
-			model.addAttribute("hotelItemList", hotelItemList);
 		}
+
+		model.addAttribute("hotelItemList", hotelItemList);
+
 		if (flag == false) {
-			throw new BusinessException(MessageList.BIZERR105);
+			model.addAttribute("message", MessageList.BIZERR105);
+			return "/order/order_history";
 		}
 
 		return "/order/order_delete_comfirm";
 	}
+
 }

@@ -24,8 +24,13 @@ public class OrdersDeleteServiceImpl implements OrdersDeleteService {
 			int price) {
 
 		mapper.deleteOrderDetail(orderNo, itemCode);
-		mapper.deleteOrderMaster(orderNo);
 		mapper.updateHotel(quantity, itemCode);
-		mapper.updateOrderMaster(orderNo, price);
+		mapper.updateOrderMaster(orderNo, price, quantity);
 	};
+
+	@Transactional
+	@Override
+	public void deleteOrderMaster() {
+		mapper.deleteOrderMaster();
+	}
 }
