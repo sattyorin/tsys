@@ -4,6 +4,8 @@
 
 package jp.co.tsys.common.control;
 
+import static jp.co.tsys.common.util.MessageList.BIZERR001;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.exception.BusinessException;
-//import jp.co.tsys.common.form.LoginForm;
 import jp.co.tsys.common.form.MemberCodeForm;
 import jp.co.tsys.common.form.MemberForm;
 import jp.co.tsys.common.service.MemberFindService;
@@ -28,11 +30,15 @@ import jp.co.tsys.common.service.MemberFindService;
  * @author Yamaguchi
  * @version 2.0.0
  */
-@SessionAttributes(types = {MemberForm.class}, names = {"memberCodeForm",
-		"loginmember"})
+@SessionAttributes(types = {MemberForm.class, MemberCodeForm.class})
 @Controller
 @RequestMapping("/member/find")
 public class MemeberFindController {
+
+	@ModelAttribute("memberCodeForm")
+	MemberCodeForm initMemberCodeForm() {
+		return new MemberCodeForm();
+	}
 
 	/**
 	 * Service
@@ -60,10 +66,6 @@ public class MemeberFindController {
 		// loginmember.setPrefecture("東京都");
 		// loginmember.setTel("港区港南");
 		// loginmember.setAddress("03-3334-4455");
-		//
-		// model.addAttribute("loginmember", loginmember);//ログインメンバーにログインする役職を設定
-
-		model.addAttribute("memberCodeForm", new MemberCodeForm());
 
 		return "/member/find/member_find";
 	}
@@ -80,12 +82,17 @@ public class MemeberFindController {
 			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
-
 			return "/member/find/member_find";
 		}
 
 		Member member = service.findMember(form.getMemberCode());// メンバーコードに一致したメンバー情報を取得
+
+		if (member == null) {
+			model.addAttribute("message", BIZERR001);
+		}
+
 		MemberForm memberForm = new MemberForm();
+		memberForm.setMember(member);
 		// memberForm.setMemberCode(member.getMemberCode());
 		// memberForm.setName(member.getName());
 		// memberForm.setRole(member.getRole());
@@ -97,7 +104,7 @@ public class MemeberFindController {
 		// memberForm.setMail(member.getMail());// new
 		// MemberFormにメンバー情報をセット
 
-		model.addAttribute("memberForm", memberForm);// メンバーフォームをセッションに。
+		model.addAttribute("memberForm", memberForm);
 
 		return "/member/find/member_detail";
 	}
