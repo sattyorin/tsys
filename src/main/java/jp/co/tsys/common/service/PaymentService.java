@@ -4,6 +4,7 @@ package jp.co.tsys.common.service;
 
 import java.util.List;
 
+import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.entity.Order;
 import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.OrdersForm;;
@@ -24,6 +25,8 @@ public interface PaymentService {
 	 * @throws BusinessException
 	 *             検索結果が存在しない場合
 	 */
+
+	public Member findMember(String memberCode) throws BusinessException;
 
 	public void insertOrder(OrdersForm ordersForm) throws BusinessException;
 

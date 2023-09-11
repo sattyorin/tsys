@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -31,6 +32,7 @@ p.sum {
 }
 </style>
 </head>
+
 <body>
 	<div th:replace="Header::header"></div>
 
@@ -38,9 +40,9 @@ p.sum {
 
 	<p th:text="${message}" class="error"></p>
 
-	<div class="subtitle">予約情報</div>
 	<form id="cart" th:object="${shoppingCartForm}" method="post"
 		th:action="@{/payment/confirmation}">
+		<div class="subtitle">予約情報</div>
 		<table border="1" width="1000px">
 			<tr>
 				<th>ホテルコード</th>
@@ -59,32 +61,41 @@ p.sum {
 				<td
 					th:text="${shoppingCartForm.orders[__${st.index}__].hotelItem.date}">date</td>
 				<td
-					th:text="${#numbers.formatInteger(shoppingCartForm.orders[__${st.index}__].hotelItem.price, 3, 'COMMA')}+'円'">price</td>
-				<td><input type="text"
+					th:text="${#numbers.formatInteger(shoppingCartForm.orders[__${st.index}__].hotelItem.price, 3, 'COMMA')}+'円'">
+					price</td>
+				<td><input type="number"
 					th:field="${shoppingCartForm.orders[__${st.index}__].quantity}"
-					maxlength="2" size="3" style="width: 20px;">
+					min="0" style="width: 35px;">
 					<div style="float: right;">
 						&thinsp;
 						<button type="submit"
 							style="font-size: 15px; width: fit-content; height: 25px;"
 							th:formaction="@{/payment/changeQuantity}">変更</button>
 					</div></td>
-				<td
-					th:text="${#numbers.formatInteger(shoppingCartForm.orders[__${st.index}__].subTotal, 3, 'COMMA')}+'円'">price</td>
+				<td th:if="${shoppingCartForm.orders[__${st.index}__].subTotal}!= 0"
+					th:text="${#numbers.formatInteger(shoppingCartForm.orders[__${st.index}__].subTotal, 3, 'COMMA')}+'円'">
+					price</td>
+				<td th:if="${shoppingCartForm.orders[__${st.index}__].subTotal}== 0"
+					th:text="${shoppingCartForm.orders[__${st.index}__].subTotal}+'円'">
+					price</td>
 			</tr>
 		</table>
-		<p class="sum">
+		<p class="sum" th:if="*{orderTotal} != 0">
 			合計金額 <span
 				th:text="*{#numbers.formatInteger(orderTotal, 3, 'COMMA')}+'円'"></span>
 		</p>
+		<p class="sum" th:if="*{orderTotal} == 0">
+			合計金額 <span th:text="*{orderTotal}+'円'"></span>
+		</p>
 		<br>
-		<div style="text-align: right;">
-			<button form="cart" type="submit">予約</button>
-		</div>
 	</form>
 	<form th:action="@{/hotelfind/findhotel}" style="float: left;">
 		<button type="submit" class="test">ホテル検索画面へ</button>
 	</form>
-
+	<!--	画面表示の関係でここにボタンを配置-->
+	<div style="text-align: right;">
+		<button form="cart" type="submit">予約</button>
+	</div>
 </body>
+
 </html>

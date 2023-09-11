@@ -3,8 +3,10 @@
  */
 package jp.co.tsys.common.control;
 
+import static jp.co.tsys.common.util.MessageList.BIZERR001;
 import static jp.co.tsys.common.util.MessageList.BIZERR102;
 import static jp.co.tsys.common.util.MessageList.BIZERR104;
+import static jp.co.tsys.common.util.MessageList.BIZERR204;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,14 +33,15 @@ import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.entity.Order;
 import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.form.HotelDetailForm;
+import jp.co.tsys.common.form.MemberCodeForm;
 import jp.co.tsys.common.form.OrdersForm;
 import jp.co.tsys.common.form.ShoppingCartForm;
-import jp.co.tsys.common.service.MemberFindService;
+//import jp.co.tsys.common.service.MemberFindService;
 import jp.co.tsys.common.service.PaymentService;
 
 @Controller
 @SessionAttributes(types = {Member.class, HotelDetailForm.class,
-		ShoppingCartForm.class, OrdersForm.class})
+		ShoppingCartForm.class, OrdersForm.class, MemberCodeForm.class})
 @RequestMapping("/payment")
 public class PaymentController {
 
@@ -64,8 +67,8 @@ public class PaymentController {
 
 	@Autowired
 	private PaymentService paymentService;
-	@Autowired
-	private MemberFindService memberService;
+	// @Autowired
+	// private MemberFindService memberService;
 
 	@RequestMapping("/cart")
 	public String inputCart(
@@ -195,17 +198,7 @@ public class PaymentController {
 
 		// TODO(masa): 在庫チェック
 		for (Order item : shoppingCartForm.getOrders()) {
-
-			// TODO(masa): 商品重複チェック
-			String check = item.getHotelItem().getItemCode();
-			int totalQuantity = 0;
-			for (Order itemCheck : shoppingCartForm.getOrders()) {
-				if (itemCheck.getHotelItem().getItemCode().equals(check)) {
-					totalQuantity += itemCheck.getQuantity();
-				}
-			}
-
-			if (totalQuantity > item.getHotelItem().getStock()) {
+			if (item.getQuantity() > item.getHotelItem().getStock()) {
 
 				// エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
 				model.addAttribute("message", BIZERR102);
@@ -221,18 +214,21 @@ public class PaymentController {
 		ordersForm.setOrderTotal(shoppingCartForm.getOrderTotal());
 
 		// 顧客と従業員の名前衝突回避用にインスタンス作成
-		Member displayMemeber = new Member();
+		Member displayMember = new Member();
 
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		if (loginMember.getRole().equals("Customer")) {
 			ordersForm.setMemberCode(loginMember.getMemberCode());
-			displayMemeber.setName(loginMember.getName());
-			displayMemeber.setZipCode(loginMember.getZipCode());
-			displayMemeber.setPrefecture(loginMember.getPrefecture());
-			displayMemeber.setAddress(loginMember.getAddress());
-			displayMemeber.setTel(loginMember.getTel());
+			displayMember.setName(loginMember.getName());
+			displayMember.setZipCode(loginMember.getZipCode());
+			displayMember.setPrefecture(loginMember.getPrefecture());
+			displayMember.setAddress(loginMember.getAddress());
+			displayMember.setTel(loginMember.getTel());
+		} else if (loginMember.getRole().equals("Employee")) {
+			model.addAttribute("memberCodeForm", new MemberCodeForm());
 		}
-		model.addAttribute("displayMemeber", displayMemeber);
+		System.out.println(loginMember.getRole());
+		model.addAttribute("displayMember", displayMember);
 		model.addAttribute("ordersForm", ordersForm);
 
 		return "/payment/order_confirmation";
@@ -240,29 +236,40 @@ public class PaymentController {
 
 	@RequestMapping("/findMember")
 	public String findMember(
-			@ModelAttribute("ordersForm") @Validated OrdersForm ordersForm,
-			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
-			BindingResult result, Model model) {
+			@ModelAttribute("ordersForm") OrdersForm ordersForm,
+			@Validated MemberCodeForm memberCodeForm, BindingResult result,
+			Model model) {
 
 		if (result.hasErrors()) {
 			return "/payment/order_confirmation";
 		}
 
 		// サービスにメンバーコード投げてメンバーオブジェクトを取得
-		Member targetMember = memberService
-				.findMember(ordersForm.getMemberCode());
+		Member targetMember = paymentService
+				.findMember(memberCodeForm.getMemberCode());
+
+		if (targetMember == null) {
+			model.addAttribute("message", BIZERR001);
+			return "/payment/order_confirmation";
+		}
+
+		// 顧客検索チェック
+		if (targetMember.getRole().equals("Employee")) {
+			model.addAttribute("message", BIZERR204);
+			return "/payment/order_confirmation";
+		}
 
 		// 顧客と従業員の名前衝突回避用にインスタンス作成
-		Member displayMemeber = new Member();
+		Member displayMember = new Member();
 
-		ordersForm.setMemberCode(targetMember.getMemberCode());
-		displayMemeber.setName(targetMember.getName());
-		displayMemeber.setZipCode(targetMember.getZipCode());
-		displayMemeber.setPrefecture(targetMember.getPrefecture());
-		displayMemeber.setAddress(targetMember.getAddress());
-		displayMemeber.setTel(targetMember.getTel());
+		ordersForm.setMemberCode(memberCodeForm.getMemberCode());
+		displayMember.setName(targetMember.getName());
+		displayMember.setZipCode(targetMember.getZipCode());
+		displayMember.setPrefecture(targetMember.getPrefecture());
+		displayMember.setAddress(targetMember.getAddress());
+		displayMember.setTel(targetMember.getTel());
 
-		model.addAttribute("displayMemeber", displayMemeber);
+		model.addAttribute("displayMember", displayMember);
 
 		return "/payment/order_confirmation";
 	}
@@ -271,9 +278,9 @@ public class PaymentController {
 	@Transactional
 	public String commitResult(
 			@ModelAttribute("ordersForm") @Validated OrdersForm ordersForm,
-			BindingResult result, Model model, SessionStatus status) {
+			BindingResult result, Boolean reloadCheck, Model model,
+			SessionStatus status) {
 
-		System.out.println(result.getAllErrors());
 		if (result.hasErrors()) {
 			return "/payment/order_confirmation";
 		}
@@ -323,16 +330,17 @@ public class PaymentController {
 	 *            例外オブジェクト
 	 */
 
-	// 未完成メソッド
 	@ExceptionHandler(BusinessException.class)
-	public String caatchBizException(Model model, Exception e) {
+	public String caatchBizException(
+			@ModelAttribute("ordersForm") OrdersForm ordersForm, Model model,
+			Exception e) {
 
 		// エラーメッセージをキー名"message"でModelに格納
 		model.addAttribute("message", e.getMessage());
 
 		// フォームオブジェクトをキー名"hotelFindForm"でModelに格納
 		model.addAttribute("shoppingCartForm", new ShoppingCartForm());
-		return "/payment/shopping_cart";
-	}
 
+		return "/payment/order_confirmation";
+	}
 }

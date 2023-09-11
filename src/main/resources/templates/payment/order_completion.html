@@ -63,13 +63,17 @@ p.sum {
 				<td
 					th:text="${#numbers.formatInteger(order.hotelItem.price, 3, 'COMMA')}+'円'">price</td>
 				<td th:text="${order.quantity}">quantity</td>
-				<td
+				<td th:if="${order.subTotal}!= 0"
 					th:text="${#numbers.formatInteger(order.subTotal, 3, 'COMMA')}+'円'">price</td>
+				<td th:if="${order.subTotal}== 0" th:text="${order.subTotal}+'円'">price</td>
 			</tr>
 		</table>
-		<p class="sum">
+		<p class="sum" th:if="*{orderTotal} != 0">
 			合計金額 <span
 				th:text="*{#numbers.formatInteger(orderTotal, 3, 'COMMA')}+'円'"></span>
+		</p>
+		<p class="sum" th:if="*{orderTotal} == 0">
+			合計金額 <span th:text="*{orderTotal}+'円'"></span>
 		</p>
 	</div>
 	<br>
@@ -79,16 +83,16 @@ p.sum {
 	<table border="1" width="1000px">
 		<tr>
 			<th>名前</th>
-			<td th:text="${displayMemeber.name}"></td>
+			<td th:text="${displayMember.name}"></td>
 		</tr>
 		<tr>
 			<th>送付先</th>
 			<td
-				th:text="${displayMemeber.zipCode + '   '+ displayMemeber.prefecture + displayMemeber.address}"></td>
+				th:text="'〒'+${displayMember.zipCode + '   '+ displayMember.prefecture + displayMember.address}"></td>
 		</tr>
 		<tr>
 			<th>電話番号</th>
-			<td th:text="${displayMemeber.tel}"></td>
+			<td th:text="${displayMember.tel}"></td>
 		</tr>
 		<tr>
 			<th>決済方法</th>
@@ -97,6 +101,7 @@ p.sum {
 		</tr>
 	</table>
 	<p></p>
+
 	<form th:action="@{/hotelfind/findhotel}" style="text-align: center;">
 		<button type="submit" style="width: 150px;">ホテル検索画面へ</button>
 	</form>
