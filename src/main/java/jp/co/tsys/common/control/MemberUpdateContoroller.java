@@ -45,6 +45,10 @@ public class MemberUpdateContoroller {
 	public CustomerMemberForm initCustomerMemberForm(Model model) {
 		return new CustomerMemberForm();
 	}
+	@ModelAttribute("employeeMemberForm")
+	public EmployeeMemberForm initEmployeeMemberForm(Model model) {
+		return new EmployeeMemberForm();
+	}
 
 	@Autowired
 	private MemberUpdateService service;
@@ -55,19 +59,37 @@ public class MemberUpdateContoroller {
 
 		// 入力値を取得するmodelを用意
 		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
-		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
-		customerMemberForm.setName(memberForm.getMember().getName());
-		customerMemberForm.setPassword(memberForm.getMember().getPassword());
-		customerMemberForm.setConfirmPassword(memberForm.getConfirmPassword());
-		customerMemberForm.setMail(memberForm.getMember().getMail());
-		customerMemberForm.setZipCode(memberForm.getMember().getZipCode());
-		customerMemberForm
-				.setPrefecture(memberForm.getMember().getPrefecture());
-		customerMemberForm.setAddress(memberForm.getMember().getAddress());
-		customerMemberForm.setTel(memberForm.getMember().getTel());
 
-		model.addAttribute("customerMemberForm", customerMemberForm);
-		// model.addAttribute("employeeMemberForm", new EmployeeMemberForm());
+		// セッションが切れた時など
+		if (memberForm.getMember() == null) {
+			return "/member/regist/member_management";
+		}
+
+		if (memberForm.getMember().getRole() == "Customer") {
+			CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+			customerMemberForm.setName(memberForm.getMember().getName());
+			customerMemberForm
+					.setPassword(memberForm.getMember().getPassword());
+			customerMemberForm
+					.setConfirmPassword(memberForm.getConfirmPassword());
+			customerMemberForm.setMail(memberForm.getMember().getMail());
+			customerMemberForm.setZipCode(memberForm.getMember().getZipCode());
+			customerMemberForm
+					.setPrefecture(memberForm.getMember().getPrefecture());
+			customerMemberForm.setAddress(memberForm.getMember().getAddress());
+			customerMemberForm.setTel(memberForm.getMember().getTel());
+			model.addAttribute("customerMemberForm", customerMemberForm);
+		} else {
+			EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+			employeeMemberForm.setName(memberForm.getMember().getName());
+			employeeMemberForm
+					.setPassword(memberForm.getMember().getPassword());
+			employeeMemberForm
+					.setConfirmPassword(memberForm.getConfirmPassword());
+			employeeMemberForm.setMail(memberForm.getMember().getMail());
+			model.addAttribute("employeeMemberForm", employeeMemberForm);
+		}
+
 		// メンバー変更画面をreturnする
 		return "/member/update/update_input";
 	}
@@ -102,12 +124,10 @@ public class MemberUpdateContoroller {
 		// 入力チェック
 		if (result.hasErrors()) {
 			// メンバー変更画面をreturnする
+			// TODO(naoto): Set error code.
 			model.addAttribute("message", "入力項目が規定を満たしていません");
-			return "/member/update_input";
+			return "/member/update/update_input";
 		}
-
-		// フォームオブジェクトを"memberForm"でModelに格納
-		model.addAttribute("employeeMemberForm", employeeMemberForm);
 
 		// 確認画面に遷移する
 		return "/member/update/update_confirm";
@@ -150,6 +170,7 @@ public class MemberUpdateContoroller {
 	@RequestMapping(value = "/employeeresult", method = RequestMethod.POST)
 	public String employeeResult(Model model) {
 		// フォームオブジェクトに格納された情報をMemberオブジェクトに設定する
+		// TODO(sara): null check
 		Member member = new Member();
 		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
 		EmployeeMemberForm employeeMemberForm = (EmployeeMemberForm) model
