@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -38,6 +39,11 @@ import jp.co.tsys.common.service.RegistHotelService;
 @RequestMapping("/hotelitem")
 public class RegistHotelItemController {
 
+	@ModelAttribute("findHotelForm")
+	FindHotelForm FindHotelForm() {
+		return new FindHotelForm();
+	}
+
 	@Autowired
 	private RegistHotelService service;
 
@@ -50,8 +56,6 @@ public class RegistHotelItemController {
 	// 登録画面（検索画面）に遷移する
 	@RequestMapping("/register/entryhotelitemregist")
 	public String entryHotelItemRegist(Model model, SessionStatus status) {
-		model.addAttribute("findHotelForm", new FindHotelForm());
-		System.out.println("はじめ");
 		return "/hotelitem/regist/hotel_find";
 	}
 
@@ -59,10 +63,9 @@ public class RegistHotelItemController {
 	@RequestMapping("/register/findhotel")
 	public String findHotel(@Validated FindHotelForm form, BindingResult result,
 			Model model) {
-		System.out.println("次");
+
 		if (result.hasErrors()) {
 			// TODO(ren): addAttribute error message
-			// model.addAttribute("findHotelForm", new FindHotelForm());
 			return "/hotelitem/regist/hotel_find";
 		}
 
@@ -79,12 +82,8 @@ public class RegistHotelItemController {
 			}
 		}
 
-		// System.out.println("test***********");
-		// System.out.println(form.getHotelName());
-
 		List<Hotel> hotelList = service.findHotel(form.getHotelCode(),
 				form.getHotelName());
-		System.out.println(hotelList.size());
 
 		if (hotelList.isEmpty()) {
 			model.addAttribute("message", BIZERR302);
