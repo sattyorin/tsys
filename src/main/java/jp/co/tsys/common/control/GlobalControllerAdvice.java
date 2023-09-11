@@ -1,5 +1,7 @@
 package jp.co.tsys.common.control;
 
+import static jp.co.tsys.common.util.MessageList.BIZERR000;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
@@ -40,7 +42,7 @@ public class GlobalControllerAdvice {
 
 		// login画面以外からの遷移
 		// TODO(risa): Set erorr code.
-		throw new UserNotFoundException("セッションが切れました。ログインしてください。");
+		throw new UserNotFoundException(BIZERR000);
 	}
 
 	@ExceptionHandler(UserNotFoundException.class)

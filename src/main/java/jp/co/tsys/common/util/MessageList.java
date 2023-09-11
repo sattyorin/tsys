@@ -29,7 +29,7 @@ public final class MessageList {
 	 * <li>メッセージ本文：{@value}</li>
 	 * </ul>
 	 */
-	public static final String BIZERR000 = "セッションが無効になりました。再度操作をやりなおしてください。";
+	public static final String BIZERR000 = "セッションが無効になりました。再度ログインしてください。";
 
 	/**
 	 * 業務エラー（入力したメンバーコードに対応するメンバーが見つからない）時のエラーメッセージ
@@ -207,7 +207,7 @@ public final class MessageList {
 	 * <li>メッセージ本文：{@value}</li>
 	 * </ul>
 	 */
-	public static final String BIZERR305 = "商品コードが重複しています。";
+	public static final String BIZERR305 = "同じ商品がすでに存在しています。";
 
 	/** プライベート・コンストラクター */
 	private MessageList() {

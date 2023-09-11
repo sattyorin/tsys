@@ -4,6 +4,8 @@
 
 package jp.co.tsys.common.control;
 
+import static jp.co.tsys.common.util.MessageList.BIZERR002;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.tsys.common.entity.HotelItem;
 import jp.co.tsys.common.exception.BusinessException;
-import jp.co.tsys.common.exception.NoResultException;
 import jp.co.tsys.common.form.HotelDetailForm;
 import jp.co.tsys.common.form.HotelFindForm;
 import jp.co.tsys.common.service.HotelReservationServiceImpl;
@@ -51,14 +52,15 @@ public class HotelReservationController {
 	public String findHotelDetail(@PathVariable String itemCode, Model model) {
 		// itemCodeをもとにホテル商品を1件検索する
 		HotelItem hotelItem = service.findHotelDetail(itemCode);
-		// TODO(risa, yusaku): if hotelItem == null NoResultException?
-		if (hotelItem == null) {
-			// TODO(risa, yusaku):Set error code.
-			throw new NoResultException("ホテルの詳細がありません");
-		}
 
 		// HotelDetailFormに検索したHotelItemを設定する
 		HotelDetailForm hotelDetailForm = new HotelDetailForm();
+
+		// 検索結果がない場合はエラーメッセージを格納する
+		if (hotelItem == null) {
+			model.addAttribute("message", BIZERR002);
+		}
+
 		hotelDetailForm.setHotelItem(hotelItem);
 
 		// 検索したホテル商品をキー名"hotelItem"でModelに格納する
@@ -81,15 +83,4 @@ public class HotelReservationController {
 		return "/hotelfind/findhotel";
 	}
 
-	/**
-	 * 検索結果がない場合のハンドリング
-	 */
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(NoResultException.class)
-	public String catchNoResultException(Model model, Exception e) {
-		// エラーメッセージをキー名"message"でModelに格納
-		model.addAttribute("message", e.getMessage());
-		return "/hotelfind/findhotel";
-
-	}
 }

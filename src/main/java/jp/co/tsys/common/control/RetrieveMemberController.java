@@ -4,6 +4,8 @@
 
 package jp.co.tsys.common.control;
 
+import static jp.co.tsys.common.util.MessageList.BIZERR204;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +59,7 @@ public class RetrieveMemberController {
 
 		if (loginMember == null) {
 			// TODO(risa): Set erorr code.
-			throw new UserNotFoundException("ユーザー名もしくはパスワードが間違っています。");
+			throw new UserNotFoundException(BIZERR204);
 		}
 
 		model.addAttribute("loginMember", loginMember);

@@ -45,6 +45,7 @@ th {
 
 .error-area {
 	text-align: center;
+	font-size: 14px;
 	color: red;
 }
 
@@ -79,11 +80,16 @@ img.cart {
 
 	<h1>ホテル詳細</h1>
 	<form method="POST" th:object="${hotelDetailForm}">
-		<div class="error" th:if="${#fields.hasErrors('inputQuantity')}"
-			th:errors="*{inputQuantity}">validation massage</div>
-		<p class="input-message red">*入力必須項目</p>
+		<div class="error-area">
+			<div class="error" th:if="${#fields.hasErrors('inputQuantity')}"
+				th:errors="*{inputQuantity}">validation massage</div>
+			<div class="error" th:text="${message}">validation massage</div>
+		</div>
+		<p class="input-message red"
+			th:if="${hotelDetailForm.hotelItem} != null">*入力必須項目</p>
 
-		<table border="1" align="center">
+		<table border="1" align="center"
+			th:if="${hotelDetailForm.hotelItem} != null">
 			<tr>
 				<th>商品コード</th>
 				<td th:text="${hotelDetailForm.hotelItem.itemCode}">itemCode</td>
@@ -123,8 +129,8 @@ img.cart {
 		<div style="text-align: center;">
 			<button type="submit" th:formaction="@{/hotelfind/findhotellist}">
 				戻る</button>
-			<button type="submit" th:formaction="@{/payment/cart}">
-				カートに入れる</button>
+			<button type="submit" th:formaction="@{/payment/cart}"
+				th:if="${hotelDetailForm.hotelItem} != null">カートに入れる</button>
 			<!-- 	TODO(sara): Is this necessary? -->
 			<!-- 			<button type="submit" th:formaction="@{/payment/complition}"> -->
 			<!-- 				今すぐ予約</button> -->
