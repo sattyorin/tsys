@@ -1,106 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-​
 
 <head>
 <meta charset="utf-8">
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js}"></script>
+<script type="text/javascript" th:src="@{/js/paging.js}"></script>
 <title>ホテル商品検索画面</title>
-<style type="text/css">
-.search_block {
-	display: inline-block;
-	/* インラインブロック要素にする */
-	border-color: black;
-	border-width: 3px;
-	border-style: solid;
-	/*padding: 20px;*/
-	/* 余白指定 */
-	/*height: 100px;*/
-	/* 高さ指定 */
-}
-
-​ .search_title {
-	display: inline-block;
-	/* インラインブロック要素にする */
-	background-color: #E6B9B8;
-}
-
-​ .search_input {
-	display: inline-block;
-	/* インラインブロック要素にする */
-}
-</style>
 </head>
 ​
 
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
-		<p>
-			<a th:href="@{/}">
-				<button
-					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
+		<div style="text-align: left;">
+			<a th:href="@{/topmenu/productmanage}">
+				<button style="width: fit-content">商品管理メニュー</button>
 			</a>
-		</p>
+		</div>
 		<h1>ホテル商品検索</h1>
 		<hr>
 		<p th:text="${message}" class="error">error message</p>
 
 		<form th:object="${form}" method="post"
 			th:action="@{/hotelitem/retrieve/searchlist}">
+
+			<table border="1" align="center">
+				<tr>
+					<td style="background-color: rgb(255, 185, 185);">商品コード</td>
+					<td><input type="text" maxlength="9"
+						th:field="${form.itemCode}"></td>
+				</tr>
+				<tr>
+					<td style="background-color: rgb(255, 185, 185);">ホテル名</td>
+					<td><input type="text" maxlength="30" placeholder="30文字以内で入力"
+						th:field="${form.hotelName}"></td>
+				</tr>
+				<tr>
+					<td style="background-color: rgb(255, 185, 185);">宿泊日</td>
+					<td><input type="date" th:field="${form.date}"></td>
+				</tr>
+			</table>
 			<div>
-				<div class="search_block">
-					<div class="search_title">商品コード</div>
-					<div class="search_input">
-						<input type="text" maxlength="9" th:field="${form.itemCode}">
-					</div>
-				</div>
-				<div class="search_block">
-					<div class="search_title">ホテル名</div>
-					<div class="search_input">
-						<input type="text" maxlength="30" th:field="${form.hotelName}">
-					</div>
-				</div>
-				<div class="search_block">
-					<div class="search_title">宿泊日</div>
-					<div class="search_input">
-						<input type="date" th:field="${form.date}">
-					</div>
-				</div>
-				<div style="display: inline-block;">
-					<button
-						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
-						type="submit">検索</button>
-				</div>
+				<button type="submit">検索</button>
 			</div>
+
+
 		</form>
 
 		<br> ​
 		<div>
-			<table border="1" style="text-align: center;"
-				th:if="${not #strings.isEmpty(HotelItemList)}">
-				<tr>
-					<th>商品コード</th>
-					<th>ホテルコード</th>
-					<th>ホテル名</th>
-					<th>宿泊日</th>
-					<th>料金</th>
-					<th>在庫数</th>
-				</tr>
-				<th:block th:object="${HotelItemDetailForm}"
-					th:each="hotelItem : ${HotelItemList}">
+			<table id="paging" border="1" align="center">
+				<thead>
 					<tr>
-						<td><a
-							th:href="@{'/hotelitem/retrieve/detail/' + ${hotelItem.itemCode}}"
-							th:text="${hotelItem.itemCode}"> itemCode </a></td>
-						<td th:text="${hotelItem.hotelCode}">hotelCode</td>
-						<td th:text="${hotelItem.name}">name</td>
-						<td th:text="${hotelItem.date}">date</td>
-						<td style="text-align: left;" class="digit"
-							th:text="${hotelItem.price}+'円'">price</td>
-						<td class="digit" th:text="${hotelItem.stock}">stock</td>
+						<th style="background-color: rgb(255, 185, 185);">商品コード</th>
+						<th style="background-color: rgb(255, 185, 185);">ホテルコード</th>
+						<th style="background-color: rgb(255, 185, 185);">ホテル名</th>
+						<th style="background-color: rgb(255, 185, 185);">宿泊日</th>
+						<th style="background-color: rgb(255, 185, 185);">料金</th>
+						<th style="background-color: rgb(255, 185, 185);">在庫数</th>
 					</tr>
-				</th:block>
+				</thead>
+				<tbody>
+					<th:block th:object="${HotelItemDetailForm}"
+						th:each="hotelItem : ${HotelItemList}">
+						<tr>
+							<td><a
+								th:href="@{'/hotelitem/retrieve/detail/' + ${hotelItem.itemCode}}"
+								th:text="${hotelItem.itemCode}"> itemCode </a></td>
+							<td th:text="${hotelItem.hotelCode}">hotelCode</td>
+							<td th:text="${hotelItem.name}">name</td>
+							<td th:text="${hotelItem.date}">date</td>
+							<td style="text-align: left;" class="digit"
+								th:text="${hotelItem.price}+'円'">price</td>
+							<td class="digit" th:text="${hotelItem.stock}">stock</td>
+						</tr>
+					</th:block>
+				</tbody>
 			</table>
 		</div>
 

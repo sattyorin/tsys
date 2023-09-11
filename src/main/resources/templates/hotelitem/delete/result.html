@@ -3,19 +3,18 @@
 
 <head>
 <meta charset="utf-8">
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>商品削除確認</title>
 </head>
 
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
-		<p>
-			<a th:href="@{/}">
-				<button
-					style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
+		<div style="text-align: left; width: fit-content;">
+			<a th:href="@{/topmenu/productmanage}">
+				<button>商品管理メニュー</button>
 			</a>
-		</p>
+		</div>
 		<h1>ホテル商品削除確認</h1>
 		<p>以下のホテル情報を削除しました。</p>
 
@@ -56,7 +55,6 @@
 		</table>
 
 
-		<div th:insert="footer::back2Top"></div>
 	</div>
 </body>
 
