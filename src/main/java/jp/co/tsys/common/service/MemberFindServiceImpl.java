@@ -16,7 +16,7 @@ import jp.co.tsys.common.util.MessageList;
 
 /**
  * メンバー検索のService
- * 
+ *
  * @author Yamaguchi
  * @version 1.0.0
  */

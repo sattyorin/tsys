@@ -10,7 +10,7 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
-		<p>予約確認キャンセル画面</p>
+		<h1>予約確認キャンセル画面</h1>
 
 		<table>
 			<tr th:each="hotelItem : ${hotelItemList}">
@@ -18,13 +18,12 @@
 				<td th:text="${hotelItem.hotel.name}">hotelName</td>
 			</tr>
 		</table>
-		<p>予約キャンセル完了しました</p>
-		<p>
-		<form th:if="${loginMember.role.equals('Customer')}"
+		<h3>予約キャンセル完了しました</h3>
+		<form th:if="${session.loginMember.role.equals('Customer')}"
 			th:action="@{/topmenu/}">
 			<button>戻る</button>
 		</form>
-		<form th:if="${loginMember.role.equals('Employee')}"
+		<form th:if="${session.loginMember.role.equals('Employee')}"
 			th:action="@{/order/find/}">
 			<button>戻る</button>
 		</form>

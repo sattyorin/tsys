@@ -10,7 +10,8 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
-		<table align="center" th:object="${OrderHistoryForm}">
+		<h1>予約履歴</h1>
+		<table align="center" th:object="${orderHistoryForm}">
 			<tbody>
 				<tr>
 					<th>顧客番号</th>
@@ -30,71 +31,81 @@
 				</tr>
 			</tbody>
 		</table>
-		<p>現在の予約履歴</p>
-		<form action="#" th:action="@{/order/deletecomfirm}"
-			th:object="${OrderHistoryForm}" method="post">
+		<p th:text="${message}" class="error"></p>
+		<h3>現在の予約履歴</h3>
+		<div th:if="${!#lists.isEmpty(orderHistoryForm.currentOrders)}">
+			<form action="#" th:action="@{/order/deletecomfirm}"
+				th:object="${orderHistoryForm}" method="post">
+				<table align="center">
+					<tbody>
+						<tr>
+							<th>宿泊予定日</th>
+							<th>注文日</th>
+							<th>ホテル名</th>
+							<th></th>
+						</tr>
+						<tr th:each="pair, st : ${orderHistoryForm.currentOrders}">
+							<td
+								th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.date}">StayDate
+							</td>
+							<td
+								th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.orderDate}">OrderDate</td>
+							<td
+								th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.hotel.name}">
+								Hotel</td>
+							<td><input type="checkbox"
+								th:field="${orderHistoryForm.currentOrders[__${st.index}__].second}"
+								value="True" /> <input type="hidden"
+								th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.orderNo}" />
+								<input type="hidden"
+								th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.itemCode}" />
+								<input type="hidden"
+								th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.quantity}" />
+								<input type="hidden"
+								th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.price}" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<p>
+					<button>予約キャンセル</button>
+				</p>
+			</form>
+		</div>
+		<div th:if="${#lists.isEmpty(orderHistoryForm.currentOrders)}">
+			<p>現在の予約履歴はありません</p>
+		</div>
+		<br>
+		<h3>過去の予約履歴</h3>
+		<!-- 		<p>(当日のキャンセルはできません)</p> -->
+		<div th:if="${!#lists.isEmpty(orderHistoryForm.pastOrders)}">
 			<table align="center">
-				<p th:text="${message}" class="error"></p>
 				<tbody>
 					<tr>
 						<th>宿泊予定日</th>
 						<th>注文日</th>
 						<th>ホテル名</th>
-						<th></th>
 					</tr>
-					<tr th:if="${!#lists.isEmpty(orderHistoryForm.currentOrders)}"
-						th:each="pair, st : ${orderHistoryForm.currentOrders}">
+					<tr th:each="pair, st : ${orderHistoryForm.pastOrders}">
 						<td
-							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.date}">StayDate
-						</td>
+							th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.hotelItem.date}">StayDate</td>
 						<td
-							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.orderDate}">OrderDate</td>
+							th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.orderDate}">OrderDate</td>
 						<td
-							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.hotel.name}">
-							Hotel</td>
-						<td><input type="checkbox"
-							th:field="${orderHistoryForm.currentOrders[__${st.index}__].second}"
-							value="True" /> <input type="hidden"
-							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.orderNo}" />
-							<input type="hidden"
-							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.itemCode}" />
-							<input type="hidden"
-							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.quantity}" />
-							<input type="hidden"
-							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.price}" />
-						</td>
+							th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.hotelItem.hotel.name}">Hotel</td>
 					</tr>
 				</tbody>
 			</table>
-			<p>
-				<button>予約キャンセル</button>
-			</p>
-		</form>
-		<p>過去の予約履歴</p>
-		<p>(当日のキャンセルはできません)</p>
-		<table align="center">
-			<tbody>
-				<tr>
-					<th>宿泊予定日</th>
-					<th>注文日</th>
-					<th>ホテル名</th>
-				</tr>
-				<tr th:if="${!#lists.isEmpty(orderHistoryForm.pastOrders)}"
-					th:each="pair, st : ${orderHistoryForm.pastOrders}">
-					<td
-						th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.hotelItem.date}">StayDate</td>
-					<td
-						th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.orderDate}">OrderDate</td>
-					<td
-						th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.hotelItem.hotel.name}">Hotel</td>
-				</tr>
-			</tbody>
-		</table>
-		<form th:if="${loginMember.role.equals('Customer')}"
+		</div>
+		<div th:if="${#lists.isEmpty(orderHistoryForm.pastOrders)}">
+			<p>過去の予約履歴はありません</p>
+		</div>
+		<br>
+		<form th:if="${session.loginMember.role.equals('Customer')}"
 			th:action="@{/topmenu/}">
 			<button>戻る</button>
 		</form>
-		<form th:if="${loginMember.role.equals('Employee')}"
+		<form th:if="${session.loginMember.role.equals('Employee')}"
 			th:action="@{/order/find/}">
 			<button>戻る</button>
 		</form>

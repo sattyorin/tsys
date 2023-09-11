@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.tsys.common.entity.Order;
-import jp.co.tsys.common.exception.BusinessException;
 import jp.co.tsys.common.mapper.OrdersMapper;
 
 /**
@@ -48,9 +47,9 @@ public class MemberOrdersFindServiceImpl implements MemberOrdersFindService {
 
 		List<Order> listCurrentOrder = ordersMapper
 				.findCurrentOrderFromMemberCode(memberCode, strDate);
-		if (listCurrentOrder.size() == 0) {
-			throw new BusinessException("BIZERR107");
-		}
+		// if (listCurrentOrder.size() == 0) {
+		// throw new BusinessException("BIZERR107");
+		// }
 
 		return listCurrentOrder;
 	}
@@ -60,9 +59,9 @@ public class MemberOrdersFindServiceImpl implements MemberOrdersFindService {
 		List<Order> listPastOrder = ordersMapper
 				.findPastOrderFromMemberCode(memberCode, strDate);
 
-		if (listPastOrder.size() == 0) {
-			throw new BusinessException("BIZERR108");
-		}
+		// if (listPastOrder.size() == 0) {
+		// throw new BusinessException("BIZERR108");
+		// }
 
 		return listPastOrder;
 	}
