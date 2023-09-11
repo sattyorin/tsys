@@ -24,10 +24,6 @@ public class Order implements Serializable {
 
 	private int orderNo;
 
-	private String itemCode;
-
-	private String orderDate;
-
 	/** ホテル商品 */
 	private HotelItem hotelItem;
 

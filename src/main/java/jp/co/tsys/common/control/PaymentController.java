@@ -123,6 +123,31 @@ public class PaymentController {
 		return "/payment/shopping_cart";
 	}
 
+	// 予約部屋数の変更
+	@RequestMapping("/changeQuantity")
+	public String changeQuantity(
+			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			return "/payment/shopping_cart";
+		}
+
+		List<Order> orderList = shoppingCartForm.getOrders();
+		int sum = 0;
+
+		for (Order item : orderList) {
+			item.setSubTotal(
+					item.getQuantity() * item.getHotelItem().getPrice());
+			sum += item.getSubTotal();
+		}
+
+		shoppingCartForm.setOrders(orderList);
+		shoppingCartForm.setOrderTotal(sum);
+		model.addAttribute("shoppingCartForm", shoppingCartForm);
+		return "/payment/shopping_cart";
+	}
+
 	@RequestMapping("/confirmation")
 	public String confirmeResult(ShoppingCartForm shoppingCartForm,
 			BindingResult result, Model model, HttpSession session) {

@@ -5,6 +5,11 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>カート</title>
 <style>
+th {
+	background-color: rgb(255, 185, 185);
+	border: "1";
+}
+
 h1 {
 	font-size: 1.5em;
 	line-height: 1.2em;
@@ -14,15 +19,15 @@ h1 {
 div.subtitle {
 	font-size: 1.3em;
 	font-weight: bold;
-	padding-left: 330px;
+	padding-left: 115px;
 	text-align: left;
 }
 
 p.sum {
-	font-size: 1em;
+	font-size: 1.3em;
 	font-weight: bold;
 	text-align: right;
-	padding-right: 330px;
+	padding-right: 110px;
 }
 </style>
 </head>
@@ -36,7 +41,7 @@ p.sum {
 	<div class="subtitle">予約情報</div>
 	<form id="cart" th:object="${shoppingCartForm}" method="post"
 		th:action="@{/payment/confirmation}">
-		<table border="1" width="600px">
+		<table border="1" width="1000px">
 			<tr>
 				<th>ホテルコード</th>
 				<th>ホテル名</th>
@@ -45,15 +50,27 @@ p.sum {
 				<th>部屋数</th>
 				<th>小計</th>
 			</tr>
-			<tr th:each="order:*{orders}" data-im-format-options="useseparator">
-				<td th:text="${order.hotelItem.hotel.hotelCode}">hotelCode</td>
-				<td th:text="${order.hotelItem.hotel.name}">name</td>
-				<td th:text="${order.hotelItem.date}">date</td>
+			<tr th:each="order, st:*{orders}"
+				data-im-format-options="useseparator">
 				<td
-					th:text="${#numbers.formatInteger(order.hotelItem.price, 3, 'COMMA')}+'円'">price</td>
-				<td th:text="${order.quantity}">quantity</td>
+					th:text="${shoppingCartForm.orders[__${st.index}__].hotelItem.hotel.hotelCode}">hotelCode</td>
 				<td
-					th:text="${#numbers.formatInteger(order.subTotal, 3, 'COMMA')}+'円'">price</td>
+					th:text="${shoppingCartForm.orders[__${st.index}__].hotelItem.hotel.name}">name</td>
+				<td
+					th:text="${shoppingCartForm.orders[__${st.index}__].hotelItem.date}">date</td>
+				<td
+					th:text="${#numbers.formatInteger(shoppingCartForm.orders[__${st.index}__].hotelItem.price, 3, 'COMMA')}+'円'">price</td>
+				<td><input type="text"
+					th:field="${shoppingCartForm.orders[__${st.index}__].quantity}"
+					maxlength="2" size="3" style="width: 20px;">
+					<div style="float: right;">
+						&thinsp;
+						<button type="submit"
+							style="font-size: 15px; width: fit-content; height: 25px;"
+							th:formaction="@{/payment/changeQuantity}">変更</button>
+					</div></td>
+				<td
+					th:text="${#numbers.formatInteger(shoppingCartForm.orders[__${st.index}__].subTotal, 3, 'COMMA')}+'円'">price</td>
 			</tr>
 		</table>
 		<p class="sum">

@@ -5,6 +5,17 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>予約確認</title>
 <style>
+table {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+th {
+	background-color: rgb(255, 185, 185);
+}
+
 h1 {
 	font-size: 1.5em;
 	line-height: 1.2em;
@@ -14,15 +25,15 @@ h1 {
 div.subtitle {
 	font-size: 1.3em;
 	font-weight: bold;
-	padding-left: 310px;
+	padding-left: 115px;
 	text-align: left;
 }
 
 p.sum {
-	font-size: 1em;
+	font-size: 1.3em;
 	font-weight: bold;
 	text-align: right;
-	padding-right: 330px;
+	padding-right: 110px;
 }
 </style>
 </head>
@@ -34,7 +45,7 @@ p.sum {
 
 	<div class="subtitle">予約情報</div>
 	<div th:object="${ordersForm}">
-		<table border="1" width="600px">
+		<table border="1" width="1000px">
 			<tr>
 				<th>ホテルコード</th>
 				<th>ホテル名</th>
@@ -73,7 +84,7 @@ p.sum {
 
 	<form id="order" th:object="${ordersForm}"
 		th:action="@{/payment/completion}">
-		<table border="1" width="600px">
+		<table border="1" width="1000px">
 			<tr>
 				<th>名前</th>
 				<td th:text="${displayMemeber.name}"></td>
