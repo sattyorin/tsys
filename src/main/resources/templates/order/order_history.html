@@ -31,7 +31,6 @@
 			</tbody>
 		</table>
 		<p>現在の予約履歴</p>
-
 		<form action="#" th:action="@{/order/deletecomfirm}"
 			th:object="${OrderHistoryForm}" method="post">
 			<table align="center">
@@ -48,21 +47,19 @@
 							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.date}">StayDate
 						</td>
 						<td
-							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.OrderNo}">OrderDate</td>
+							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.orderDate}">OrderDate</td>
 						<td
 							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.hotel.name}">
 							Hotel</td>
 						<td><input type="checkbox"
 							th:field="${orderHistoryForm.currentOrders[__${st.index}__].second}"
-							value="True" /></td>
-						<td><input type="hidden"
-							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.orderNo}" /></td>
-						<td><input type="hidden"
+							value="True" /> <input type="hidden"
+							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.orderNo}" />
+							<input type="hidden"
 							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.itemCode}" />
-						</td>
-						<td><input type="hidden"
-							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.quantity}" /></td>
-						<td><input type="hidden"
+							<input type="hidden"
+							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.quantity}" />
+							<input type="hidden"
 							th:field="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.price}" />
 						</td>
 					</tr>
@@ -72,7 +69,6 @@
 				<button>予約キャンセル</button>
 			</p>
 		</form>
-
 		<p>過去の予約履歴</p>
 		<p>(当日のキャンセルはできません)</p>
 		<table align="center">
@@ -82,23 +78,20 @@
 					<th>注文日</th>
 					<th>ホテル名</th>
 				</tr>
-
 				<tr th:if="${!#lists.isEmpty(orderHistoryForm.pastOrders)}"
 					th:each="pair, st : ${orderHistoryForm.pastOrders}">
 					<td
 						th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.hotelItem.date}">StayDate</td>
 					<td
-						th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.OrderNo}">OrderDate</td>
+						th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.orderDate}">OrderDate</td>
 					<td
 						th:text="${orderHistoryForm.pastOrders[__${st.index}__].first.hotelItem.hotel.name}">Hotel</td>
 				</tr>
 			</tbody>
 		</table>
-
 		<form th:action="@{/order/history/}">
 			<button>戻る</button>
 		</form>
-
 	</div>
 </body>
 
