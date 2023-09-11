@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * ホテル商品入力フォーム
- * 
+ *
  * @author FLM
  * @version 1.0.0
  */
@@ -44,18 +44,18 @@ public class RegistHotelForm implements Serializable {
 	private String city;
 
 	/** グレード */
-	private int grade;
+	private Integer grade;
 
 	/** 料金 */
 	@Max(999999999)
 	@Min(1)
 	@Digits(fraction = 0, integer = 10)
-	private int price;
+	private Integer price;
 
 	/** 在庫数 */
 	@Max(99999)
 	@Min(1)
 	@Digits(fraction = 0, integer = 6)
-	private int stock;
+	private Integer stock;
 
 }

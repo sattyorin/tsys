@@ -3,13 +3,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
 <meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>商品登録</title>
 </head>
 
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: left">
-		<a th:href="@{/hotelitem/register/itemmenu}">
+		<a th:href="@{/topmenu/productmanage}">
 			<button type="submit"
 				style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">商品管理メニュー</button>
 		</a>
@@ -20,7 +21,7 @@
 		<p th:text="${message}">error message</p>
 
 		<form th:object="${findHotelForm}" method="post"
-			th:action="@{/hotelitem/register/findHotel}">
+			th:action="@{/hotelitem/register/findhotel}">
 			<table align="center">
 				<tr>
 					<td style="background-color: rgb(255, 206, 206);">ホテルコード</td>
@@ -29,19 +30,21 @@
 				<tr>
 
 					<td style="background-color: rgb(255, 206, 206);">ホテル名</td>
-					<td><input type="text" th:field="*{hotelName}"></td>
+					<td><input type="text" th:field="${findHotelForm.hotelName}"></td>
 				</tr>
 			</table>
 			<br>
 			<button type="submit"
 				style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">検索</button>
+
+			<!--				name=hoetlCOde , id=hotelCode , value=hotelCodeみたいになる。で、遷移先のformにhotelCodeがあれば自動格納-->
+			<!--				ここにエラーチェック-->
+			<div class="error" th:if="${#fields.hasErrors('hotelCode')}"
+				th:errors="*{hotelCode}">validation massage</div>
+			<div class="error" th:if="${#fields.hasErrors('hotelName')}"
+				th:errors="*{hotelName}">validation massage</div>
 		</form>
-		<!--				name=hoetlCOde , id=hotelCode , value=hotelCodeみたいになる。で、遷移先のformにhotelCodeがあれば自動格納-->
-		<!--				ここにエラーチェック-->
-		<div class="error" th:if="${#fields.hasErrors('hotelCode')}"
-			th:errors="*{hotelCode}">validation massage</div>
-		<div class="error" th:if="${#fields.hasErrors('hotelName')}"
-			th:errors="*{hotelName}">validation massage</div>
+
 	</div>
 
 	<br>

@@ -1,5 +1,5 @@
 /**
- * Eg6_InsertEmpController.java
+ * MemberRegistController.java
  * All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited
  */
 
@@ -15,19 +15,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.tsys.common.entity.Member;
 import jp.co.tsys.common.exception.BusinessException;
+import jp.co.tsys.common.form.CustomerMemberForm;
+import jp.co.tsys.common.form.EmployeeMemberForm;
+import jp.co.tsys.common.form.LoginForm;
 import jp.co.tsys.common.form.MemberForm;
 import jp.co.tsys.common.service.MemberRegistService;
 
-@SessionAttributes(types = MemberForm.class)
+@SessionAttributes(names = {"memberForm", "loginmember", "customerMemberForm",
+		"employeeMemberForm"})
 @Controller
 @RequestMapping("/member/regist")
 public class MemberRegistController {
@@ -46,9 +48,15 @@ public class MemberRegistController {
 	 */
 	@RequestMapping("/chooserole")
 	public String chooseRole(Model model) {
-		// フォームオブジェクトをキー名"memberForm"でModelに格納
+
 		MemberForm memberForm = new MemberForm();
 		model.addAttribute("memberForm", memberForm);
+
+		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+		model.addAttribute("customerMemberForm", customerMemberForm);
+
+		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+		model.addAttribute("employeeMemberForm", employeeMemberForm);
 
 		return "/member/regist/member_regist_role";
 	}
@@ -59,14 +67,55 @@ public class MemberRegistController {
 	 *
 	 * @param model
 	 *            Modelオブジェクト
+	 * @param memberForm
 	 * @return メンバー登録画面（/member_regist）
 	 */
-	@RequestMapping("/input/{role}")
-	public String inputRegist(@PathVariable String role,
-			@ModelAttribute("memberForm") MemberForm form, Model model) {
-		// roleの値（CustomerかEmployee）をformのroleに入れる
-		form.getMember().setRole(role);
-		model.addAttribute("memberForm", form);
+	// メンバー登録（権限）画面の[お客様登録]に対応
+	@RequestMapping("/customerinput")
+	public String customerInputRegist(Model model) {
+
+		// EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+
+		// 入力値を取得するmodelを用意
+		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+
+		// Customerをformのroleに入れる
+		customerMemberForm.setRole("Customer");
+
+		model.addAttribute("customerMemberForm", customerMemberForm);
+
+		return "/member/regist/member_regist";
+	}
+
+	// メンバー登録（権限）画面の[従業員登録]に対応
+	@RequestMapping("/employeeinput")
+	public String employeeInputRegist(Model model) {
+
+		// CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+
+		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+
+		// Employeeをformのroleに入れる
+		employeeMemberForm.setRole("Employee");
+
+		model.addAttribute("employeeMemberForm", employeeMemberForm);
+
+		return "/member/regist/member_regist";
+	}
+
+	// ログイン画面の[登録はこちら]に対応
+	@RequestMapping("/customercinput")
+	public String inputRegist(Model model) {
+
+		// EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+
+		// 入力値を取得するmodelを用意
+		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+
+		// Customerをformのroleに入れる
+		customerMemberForm.setRole("CustomerC");
+
+		model.addAttribute("customerMemberForm", customerMemberForm);
 
 		return "/member/regist/member_regist";
 	}
@@ -81,21 +130,41 @@ public class MemberRegistController {
 	 *            入力値検証結果オブジェクト
 	 * @return 従業員登録確認画面（/member_regist_confirm）
 	 */
-	@RequestMapping(value = "/comfirm", method = RequestMethod.POST)
-	public String confirmRegist(
-			@ModelAttribute("memberForm") @Validated MemberForm form,
+	// メンバー登録画面（お客様登録）の[確認]に対応
+	@RequestMapping(value = "/customercomfirm", method = RequestMethod.POST)
+	public String customerConfirmRegist(
+			@ModelAttribute("customerMemberForm") @Validated CustomerMemberForm customerMemberForm,
 			BindingResult result, Model model) {
 		// 入力チェック
 		if (result.hasErrors()) {
-
 			// メンバー登録画面（/member_regist）を返却する
-			return "/member_regist";
-		} else if (!form.getMember().getPassword()
-				.equals(form.getConfirmPassword())) {
-			model.addAttribute("message", BIZERR201);
-			return "/member_regist";
-		}
+			return "/member/regist/member_regist";
 
+		} else if (!customerMemberForm.getPassword()
+				.equals(customerMemberForm.getConfirmPassword())) {
+			model.addAttribute("message", BIZERR201);
+			return "/member/regist/member_regist";
+
+		}
+		return "/member/regist/member_regist_confirm";
+	}
+
+	// メンバー登録画面（従業員登録）の[確認]に対応
+	@RequestMapping(value = "/employeecomfirm", method = RequestMethod.POST)
+	public String employeeConfirmRegist(
+			@ModelAttribute("employeeMemberForm") @Validated EmployeeMemberForm employeeMemberForm,
+			BindingResult result, Model model) {
+		// 入力チェック
+		if (result.hasErrors()) {
+			// メンバー登録画面（/member_regist）を返却する
+			return "/member/regist/member_regist";
+
+		} else if (!employeeMemberForm.getPassword()
+				.equals(employeeMemberForm.getConfirmPassword())) {
+			model.addAttribute("message", BIZERR201);
+			return "/member/regist/member_regist";
+
+		}
 		return "/member/regist/member_regist_confirm";
 	}
 
@@ -111,16 +180,21 @@ public class MemberRegistController {
 	 *            セッションステータス
 	 * @return メンバー登録確定画面（/member_regist_result）
 	 */
-	@RequestMapping(value = "/commit", method = RequestMethod.POST)
-	public String commitRegist(@ModelAttribute("memberForm") MemberForm form,
-			Model model, SessionStatus status) {
+
+	// メンバー登録確認画面（お客様登録）の[確定]に対応
+	@RequestMapping(value = "/customercommit", method = RequestMethod.POST)
+	public String customerCommitRegist(Model model) {
 
 		// フォームオブジェクトに格納された情報をEmployeeオブジェクトに設定する
-		Member member = new Member("0", form.getMember().getName(),
-				form.getMember().getPassword(), form.getMember().getRole(),
-				form.getMember().getMail(), form.getMember().getZipCode(),
-				form.getMember().getPrefecture(), form.getMember().getAddress(),
-				form.getMember().getTel());
+
+		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
+				.getAttribute("customerMemberForm");
+
+		Member member = new Member("0", customerMemberForm.getName(),
+				customerMemberForm.getPassword(), "Customer",
+				customerMemberForm.getMail(), customerMemberForm.getZipCode(),
+				customerMemberForm.getPrefecture(),
+				customerMemberForm.getAddress(), customerMemberForm.getTel());
 
 		// ServiceのregistEmployeeメソッドを呼び出す
 		service.registMember(member);
@@ -128,8 +202,32 @@ public class MemberRegistController {
 		// Employeeオブジェクトをキー名"employee"でModelに格納
 		model.addAttribute("member", member);
 
-		// セッションからフォームオブジェクトを削除
-		status.setComplete();
+		// // セッションからフォームオブジェクトを削除
+		// status.setComplete();
+
+		return "/member/regist/member_regist_result";
+	}
+
+	// メンバー登録確認画面（従業員登録）の[確定]に対応
+	@RequestMapping(value = "/employeecommit", method = RequestMethod.POST)
+	public String employeeCommitRegist(Model model) {
+
+		EmployeeMemberForm employeeMemberForm = (EmployeeMemberForm) model
+				.getAttribute("employeeMemberForm");
+
+		// フォームオブジェクトに格納された情報をEmployeeオブジェクトに設定する
+		Member member = new Member("0", employeeMemberForm.getName(),
+				employeeMemberForm.getPassword(), employeeMemberForm.getRole(),
+				employeeMemberForm.getMail(), null, null, null, null);
+
+		// ServiceのregistEmployeeメソッドを呼び出す
+		service.registMember(member);
+
+		// Employeeオブジェクトをキー名"employee"でModelに格納
+		model.addAttribute("member", member);
+
+		// // セッションからフォームオブジェクトを削除
+		// status.setComplete();
 
 		return "/member/regist/member_regist_result";
 	}
@@ -140,12 +238,12 @@ public class MemberRegistController {
 	 *
 	 * @param form
 	 *            メンバー登録情報入力フォームオブジェクト
-	 * @return メンバー管理メニュー画面（/member_mgr_menu）
+	 * @return メンバー管理メニュー画面（/member_management）
 	 */
 	@RequestMapping("/returnmenu")
-	public String returnMemberMenu(
-			@ModelAttribute("memberForm") MemberForm form) {
-		return "/member/regist/member_mgr_menu";
+	public String returnMemberMenu() {
+
+		return "/member/regist/member_management";
 	}
 
 	/**
@@ -157,7 +255,17 @@ public class MemberRegistController {
 	 * @return メンバー登録（権限）画面（/member_regist_role）
 	 */
 	@RequestMapping("/returnrole")
-	public String returnRole(@ModelAttribute("memberForm") MemberForm form) {
+	public String returnRole(Model model) {
+
+		MemberForm memberForm = new MemberForm();
+		model.addAttribute("memberForm", memberForm);
+
+		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+		model.addAttribute("customerMemberForm", customerMemberForm);
+
+		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+		model.addAttribute("employeeMemberForm", employeeMemberForm);
+
 		return "/member/regist/member_regist_role";
 	}
 
@@ -170,8 +278,9 @@ public class MemberRegistController {
 	 * @return ログイン画面（/）
 	 */
 	@RequestMapping("/returnlogin")
-	public String returnLogin(@ModelAttribute("memberForm") MemberForm form) {
-		return "/member/regist/login";
+	public String returnLogin(Model model) {
+		model.addAttribute("loginForm", new LoginForm());
+		return "login";
 	}
 
 	/**
@@ -182,8 +291,21 @@ public class MemberRegistController {
 	 *            メンバー登録情報入力フォームオブジェクト
 	 * @return メンバー登録画面（/member_regist）
 	 */
-	@RequestMapping("/returninput")
-	public String returnRegist(@ModelAttribute("memberForm") MemberForm form) {
+	@RequestMapping("/returncustomerinput")
+	public String returnCustomerRegist(
+			@ModelAttribute("customerMemberForm") CustomerMemberForm customerMemberForm) {
+		return "/member/regist/member_regist";
+	}
+
+	@RequestMapping("/returnemployeeinput")
+	public String returnEmployeeRegist(
+			@ModelAttribute("employeeMemberForm") EmployeeMemberForm employeeMemberForm) {
+		return "/member/regist/member_regist";
+	}
+
+	@RequestMapping("/returncustomercinput")
+	public String returnCustomerCRegist(
+			@ModelAttribute("customerMemberForm") CustomerMemberForm customerMemberForm) {
 		return "/member/regist/member_regist";
 	}
 
@@ -204,7 +326,7 @@ public class MemberRegistController {
 		model.addAttribute("message", e.getMessage());
 
 		// フォームオブジェクトをキー名"employeeForm"でModelに格納
-		model.addAttribute("memberForm", new MemberForm());
+		model.addAttribute("memberForm", new CustomerMemberForm());
 
 		return "/member/regist/member_regist";
 	}

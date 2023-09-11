@@ -4,6 +4,8 @@
 
 package jp.co.tsys.common.service;
 
+import static jp.co.tsys.common.util.MessageList.BIZERR306;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,7 @@ public class RegistHotelServiceImpl implements RegistHotelService {
 					hotelitem.getHotel().getHotelCode(), hotelitem.getDate(),
 					hotelitem.getPrice(), hotelitem.getStock());
 		} catch (DuplicateKeyException e) {
-			throw new BusinessException("BIZERR305");
+			throw new BusinessException(BIZERR306);
 		}
 	}
 

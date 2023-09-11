@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- RetrieveProductMapper.xml -->
-<!-- All Rights Reserved, Copyright(c) Fujitsu Learning Media Limited -->
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.tsys.common.mapper.HotelMasterMapper">
 
 	<select id = "findHotel" resultType = "jp.co.tsys.common.entity.Hotel">
-	
 
-		select 
+
+		select
 			hotelmaster.HotelCode as hotelCode,
-			hotelmaster.Name 	　as name,
-			city.Name 			　as cityName, 
-			hotelmaster.Grade 	　as grade
+			hotelmaster.Name 	as name,
+			city.Name 			as cityName,
+			hotelmaster.Grade 	as grade
 		from
 			hotelmaster
 		inner join
 			city
 		on
 			hotelmaster.CityCode = City.CityCode
-		where 
-			(hotelmaster.HotelCode = #{hotelCode} OR #{hotelCode} = "*")
+		where
+			(hotelmaster.HotelCode = #{hotelCode} OR #{hotelCode} = "")
 		and
-			(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "*");
+			(hotelmaster.NAME LIKE CONCAT('%', #{hotelName}, '%') OR #{hotelName} = "");
 	</select>
 </mapper>
-		

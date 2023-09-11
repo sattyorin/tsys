@@ -8,6 +8,7 @@ package jp.co.tsys.common.control;
 
 import static jp.co.tsys.common.util.MessageList.BIZERR301;
 import static jp.co.tsys.common.util.MessageList.BIZERR302;
+import static jp.co.tsys.common.util.MessageList.BIZERR305;
 
 import java.util.List;
 
@@ -41,16 +42,16 @@ public class RegistHotelItemController {
 	private RegistHotelService service;
 
 	// 商品管理メニューに遷移（一番上）
-	@RequestMapping("/register/itemmenu")
-	public String itemMgrMenu(Model model) {
-		return "/item_menu";
-	}
+	// @RequestMapping("/register/itemmenu")
+	// public String itemMgrMenu(Model model) {
+	// return "/regist/item_menu";
+	// }
 
 	// 登録画面（検索画面）に遷移する
 	@RequestMapping("/register/entryhotelitemregist")
 	public String entryHotelItemRegist(Model model, SessionStatus status) {
 		model.addAttribute("findHotelForm", new FindHotelForm());
-
+		System.out.println("はじめ");
 		return "/hotelitem/regist/hotel_find";
 	}
 
@@ -58,8 +59,10 @@ public class RegistHotelItemController {
 	@RequestMapping("/register/findhotel")
 	public String findHotel(@Validated FindHotelForm form, BindingResult result,
 			Model model) {
+		System.out.println("次");
 		if (result.hasErrors()) {
 			// TODO(ren): addAttribute error message
+			// model.addAttribute("findHotelForm", new FindHotelForm());
 			return "/hotelitem/regist/hotel_find";
 		}
 
@@ -76,8 +79,12 @@ public class RegistHotelItemController {
 			}
 		}
 
+		// System.out.println("test***********");
+		// System.out.println(form.getHotelName());
+
 		List<Hotel> hotelList = service.findHotel(form.getHotelCode(),
 				form.getHotelName());
+		System.out.println(hotelList.size());
 
 		if (hotelList.isEmpty()) {
 			model.addAttribute("message", BIZERR302);
@@ -120,7 +127,7 @@ public class RegistHotelItemController {
 				form.getPrice());
 		if (count != 0) {
 			// TODO(ren): use error code
-			model.addAttribute("message", "同じ商品が登録されています。");
+			model.addAttribute("message", BIZERR305);
 			return "/hotelitem/regist/hotel_regist";
 		}
 

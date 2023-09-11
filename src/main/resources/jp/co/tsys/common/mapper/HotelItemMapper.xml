@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- RetrieveProductMapper.xml -->
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.tsys.common.mapper.HotelItemMapper">
 	<!-- insert -->
 	<insert id="registHotelItem">
@@ -27,7 +27,7 @@
 		DESC
 		limit 1;
 	</select>
-	
+
 	<select id = "countHotelItem" resultType="int">
 		SELECT
 			COUNT(*)
@@ -35,7 +35,7 @@
 			hotel
 		WHERE HotelCode = #{hotelCode} AND Date = #{date} AND Price = #{price}
 	</select>
-	
+
 	<!-- update -->
 	<update id="updateHotelItem">
 		UPDATE
@@ -193,7 +193,7 @@
 		hotel.ItemCode = #{ItemCode}
 		;
 	</select>
-	
+
 	<select id="findItem" resultType="jp.co.tsys.common.form.HotelItemDetailForm">
 		SELECT
 		hotel.itemCode as itemCode,
