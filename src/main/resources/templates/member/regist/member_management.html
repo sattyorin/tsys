@@ -4,8 +4,6 @@
 <head>
 <meta charset="utf-8">
 <!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
-<head>
-<meta charset="UTF-8">
 <title>従業員メンバー管理メニュー画面</title>
 </head>
 
@@ -15,12 +13,13 @@
 		<h1>メンバー管理メニュー</h1>
 		<br>
 		<div>
-			<form th:action="@{member/regist/employee/emp/chooserole}">
+			<form th:action="@{/member/regist/chooserole}">
 				<button
 					style="width: 300px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
 					7 type="submit">メンバー登録</button>
 			</form>
 		</div>
+		<br>
 		<div>
 			<form th:action="@{/member/find/search}">
 				<button
@@ -28,6 +27,7 @@
 					type="submit">メンバー変更・削除</button>
 			</form>
 		</div>
+		<br>
 		<div>
 			<form th:action="@{/member/allview/viewlist}">
 				<button
