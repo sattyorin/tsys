@@ -39,7 +39,9 @@ import jp.co.tsys.common.util.Pair;
 public class MemberOrdersFindController {
 	@Autowired
 	private MemberFindService memberservice;
+	@Autowired
 	private MemberOrdersFindService orderservice;
+	@Autowired
 	private OrdersDeleteService deleteService;
 
 	// 顧客情報検索画面に遷移する。
@@ -70,28 +72,23 @@ public class MemberOrdersFindController {
 			// // Service で各メソッドを呼び出し
 			// // 戻り値Memberオブジェクトを取得する
 			member = memberservice.findMember(memberCodeForm.getMemberCode());
-
+			// member = memberservice.findMember("CM0002");
 			OrderHistoryForm orderHistoryForm = new OrderHistoryForm();
+			List<Order> currentOrder = orderservice
+					.findCurrentOrder(member.getMemberCode());
 
-			List<Order> currentOrder
-					= orderservice.findCurrentOrder(member.getMemberCode());
-
-			List<Order> pastOrder
-					= orderservice.findPastOrder(member.getMemberCode());
+			List<Order> pastOrder = orderservice
+					.findPastOrder(member.getMemberCode());
 
 			// List<Order> -> List<Pair<Order, String>>
-			List<Pair<Order, String>> currentOrderPairList
-					= currentOrder.stream().map(
-							order -> new Pair<Order, String>(order,
-									"false")).collect(
-											Collectors.toList());
+			List<Pair<Order, String>> currentOrderPairList = currentOrder
+					.stream()
+					.map(order -> new Pair<Order, String>(order, "false"))
+					.collect(Collectors.toList());
 
-			List<Pair<Order, String>> pastOrderPairList
-					= pastOrder.stream().map(
-							order -> new Pair<Order, String>(order,
-									"false")).collect(
-											Collectors.toList());
-
+			List<Pair<Order, String>> pastOrderPairList = pastOrder.stream()
+					.map(order -> new Pair<Order, String>(order, "false"))
+					.collect(Collectors.toList());
 			orderHistoryForm.setCurrentOrders(currentOrderPairList);
 			orderHistoryForm.setPastOrders(pastOrderPairList);
 			orderHistoryForm.setMember(member);
@@ -102,23 +99,20 @@ public class MemberOrdersFindController {
 		} else {
 			OrderHistoryForm orderHistoryForm = new OrderHistoryForm();
 
-			List<Order> currentOrder = orderservice.findCurrentOrder(
-					loginMember.getMemberCode());
+			List<Order> currentOrder = orderservice
+					.findCurrentOrder(loginMember.getMemberCode());
 
-			List<Order> pastOrder
-					= orderservice.findPastOrder(loginMember.getMemberCode());
+			List<Order> pastOrder = orderservice
+					.findPastOrder(loginMember.getMemberCode());
 			// List<Order> -> List<Pair<Order, String>>
-			List<Pair<Order, String>> currentOrderPairList
-					= currentOrder.stream().map(
-							order -> new Pair<Order, String>(order,
-									"false")).collect(
-											Collectors.toList());
+			List<Pair<Order, String>> currentOrderPairList = currentOrder
+					.stream()
+					.map(order -> new Pair<Order, String>(order, "false"))
+					.collect(Collectors.toList());
 
-			List<Pair<Order, String>> pastOrderPairList
-					= pastOrder.stream().map(
-							order -> new Pair<Order, String>(order,
-									"false")).collect(
-											Collectors.toList());
+			List<Pair<Order, String>> pastOrderPairList = pastOrder.stream()
+					.map(order -> new Pair<Order, String>(order, "false"))
+					.collect(Collectors.toList());
 
 			orderHistoryForm.setCurrentOrders(currentOrderPairList);
 			orderHistoryForm.setPastOrders(pastOrderPairList);
@@ -154,15 +148,16 @@ public class MemberOrdersFindController {
 			Model model) {
 		boolean flag = false;
 
-		for (Pair<Order, String> currentOrder : orderHistoryForm.getCurrentOrders()) {
+		for (Pair<Order, String> currentOrder : orderHistoryForm
+				.getCurrentOrders()) {
 			List<HotelItem> hotelItemList = new ArrayList<>();
 			if ("True".equals(currentOrder.getSecond())) {
 
 				HotelItem hotelItem = new HotelItem();
 				hotelItem.setDate(
 						currentOrder.getFirst().getHotelItem().getDate());
-				hotelItem.getHotel().setName(
-						currentOrder.getFirst().getHotelItem().getHotel().getName());
+				hotelItem.getHotel().setName(currentOrder.getFirst()
+						.getHotelItem().getHotel().getName());
 				hotelItemList.add(hotelItem);
 
 				deleteService.deleteCurrentOrder(

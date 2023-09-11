@@ -10,24 +10,23 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center;">
-		<!--				<div th:insert="top::back2Top"></div>-->
-		<table align="center">
+		<table align="center" th:object="${OrderHistoryForm}">
 			<tbody>
 				<tr>
 					<th>顧客番号</th>
-					<td th:text="${member.memberCode}">memberCode</td>
+					<td th:text="${orderHistoryForm.member.memberCode}">memberCode</td>
 					<th>メールアドレス</th>
-					<td th:text="${member.Mail}">Mail</td>
+					<td th:text="${orderHistoryForm.member.Mail}">Mail</td>
 					<th>郵便番号</th>
-					<td th:text="${member.ZipCode}">ZipCode</td>
+					<td th:text="${orderHistoryForm.member.ZipCode}">ZipCode</td>
 				</tr>
 				<tr>
 					<th>名前</th>
-					<td th:text="${member.Name}">Name</td>
+					<td th:text="${orderHistoryForm.member.Name}">Name</td>
 					<th>電話番号</th>
-					<td th:text="${member.Tel}">Tel</td>
+					<td th:text="${orderHistoryForm.member.Tel}">Tel</td>
 					<th>住所</th>
-					<td th:text="${member.Address}">Address</td>
+					<td th:text="${orderHistoryForm.member.Address}">Address</td>
 				</tr>
 			</tbody>
 		</table>
@@ -46,11 +45,13 @@
 					<tr th:if="${!#lists.isEmpty(orderHistoryForm.currentOrders)}"
 						th:each="pair, st : ${orderHistoryForm.currentOrders}">
 						<td
-							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.date}">StayDate</td>
+							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.date}">StayDate
+						</td>
 						<td
 							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.OrderNo}">OrderDate</td>
 						<td
-							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.hotel.name}">Hotel</td>
+							th:text="${orderHistoryForm.currentOrders[__${st.index}__].first.hotelItem.hotel.name}">
+							Hotel</td>
 						<td><input type="checkbox"
 							th:field="${orderHistoryForm.currentOrders[__${st.index}__].second}"
 							value="True" /></td>
@@ -98,7 +99,6 @@
 			<button>戻る</button>
 		</form>
 
-		<!--		<div th:insert="footer::back2Top"></div>-->
 	</div>
 </body>
 
