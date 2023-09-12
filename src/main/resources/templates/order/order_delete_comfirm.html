@@ -19,12 +19,7 @@
 			</tr>
 		</table>
 		<h3>予約キャンセル完了しました</h3>
-		<form th:if="${session.loginMember.role.equals('Customer')}"
-			th:action="@{/topmenu/}">
-			<button>戻る</button>
-		</form>
-		<form th:if="${session.loginMember.role.equals('Employee')}"
-			th:action="@{/order/backhistory/}">
+		<form th:action="@{/order/backhistory/}">
 			<button>戻る</button>
 		</form>
 	</div>
