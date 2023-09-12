@@ -44,6 +44,9 @@ public class MemberDeleteController {
 	// 顧客が退会する際の「確認」に対応するメソッド
 	@RequestMapping("/confirm")
 	public String deleteMemberConfirm(String memberCode) {
+		if (memberCode.isEmpty() || memberCode == null) {
+			return "member/find/member_find";
+		}
 		// TODO(sara): if memberForm is empty
 		return "member/delete/member_delete_confirm";
 
