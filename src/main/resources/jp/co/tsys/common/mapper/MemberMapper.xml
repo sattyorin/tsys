@@ -112,6 +112,7 @@
 		Name AS name,
 		Role AS role,
 		Mail AS mail,
+		Password AS password,
 		ZipCode AS zipCode,
 		Prefecture AS prefecture,
 		Address AS address,
