@@ -4,7 +4,6 @@
 
 <head>
 <meta charset="utf-8">
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
 <link rel="stylesheet" type="text/css"
 	th:href="@{https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -23,6 +22,10 @@
 
 th {
 	background-color: rgb(255, 185, 185);
+}
+
+td.memberFind {
+	border: none;
 }
 </style>
 
@@ -43,16 +46,18 @@ th {
 		th:action="@{/member/allview/search}">
 		<table style="margin: auto">
 			<tr>
-				<td>​ <select name="role">
+				<td class="memberFind">​ <select name="role">
 						<option value="Customer">Customer</option>
 						<option value="Employee">Employee</option>
 				</select>
 				</td>
-				<td><input type="text" th:field="${findAllMemberForm.name}"
-					placeholder="富士通　太郎" /><br /></td>
-				<td><input type="text" th:field="*{tel}" placeholder="電話番号" /><br /></td>
-				<td><input type="text" th:field="*{mail}" placeholder="メールアドレス" /><br /></td>
-				<td>
+				<td class="memberFind"><input type="text"
+					th:field="${findAllMemberForm.name}" placeholder="富士通　太郎" /><br /></td>
+				<td class="memberFind"><input type="text" th:field="*{tel}"
+					placeholder="電話番号" /><br /></td>
+				<td class="memberFind"><input type="text" th:field="*{mail}"
+					placeholder="メールアドレス" /><br /></td>
+				<td class="memberFind">
 					<button
 						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
 						type="submit">検索</button>
@@ -69,7 +74,7 @@ th {
 		</a>
 	</div>
 	<br>
-	<table id="memberlist" border="1" style="margin: auto">
+	<table id="paging" border="1" style="margin: auto">
 		<thead>
 			<tr>
 				<th>権限</th>
