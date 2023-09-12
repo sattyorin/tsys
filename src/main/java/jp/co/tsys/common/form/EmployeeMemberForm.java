@@ -29,11 +29,11 @@ public class EmployeeMemberForm implements Serializable {
 	private String name;
 
 	@NotBlank
-	@Size(min = 3, max = 15)
+	@Size(min = 8, max = 15)
 	private String password;
 
 	@NotBlank
-	@Size(min = 3, max = 15)
+	@Size(min = 8, max = 15)
 	private String confirmPassword;
 
 	@NotBlank
