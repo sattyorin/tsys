@@ -17,6 +17,7 @@
 			th:action="@{/order/history/}">
 			<div class="error" th:if="${#fields.hasErrors('memberCode')}"
 				th:errors="*{memberCode}">validation massage</div>
+			<p th:text="${message}" class="error">error message</p>
 			<p>
 				<input type="text" th:field="*{memberCode}">
 				<button type="submit">検索</button>

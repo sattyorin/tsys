@@ -83,7 +83,7 @@ public class MemberOrdersFindController {
 			try {
 				member = memberFindService.findMember(memberCode);
 			} catch (BusinessException e) {
-				model.addAttribute("message", e);
+				model.addAttribute("message", e.getMessage());
 				return "/order/member_code_find";
 			}
 		}
