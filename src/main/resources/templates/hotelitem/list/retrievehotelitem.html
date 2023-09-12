@@ -75,7 +75,7 @@
 						<td th:text="${hotelItem.name}">name</td>
 						<td th:text="${hotelItem.date}">date</td>
 						<!-- <td th:text="${#temporals.format(hotelItem.date, 'yyyy/MM/dd')}">date</td>-->
-						<td class="digit" th:text="${hotelItem.price}+'円'">price</td>
+						<td class="digit" th:text="${#numbers.formatInteger(hotelItem.price, 3, 'COMMA')} + '円'">price</td>
 						<td class="digit" th:text="${hotelItem.stock}">stock</td>
 					</tr>
 

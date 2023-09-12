@@ -80,7 +80,7 @@ public class HotelAllListViewController {
 		}
 		// 入力チェック：期間がStartdate,Enddateどちらかしか入力されていない場合
 		if (form.getStartdate().equals("") ^ form.getEnddate().equals("")) {
-			model.addAttribute("message", MessageList.BIZERR103);
+			model.addAttribute("message", "期間を設定する場合は、期首・期末両方を入力してください。（同日選択可能）");
 			model.addAttribute("HotelItemList", null);
 			if (form.getName().length() >= 31) {
 				model.addAttribute("message",
@@ -99,7 +99,7 @@ public class HotelAllListViewController {
 
 			// EnddateでStartdateより前の日付けが選択された場合
 			if ((startdate.after(enddate) == true)) {
-				model.addAttribute("message", MessageList.BIZERR103);
+				model.addAttribute("message", "期末には期首より前の日付を入力してください。");
 				model.addAttribute("HotelItemList", null);
 				if (form.getName().length() >= 31) {
 					model.addAttribute("message",
