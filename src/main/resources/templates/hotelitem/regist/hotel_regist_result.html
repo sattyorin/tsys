@@ -67,7 +67,9 @@
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">料金</th>
 					<td>
-						<p th:text="${registHotelForm.price} + '円'">price</p> <!--	<input type="hidden" th:field="*{price}">-->
+						<p
+							th:text="${#numbers.formatInteger(registHotelForm.price, 3, 'COMMA')} + '円'">price</p>
+						<!--	<input type="hidden" th:field="*{price}">-->
 					</td>
 				</tr>
 				<tr>
