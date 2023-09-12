@@ -10,7 +10,7 @@
 <body>
 	<div th:replace="header::header"></div>
 	<div style="text-align: center"
-		th:if="${session.loginMember.role == 'Customer'}">
+		th:if="${memberForm.member.role == 'Customer'}">
 		<h1>メンバー変更確定確認</h1>
 		<p>以下の情報に更新しました。</p>
 		<table align="center" border="1">
