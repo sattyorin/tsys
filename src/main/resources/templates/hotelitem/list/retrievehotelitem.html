@@ -18,12 +18,12 @@
 
 <body>
 	<div th:replace="header::header"></div>
-	<div style="text-align: left">
+	<div style="text-align: center">
 		<a th:href="@{/topmenu/productmanage}">
 			<button type="submit">商品管理メニュー</button>
 		</a>
 	</div>
-	<div style="text-align: center; width: fit-content;">
+	<div style="text-align: center;">
 		<h1>ホテル商品検索</h1>
 		<p th:text="${message}" class="error">エラーメッセージ</p>
 	</div>

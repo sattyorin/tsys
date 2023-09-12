@@ -35,7 +35,7 @@ import jp.co.tsys.common.util.MessageList;
  * @author FLM
  * @version 1.0.0
  */
-@SessionAttributes(names = {"HotelItemList", "form"})
+@SessionAttributes(names = {"form"})
 @RequestMapping("/hotelitem/list")
 @Controller
 public class HotelAllListViewController {
