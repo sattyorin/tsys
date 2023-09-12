@@ -45,12 +45,12 @@ public class HotelAllListViewController {
 	// 商品管理メニューに遷移（一番上）
 	@RequestMapping("/itemmgrmenu")
 	public String itemMgrMenu(Model model) {
-		return "/hotelitem/item_menu";
+		return "/hotelitem/regist/item_menu";
 	}
 
 	/**
 	 * 商品管理メニューで[ホテル商品一覧]ボタンを押下 マッピングするURL：/hotelItem/list/viewList
-	 * 
+	 *
 	 * @return /hotelItem/list/retrieveHotelItem
 	 */
 	@RequestMapping("/viewlist")
@@ -61,7 +61,7 @@ public class HotelAllListViewController {
 
 	/**
 	 * 検索ボタンを押下 マッピングするURL：/hotelItem/list/retrieveHotelItem
-	 * 
+	 *
 	 * @return /hotelItem/list/retrieveHotelItem
 	 * @throws ParseException
 	 */
@@ -141,7 +141,7 @@ public class HotelAllListViewController {
 
 	/**
 	 * マッピングするURL：
-	 * 
+	 *
 	 * @return /hotelItem/list/retrieveHotelItem
 	 */
 	@RequestMapping("HttpStatus.BAD_REQUEST")
