@@ -119,10 +119,11 @@
 	FROM
 		member
 	WHERE
-		Role = #{role} OR
-		Name = #{name} OR
+		Role = #{role} AND
+		(Name = #{name} OR
 		Tel = #{tel} OR
-		Mail = #{mail};
+		Mail = #{mail} OR
+		(#{name} = "" AND #{tel} = "" AND #{mail} = ""));
 	</select>
 		
 
