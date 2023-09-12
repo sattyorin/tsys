@@ -70,6 +70,21 @@ public class PaymentController {
 	// @Autowired
 	// private MemberFindService memberService;
 
+	@RequestMapping("/seeCart")
+	public String seeCart(
+			@ModelAttribute("shoppingCartForm") ShoppingCartForm shoppingCartForm,
+			BindingResult shoppingCartResult, Model model) {
+
+		if (shoppingCartResult.hasErrors()) {
+			return "/hotelsalses/find/hotel_detail";
+		}
+
+		// リロードでカートが増えないようにhotelDetailFormをリセット
+		model.addAttribute("hotelDetailForm", new HotelDetailForm());
+
+		return "/payment/shopping_cart";
+	}
+
 	@RequestMapping("/cart")
 	public String inputCart(
 			@Validated @ModelAttribute("hotelDetailForm") HotelDetailForm hotelDetailForm,
@@ -107,7 +122,6 @@ public class PaymentController {
 		}
 
 		// hotelDetailFormの中
-		System.out.println(hotelDetailForm);
 		if (hotelDetailForm.getHotelItem() != null) {
 			Order order = new Order();
 			order.setHotelItem(hotelDetailForm.getHotelItem());
@@ -216,18 +230,21 @@ public class PaymentController {
 		// 顧客と従業員の名前衝突回避用にインスタンス作成
 		Member displayMember = new Member();
 
+		// validatino用
+		MemberCodeForm memberCodeForm = new MemberCodeForm();
+
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		if (loginMember.getRole().equals("Customer")) {
+			memberCodeForm.setMemberCode(loginMember.getMemberCode());
 			ordersForm.setMemberCode(loginMember.getMemberCode());
 			displayMember.setName(loginMember.getName());
 			displayMember.setZipCode(loginMember.getZipCode());
 			displayMember.setPrefecture(loginMember.getPrefecture());
 			displayMember.setAddress(loginMember.getAddress());
 			displayMember.setTel(loginMember.getTel());
-		} else if (loginMember.getRole().equals("Employee")) {
-			model.addAttribute("memberCodeForm", new MemberCodeForm());
 		}
-		System.out.println(loginMember.getRole());
+
+		model.addAttribute("memberCodeForm", memberCodeForm);
 		model.addAttribute("displayMember", displayMember);
 		model.addAttribute("ordersForm", ordersForm);
 
@@ -276,12 +293,13 @@ public class PaymentController {
 
 	@RequestMapping("/completion")
 	@Transactional
-	public String commitResult(
+	public String commitResult(@Validated MemberCodeForm memberCodeForm,
+			BindingResult memberResult,
 			@ModelAttribute("ordersForm") @Validated OrdersForm ordersForm,
-			BindingResult result, Boolean reloadCheck, Model model,
+			BindingResult orderResult, Boolean reloadCheck, Model model,
 			SessionStatus status) {
 
-		if (result.hasErrors()) {
+		if (memberResult.hasErrors() || orderResult.hasErrors()) {
 			return "/payment/order_confirmation";
 		}
 
@@ -303,7 +321,6 @@ public class PaymentController {
 		ordersForm.setOrderDate(fdate1);
 
 		// データ登録
-		System.out.println(ordersForm.getMemberCode());
 		paymentService.insertOrder(ordersForm);
 		String lastOrderNo = paymentService.getLastOrderNo();
 		ordersForm.setOrderNo(lastOrderNo);
@@ -312,8 +329,6 @@ public class PaymentController {
 
 		// 在庫減らす
 		paymentService.updateHotelStock(ordersForm.getOrders());
-
-		System.out.println(ordersForm.getPayment());
 
 		// カートの中身を破棄
 		model.addAttribute("shoppingCartForm", new ShoppingCartForm());

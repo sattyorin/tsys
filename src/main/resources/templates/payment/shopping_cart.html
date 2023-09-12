@@ -8,7 +8,10 @@
 <style>
 th {
 	background-color: rgb(255, 185, 185);
-	border: "1";
+	border: solid 2px;
+	padding: 10px;
+	padding-right: 30px;
+	padding-left: 30px;
 }
 
 h1 {
@@ -20,7 +23,7 @@ h1 {
 div.subtitle {
 	font-size: 1.3em;
 	font-weight: bold;
-	padding-left: 115px;
+	padding-left: 180px;
 	text-align: left;
 }
 
@@ -28,14 +31,18 @@ p.sum {
 	font-size: 1.3em;
 	font-weight: bold;
 	text-align: right;
-	padding-right: 110px;
+	padding-right: 180px;
 }
 </style>
 </head>
 
 <body>
 	<div th:replace="Header::header"></div>
-
+	<div style="margin-bottom: 50px; text-align: left;">
+		<form th:action="@{/hotelfind/findhotel}" style="float: left;">
+			<button type="submit" class="test">ホテル検索画面へ</button>
+		</form>
+	</div>
 	<h1>ショッピングカート</h1>
 
 	<p th:text="${message}" class="error"></p>
@@ -88,9 +95,6 @@ p.sum {
 			合計金額 <span th:text="*{orderTotal}+'円'"></span>
 		</p>
 		<br>
-	</form>
-	<form th:action="@{/hotelfind/findhotel}" style="float: left;">
-		<button type="submit" class="test">ホテル検索画面へ</button>
 	</form>
 	<!--	画面表示の関係でここにボタンを配置-->
 	<div style="text-align: right;">

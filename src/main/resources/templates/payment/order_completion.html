@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>予約完了</title>
 <style>
-table {
-	margin-left: auto;
-	margin-right: auto;
-	border-collapse: collapse;
-	text-align: left;
-}
-
 th {
 	background-color: rgb(255, 185, 185);
+	border: solid 2px;
+	padding: 10px;
+	padding-right: 30px;
+	padding-left: 30px;
 }
 
 h1 {
@@ -25,7 +23,7 @@ h1 {
 div.subtitle {
 	font-size: 1.3em;
 	font-weight: bold;
-	padding-left: 115px;
+	padding-left: 180px;
 	text-align: left;
 }
 
@@ -33,12 +31,18 @@ p.sum {
 	font-size: 1.3em;
 	font-weight: bold;
 	text-align: right;
-	padding-right: 110px;
+	padding-right: 180px;
 }
 </style>
 </head>
+
 <body>
 	<div th:replace="Header::header"></div>
+	<div style="margin-bottom: 50px; text-align: left;">
+		<form th:action="@{/hotelfind/findhotel}" style="float: left;">
+			<button type="submit" class="test">ホテル検索画面へ</button>
+		</form>
+	</div>
 	<h1 style="text-align: center">予約完了</h1>
 
 	<h2 th:text="'予約番号：'+ ${ordersForm.orderNo}"></h2>
@@ -64,7 +68,8 @@ p.sum {
 					th:text="${#numbers.formatInteger(order.hotelItem.price, 3, 'COMMA')}+'円'">price</td>
 				<td th:text="${order.quantity}">quantity</td>
 				<td th:if="${order.subTotal}!= 0"
-					th:text="${#numbers.formatInteger(order.subTotal, 3, 'COMMA')}+'円'">price</td>
+					th:text="${#numbers.formatInteger(order.subTotal, 3, 'COMMA')}+'円'">
+					price</td>
 				<td th:if="${order.subTotal}== 0" th:text="${order.subTotal}+'円'">price</td>
 			</tr>
 		</table>
@@ -102,9 +107,7 @@ p.sum {
 	</table>
 	<p></p>
 
-	<form th:action="@{/hotelfind/findhotel}" style="text-align: center;">
-		<button type="submit" style="width: 150px;">ホテル検索画面へ</button>
-	</form>
 
 </body>
+
 </html>

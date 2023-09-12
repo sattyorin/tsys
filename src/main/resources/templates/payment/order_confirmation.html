@@ -6,15 +6,12 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>予約確認</title>
 <style>
-table {
-	margin-left: auto;
-	margin-right: auto;
-	border-collapse: collapse;
-	text-align: left;
-}
-
 th {
 	background-color: rgb(255, 185, 185);
+	border: solid 2px;
+	padding: 10px;
+	padding-right: 30px;
+	padding-left: 30px;
 }
 
 h1 {
@@ -26,7 +23,7 @@ h1 {
 div.subtitle {
 	font-size: 1.3em;
 	font-weight: bold;
-	padding-left: 115px;
+	padding-left: 180px;
 	text-align: left;
 }
 
@@ -34,7 +31,7 @@ p.sum {
 	font-size: 1.3em;
 	font-weight: bold;
 	text-align: right;
-	padding-right: 110px;
+	padding-right: 180px;
 }
 </style>
 </head>
@@ -111,7 +108,7 @@ p.sum {
 			<tr>
 				<th>決済方法</th>
 				<td><input type="radio" name="pay" th:field="*{payment}"
-					th:value="'01'">代金引き換え <input type="radio" name="pay"
+					th:value="'01'">代金引き換え&emsp;<input type="radio" name="pay"
 					th:field="*{payment}" th:value="'02'">コンビニエンスストア決済</td>
 			</tr>
 		</table>
