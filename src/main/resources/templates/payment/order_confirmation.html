@@ -90,7 +90,7 @@ p.sum {
 		th:action="@{/payment/completion}">
 		<div class="error" th:if="${#fields.hasErrors('payment')}"
 			th:errors="*{payment}"></div>
-		<table border="1" width="1000px">
+		<table border="1" width="1000px" style="text-align: left;">
 			<tr>
 				<th>名前</th>
 				<td th:text="${displayMember.name}"></td>

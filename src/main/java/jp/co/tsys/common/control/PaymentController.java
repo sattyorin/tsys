@@ -296,10 +296,20 @@ public class PaymentController {
 	public String commitResult(@Validated MemberCodeForm memberCodeForm,
 			BindingResult memberResult,
 			@ModelAttribute("ordersForm") @Validated OrdersForm ordersForm,
-			BindingResult orderResult, Boolean reloadCheck, Model model,
+			BindingResult orderResult,
+			@ModelAttribute("displayMember") Member displayMember,
+			BindingResult displayResult, Boolean reloadCheck, Model model,
 			SessionStatus status) {
 
 		if (memberResult.hasErrors() || orderResult.hasErrors()) {
+			return "/payment/order_confirmation";
+		}
+
+		if (displayMember.getName() == null) {
+			// エラーメッセージ[BIZERR102]をキー名"message"でModelに格納
+			model.addAttribute("message", BIZERR204);
+
+			// ホテル詳細画面（/hotelfind/sendShoppingCart）を返却する
 			return "/payment/order_confirmation";
 		}
 
