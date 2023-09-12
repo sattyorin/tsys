@@ -9,10 +9,9 @@
 
 <body>
 	<!--	従業員用画面でお客様を登録する場合-->
+	<div th:replace="header::header"></div>
 	<div style="text-align: center;"
 		th:if="${customerMemberForm.role == 'Customer'}">
-		<div th:replace="header::header"></div>
-
 		<h1>メンバー登録</h1>
 		<p>登録するメンバー情報を入力してください。</p>
 
@@ -104,35 +103,21 @@
 							th:errors="*{mail}">validation massage</div></td>
 				</tr>
 			</table>
-
 			<br>
-
-
-			<table style="border: none;" align="center">
-				<tr>
-					<td><a th:href="@{/member/regist/returnrole}">
-							<button
-								style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
-								formaction="/member/regist/returnrole">戻る</button>
-					</a></td>
-
-					<td>
-						<button
-							style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
-							formaction="/member/regist/customercomfirm">登録</button>
-					</td>
-				</tr>
-			</table>
-
+			<button
+				style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+				formaction="/member/regist/returnrole">戻る</button>
+			<button
+				style="width: fit-content; height: fit-content; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid;"
+				formaction="/member/regist/customercomfirm">登録</button>
 		</form>
+		<br> <br>
 	</div>
 
 
 	<!--	従業員用画面で従業員を登録する場合-->
 	<div style="text-align: center;"
 		th:if="${employeeMemberForm.role == 'Employee'}">
-		<div th:replace="header::header"></div>
-
 		<h1>メンバー登録</h1>
 		<p>登録するメンバー情報を入力してください。</p>
 		<p th:text="${message}" class="error">

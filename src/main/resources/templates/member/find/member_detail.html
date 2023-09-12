@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="utf-8">
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <head>
 <meta charset="UTF-8">
 <title>メンバー詳細画面</title>
@@ -108,9 +108,9 @@
 					</tr>
 				</table>
 				<br>
-				<table align="center" border="0">
-					<tr>
-						<td>
+				<table align="center" style="border: none;">
+					<tr  style="border: none;">
+						<td style="border: none;">
 							<form method="post" th:action="@{/member/update/entry}">
 								<button
 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
@@ -118,7 +118,7 @@
 							</form>
 						</td>
 
-						<td>
+						<td  style="border: none;">
 							<form method="post" th:action="@{/member/delete/confirm}">
 								<button
 									style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid"
@@ -127,11 +127,11 @@
 						</td>
 					</tr>
 				</table>
-<!-- 				<form method="post" th:action="@{/member/find/return/memberfind}"> -->
-<!-- 					<button -->
-<!-- 						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
-<!-- 						type="submit">戻る</button> -->
-<!-- 				</form> -->
+				<!-- 				<form method="post" th:action="@{/member/find/return/memberfind}"> -->
+				<!-- 					<button -->
+				<!-- 						style="width: 80px; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid" -->
+				<!-- 						type="submit">戻る</button> -->
+				<!-- 				</form> -->
 			</div>
 		</div>
 

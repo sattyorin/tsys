@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="utf-8">
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <head>
 <meta charset="UTF-8">
 <title>メンバー検索画面</title>
@@ -20,9 +20,10 @@
 			<div class="error" th:if="${#fields.hasErrors('memberCode')}"
 				th:errors="*{memberCode}">Validation massage</div>
 			<br>
-			<table align="center" border="1">
+			<table align="center" style="border: 0;">
 				<tr>
-					<th style="background-color: rgb(255, 206, 206);">
+					<th
+						style="background-color: rgb(255, 206, 206); border: solid 2px; padding: 10px">
 						<p>メンバーコード</p>
 						<p>
 							<font color="red" size="2">※入力必須項目</font>
