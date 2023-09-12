@@ -114,7 +114,8 @@ img.cart {
 			</tr>
 			<tr>
 				<th>料金</th>
-				<td class="digit" th:text="${hotelDetailForm.hotelItem.price} + '円'">price</td>
+				<td class="digit"
+					th:text="${#numbers.formatInteger(hotelDetailForm.hotelItem.price, 3, 'COMMA')} + '円'">price</td>
 			</tr>
 			<tr>
 				<th>グレード</th>

@@ -4,7 +4,6 @@
 
 package jp.co.tsys.common.form;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -25,7 +24,6 @@ public class HotelDetailForm {
 	/** ホテル商品 */
 	private HotelItem hotelItem;
 
-	@Max(20)
 	@Min(1)
 	@NotNull
 	/** 予約部屋数 */
