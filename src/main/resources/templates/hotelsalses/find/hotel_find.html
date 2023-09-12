@@ -11,6 +11,17 @@
 <script type="text/javascript"
 	th:src="@{https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js}"></script>
 <script type="text/javascript" th:src="@{/js/paging.js}"></script>
+
+<script>
+window.addEventListener('DOMContentLoaded', ()=>{
+	const d=new Date();
+	d.setDate(d.getDate());
+	tomorrow.setAttribute("min",d.toISOString().substr(0,10));
+	d.setDate(d.getDate() + 1);
+	out.setAttribute("min",d.toISOString().substr(0,10));
+});
+</script>
+
 <title>ホテル検索</title>
 <style>
 /* body { */
@@ -130,8 +141,8 @@ input {
 			</tr>
 			<tr>
 				<th>期間<span class="red">*</span></th>
-				<td><input type="date" th:field="*{inDate}"> ～<input
-					type="date" th:field="*{outDate}"></td>
+				<td><input type="date" th:field="*{inDate}" id="tomorrow">
+					～<input type="date" th:field="*{outDate}" id="out"></td>
 			</tr>
 			<tr>
 				<th>値段</th>
