@@ -4,6 +4,8 @@
 
 package jp.co.tsys.common.control;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -142,7 +144,7 @@ public class MemberUpdateContoroller {
 
 	// 顧客情報の確定更新に対応するHandlerメソッド
 	@RequestMapping(value = "/customerresult", method = RequestMethod.POST)
-	public String customerResult(Model model) {
+	public String customerResult(Model model, HttpSession session) {
 		// フォームオブジェクトに格納された情報をMemberオブジェクトに設定する
 		MemberForm memberForm = (MemberForm) model.getAttribute("memberForm");
 		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
@@ -167,6 +169,7 @@ public class MemberUpdateContoroller {
 
 		// ServiceのupdateMemberメソッドを呼び出す
 		service.updateMember(member);
+		session.setAttribute("loginMember", member);
 
 		// 結果確認画面に遷移する
 		return "/member/update/update_complete";
@@ -175,7 +178,7 @@ public class MemberUpdateContoroller {
 
 	// 従業員情報の確定更新に対応するHandlerメソッド
 	@RequestMapping(value = "/employeeresult", method = RequestMethod.POST)
-	public String employeeResult(Model model) {
+	public String employeeResult(Model model, HttpSession session) {
 		// フォームオブジェクトに格納された情報をMemberオブジェクトに設定する
 		// TODO(sara): null check
 		Member member = new Member();
@@ -187,11 +190,10 @@ public class MemberUpdateContoroller {
 		member.setName(employeeMemberForm.getName());
 		member.setPassword(employeeMemberForm.getPassword());
 		member.setMail(employeeMemberForm.getMail());
-		System.out.println(employeeMemberForm);
-		System.out.println(member);
 
 		// ServiceのupdateMemberメソッドを呼び出す
 		service.updateMember(member);
+		session.setAttribute("loginMember", member);
 
 		// 結果確認画面に遷移する
 		return "/member/update/update_complete";
