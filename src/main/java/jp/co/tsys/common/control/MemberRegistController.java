@@ -74,9 +74,9 @@ public class MemberRegistController {
 	@RequestMapping("/customerinput")
 	public String customerInputRegist(Model model) {
 
-		MemberForm memberForm = new MemberForm();
+		// MemberForm memberForm = new MemberForm();
 
-		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+		// EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
 
 		// 入力値を取得するmodelを用意
 		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
@@ -93,9 +93,9 @@ public class MemberRegistController {
 	@RequestMapping("/employeeinput")
 	public String employeeInputRegist(Model model) {
 
-		MemberForm memberForm = new MemberForm();
+		// MemberForm memberForm = new MemberForm();
 
-		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
+		// CustomerMemberForm customerMemberForm = new CustomerMemberForm();
 
 		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
 
@@ -111,9 +111,9 @@ public class MemberRegistController {
 	@RequestMapping("/customercinput")
 	public String inputRegist(Model model) {
 
-		MemberForm memberForm = new MemberForm();
+		// MemberForm memberForm = new MemberForm();
 
-		EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
+		// EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
 
 		// 入力値を取得するmodelを用意
 		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
