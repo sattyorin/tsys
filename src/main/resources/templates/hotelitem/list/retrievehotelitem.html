@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" type="text/css"
+	th:href="@{https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css}">
+<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js}"></script>
+<script type="text/javascript" th:src="@{/js/paging.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
 <title>ホテル商品一覧画面</title>
 </head>
+
 <body>
-<div th:replace="Header::header"></div>
+	<div th:replace="header::header"></div>
 	<div style="text-align: left">
-		<a th:href="@{/hotelitem/list/itemmgrmenu}">
+		<a th:href="@{/topmenu/productmanage}">
 			<button type="submit">商品管理メニュー</button>
 		</a>
 	</div>
-	<div style="text-align: center">
+	<div style="text-align: center; width: fit-content;">
 		<h1>ホテル商品検索</h1>
 		<p th:text="${message}" class="error">エラーメッセージ</p>
 	</div>
@@ -20,46 +31,57 @@
 		th:action="@{/hotelitem/list/retrievehotelitem}">
 		<table>
 			<tr>
-				<td>ホテル名</td>
+				<td style="background-color: rgb(255, 185, 185)">ホテル名</td>
 				<td><input type="text" placeholder="30文字以内で入力"
 					th:field="${form.name}">
 					<div class="error" th:if="${#fields.hasErrors('name')}"
 						th:errors="*{name}"></div></td>
-				<td>期間</td>
+				<td style="background-color: rgb(255, 185, 185)">期間</td>
 				<td><input type="date" th:field="*{startdate}">～<input
 					type="date" th:field="*{enddate}">
-					<button type="submit">検索</button>
+
 					<div class="error" th:if="${#fields.hasErrors('name')}"
 						th:errors="*{name}"></div></td>
+				<td style="border: none;">
+					<button type="submit">検索</button>
+				</td>
 			</tr>
 		</table>
 	</form>
+	<br>
 	<div>
-		<table border="1" align="center"
-			th:if="${not #strings.isEmpty(HotelItemList)}">
-			<tr>
-				<th>商品コード</th>
-				<th>ホテルコード</th>
-				<th>ホテル名</th>
-				<th>宿泊日</th>
-				<th>料金</th>
-				<th>在庫数</th>
-			</tr>
-			<!-- <tr th:each="hotelItem : ${HotelItemList}">-->
-			<th:block th:object="${HotelItemDetailForm}"
-				th:each="hotelItem : ${HotelItemList}">
-				<!-- <th:block th:object="${HotelItemList}">-->
+		<table id="paging" border="1" align="center">
+			<thead>
 				<tr>
-					<td th:text="${hotelItem.itemCode}">itemCode</td>
-					<td th:text="${hotelItem.hotelCode}">hotelCode</td>
-					<td th:text="${hotelItem.name}">name</td>
-					<td th:text="${hotelItem.date}">date</td>
-					<!-- <td th:text="${#temporals.format(hotelItem.date, 'yyyy/MM/dd')}">date</td>-->
-					<td class="digit" th:text="${hotelItem.price}+'円'">price</td>
-					<td class="digit" th:text="${hotelItem.stock}">stock</td>
+					<th>商品コード</th>
+					<th>ホテルコード</th>
+					<th>ホテル名</th>
+					<th>宿泊日</th>
+					<th>料金</th>
+					<th>在庫数</th>
 				</tr>
-			</th:block>
+			</thead>
+			<tbody>
+				<!-- <tr th:each="hotelItem : ${HotelItemList}">-->
+				<th:block th:object="${HotelItemDetailForm}"
+					th:each="hotelItem : ${HotelItemList}">
+					<!-- <th:block th:object="${HotelItemList}">-->
+
+					<tr>
+						<td th:text="${hotelItem.itemCode}">itemCode</td>
+						<td th:text="${hotelItem.hotelCode}">hotelCode</td>
+						<td th:text="${hotelItem.name}">name</td>
+						<td th:text="${hotelItem.date}">date</td>
+						<!-- <td th:text="${#temporals.format(hotelItem.date, 'yyyy/MM/dd')}">date</td>-->
+						<td class="digit" th:text="${hotelItem.price}+'円'">price</td>
+						<td class="digit" th:text="${hotelItem.stock}">stock</td>
+					</tr>
+
+				</th:block>
+			</tbody>
+
 		</table>
 	</div>
 </body>
+
 </html>
