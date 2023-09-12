@@ -18,7 +18,7 @@
 
 	<div style="text-align: center;">
 		<h1>ホテル検索</h1>
-		<p th:text="${message}">error message</p>
+		<p th:text="${message}" class="error">error message</p>
 
 		<form th:object="${findHotelForm}" method="post"
 			th:action="@{/hotelitem/register/findhotel}">
@@ -36,13 +36,13 @@
 			<br>
 			<button type="submit"
 				style="width: fit-content; height: 40px; font-size: 12pt; font-weight: bold; background-color: rgb(255, 185, 185); border-radius: 5px; border-color: rgb(64, 0, 64); border-style: solid">検索</button>
-
-			<!--				name=hoetlCOde , id=hotelCode , value=hotelCodeみたいになる。で、遷移先のformにhotelCodeがあれば自動格納-->
-			<!--				ここにエラーチェック-->
-			<div class="error" th:if="${#fields.hasErrors('hotelCode')}"
-				th:errors="*{hotelCode}">validation massage</div>
-			<div class="error" th:if="${#fields.hasErrors('hotelName')}"
-				th:errors="*{hotelName}">validation massage</div>
+		
+		<!--				name=hoetlCOde , id=hotelCode , value=hotelCodeみたいになる。で、遷移先のformにhotelCodeがあれば自動格納-->
+		<!--				ここにエラーチェック-->
+		<div class="error" th:if="${#fields.hasErrors('hotelCode')}"
+			th:errors="*{hotelCode}">validation massage</div>
+		<div class="error" th:if="${#fields.hasErrors('hotelName')}"
+			th:errors="*{hotelName}">validation massage</div>
 		</form>
 
 	</div>

@@ -10,6 +10,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,12 +51,14 @@ public class RegistHotelForm implements Serializable {
 	@Max(999999999)
 	@Min(1)
 	@Digits(fraction = 0, integer = 10)
+	@NotNull
 	private Integer price;
 
 	/** 在庫数 */
 	@Max(99999)
 	@Min(1)
 	@Digits(fraction = 0, integer = 6)
+	@NotNull
 	private Integer stock;
 
 }
