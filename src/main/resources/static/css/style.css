@@ -117,3 +117,17 @@ button {
 .pink {
 	color: rgb(255, 185, 185);
 }
+
+.error-area {
+	text-align: center;
+	font-size: 14px;
+	color: red;
+}
+
+.input-message {
+	font-size: 12px;
+}
+
+.red {
+	color: red;
+}
