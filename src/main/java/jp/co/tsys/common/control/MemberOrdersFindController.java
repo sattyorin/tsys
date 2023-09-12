@@ -111,6 +111,37 @@ public class MemberOrdersFindController {
 		return "/order/order_history";
 	}
 
+	// / 受注取り消し画面の受注履歴ボタンに対応するメソッド
+	// 受注一覧画面に遷移する。
+	@RequestMapping("/backhistory")
+	public String backHistory(Model model) {
+		// // 初期値
+		Member member = new Member();
+		// セッションから情報取得
+		OrderHistoryForm orderHistoryForm = (OrderHistoryForm) model
+				.getAttribute("orderHistoryForm");
+		// // Service で各メソッドを呼び出し
+		// // // 戻り値Memberオブジェクトを取得する
+		member = memberFindService
+				.findMember(orderHistoryForm.getMember().getMemberCode());
+		List<Order> currentOrder = memberOrdersFindService
+				.findCurrentOrder(member.getMemberCode());
+		List<Order> pastOrder = memberOrdersFindService
+				.findPastOrder(member.getMemberCode());
+		// List<Order> -> List<Pair<Order, String>>
+		List<Pair<Order, String>> currentOrderPairList = currentOrder.stream()
+				.map(order -> new Pair<Order, String>(order, "false"))
+				.collect(Collectors.toList());
+		List<Pair<Order, String>> pastOrderPairList = pastOrder.stream()
+				.map(order -> new Pair<Order, String>(order, "false"))
+				.collect(Collectors.toList());
+		orderHistoryForm.setCurrentOrders(currentOrderPairList);
+		orderHistoryForm.setPastOrders(pastOrderPairList);
+		orderHistoryForm.setMember(member);
+		model.addAttribute("orderHistoryForm", orderHistoryForm);
+		return "/order/order_history";
+	}
+
 	// 受注履歴を削除して確認画面に遷移。
 	@RequestMapping("/deletecomfirm")
 	public String deleteCurrentOrder(
