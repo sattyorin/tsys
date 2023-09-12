@@ -34,6 +34,26 @@ import jp.co.tsys.common.service.MemberRegistService;
 @RequestMapping("/member/regist")
 public class MemberRegistController {
 
+	@ModelAttribute("employeeMemberForm")
+	CustomerMemberForm initCustomerMemberForm(Model model) {
+		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
+				.getAttribute("employeeMemberForm");
+		if (customerMemberForm != null) {
+			return customerMemberForm;
+		}
+		return new CustomerMemberForm();
+	}
+
+	@ModelAttribute("employeeMemberForm")
+	EmployeeMemberForm initEmployeeMemberForm(Model model) {
+		EmployeeMemberForm employeeMemberForm = (EmployeeMemberForm) model
+				.getAttribute("employeeMemberForm");
+		if (employeeMemberForm != null) {
+			return employeeMemberForm;
+		}
+		return new EmployeeMemberForm();
+	}
+
 	/** Service */
 	@Autowired
 	private MemberRegistService service;
@@ -110,10 +130,6 @@ public class MemberRegistController {
 	// ログイン画面の[登録はこちら]に対応
 	@RequestMapping("/customercinput")
 	public String inputRegist(Model model) {
-
-		// MemberForm memberForm = new MemberForm();
-
-		// EmployeeMemberForm employeeMemberForm = new EmployeeMemberForm();
 
 		// 入力値を取得するmodelを用意
 		CustomerMemberForm customerMemberForm = new CustomerMemberForm();
@@ -206,10 +222,8 @@ public class MemberRegistController {
 	public String customerCommitRegist(Model model) {
 
 		// フォームオブジェクトに格納された情報をEmployeeオブジェクトに設定する
-
 		CustomerMemberForm customerMemberForm = (CustomerMemberForm) model
 				.getAttribute("customerMemberForm");
-
 		Member member = new Member("0", customerMemberForm.getName(),
 				customerMemberForm.getPassword(), "Customer",
 				customerMemberForm.getMail(), customerMemberForm.getZipCode(),
