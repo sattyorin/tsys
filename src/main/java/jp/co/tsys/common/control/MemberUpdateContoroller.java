@@ -19,6 +19,7 @@ import jp.co.tsys.common.form.CustomerMemberForm;
 import jp.co.tsys.common.form.EmployeeMemberForm;
 import jp.co.tsys.common.form.MemberForm;
 import jp.co.tsys.common.service.MemberUpdateService;
+import jp.co.tsys.common.util.MessageList;
 
 /**
  *
@@ -65,7 +66,7 @@ public class MemberUpdateContoroller {
 			return "/member/regist/member_management";
 		}
 
-		if (memberForm.getMember().getRole() == "Customer") {
+		if (memberForm.getMember().getRole().equals("Customer")) {
 			CustomerMemberForm customerMemberForm = new CustomerMemberForm();
 			customerMemberForm.setName(memberForm.getMember().getName());
 			customerMemberForm
@@ -105,7 +106,10 @@ public class MemberUpdateContoroller {
 		if (result.hasErrors()) {
 			// メンバー変更画面をreturnする
 			// TODO(naoto): Set error code.
-			model.addAttribute("message", "入力項目が規定を満たしていません");
+			return "/member/update/update_input";
+		} else if (!customerMemberForm.getPassword()
+				.equals(customerMemberForm.getConfirmPassword())) {
+			model.addAttribute("message", MessageList.BIZERR201);
 			return "/member/update/update_input";
 		}
 
@@ -125,7 +129,10 @@ public class MemberUpdateContoroller {
 		if (result.hasErrors()) {
 			// メンバー変更画面をreturnする
 			// TODO(naoto): Set error code.
-			model.addAttribute("message", "入力項目が規定を満たしていません");
+			return "/member/update/update_input";
+		} else if (!employeeMemberForm.getPassword()
+				.equals(employeeMemberForm.getConfirmPassword())) {
+			model.addAttribute("message", MessageList.BIZERR201);
 			return "/member/update/update_input";
 		}
 

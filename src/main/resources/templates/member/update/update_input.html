@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="utf-8">
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title>メンバー情報変更</title>
 </head>
 
@@ -13,9 +13,9 @@
 		th:if="${memberForm.member.role == 'Customer'}">
 
 		<h1>メンバー情報変更</h1>
-		<p>※入力必須項目</p>
-		<p th:text="${message}" class="error">
-			<font color="red">error message</font>
+		<p style="color: rgb(255, 0, 0)">※入力必須項目</p>
+		<p th:text="${message}" class="error" style="color: rgb(255, 0, 0)">
+			<font>error message</font>
 		</p>
 
 		<form th:object="${customerMemberForm}" method="post"
@@ -25,7 +25,11 @@
 					<th style="background-color: rgb(255, 206, 206);">メンバー名<font
 						color="red" size=1>※</font>
 					</th>
-					<td><input type="text" th:field="*{name}"></td>
+					<td><input type="text" th:field="*{name}">
+						<div class="error" th:if="${#fields.hasErrors('name')}"
+							th:errors="*{name}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">パスワード<font
@@ -34,7 +38,11 @@
 							<font size=2>8～15文字で入力してください</font>
 						</p>
 					</th>
-					<td><input type="text" th:field="*{password}"></td>
+					<td><input type="text" th:field="*{password}">
+						<div class="error" th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">確認用パスワード <font
@@ -44,7 +52,10 @@
 						</p>
 					</th>
 					<td><input type="text" th:field="*{confirmPassword}">
-					</td>
+						<div class="error" th:if="${#fields.hasErrors('confirmPassword')}"
+							th:errors="*{confirmPassword}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">郵便番号<font
@@ -53,32 +64,52 @@
 							<font size=2>ハイフン込み8文字</font>
 						</p>
 					</th>
-					<td><input type="text" th:field="*{zipCode}"></td>
+					<td><input type="text" th:field="*{zipCode}">
+						<div class="error" th:if="${#fields.hasErrors('zipCode')}"
+							th:errors="*{zipCode}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">都道府県<font
 						color="red" size=1>※</font>
 					</th>
-					<td><input type="text" th:field="*{prefecture}"></td>
+					<td><input type="text" th:field="*{prefecture}">
+						<div class="error" th:if="${#fields.hasErrors('prefecture')}"
+							th:errors="*{prefecture}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">住所（都道府県以降）<font
 						color="red" size=1>※</font>
 					</th>
-					<td><input type="text" th:field="*{address}"></td>
+					<td><input type="text" th:field="*{address}">
+						<div class="error" th:if="${#fields.hasErrors('address')}"
+							th:errors="*{address}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">電話番号<font
 						color="red" size=1>※</font> <br>
 						<p>ハイフン込み13文字以内</p>
 					</th>
-					<td><input type="text" th:field="*{tel}"></td>
+					<td><input type="text" th:field="*{tel}">
+						<div class="error" th:if="${#fields.hasErrors('tel')}"
+							th:errors="*{tel}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">メールアドレス<font
 						color="red" size=1>※</font>
 					</th>
-					<td><input type="text" th:field="*{mail}"></td>
+					<td><input type="text" th:field="*{mail}">
+						<div class="error" th:if="${#fields.hasErrors('mail')}"
+							th:errors="*{mail}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 			</table>
 			<br>
@@ -91,7 +122,7 @@
 		th:if="${memberForm.member.role == 'Employee'}">
 
 		<h1>メンバー情報変更</h1>
-		<p>※入力必須項目</p>
+		<p style="color: rgb(255, 0, 0)">※入力必須項目</p>
 		<p th:text="${message}" class="error">
 			<font color="red">error message</font>
 		</p>
@@ -103,7 +134,11 @@
 					<th style="background-color: rgb(255, 206, 206);">メンバー名<font
 						color="red" size=1>※</font>
 					</th>
-					<td><input type="text" th:field="*{name}"></td>
+					<td><input type="text" th:field="*{name}">
+						<div class="error" th:if="${#fields.hasErrors('name')}"
+							th:errors="*{name}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">パスワード<font
@@ -112,7 +147,11 @@
 							<font size=2>8～15文字で入力してください</font>
 						</p>
 					</th>
-					<td><input type="text" th:field="*{password}"></td>
+					<td><input type="text" th:field="*{password}">
+						<div class="error" th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">確認用パスワード <font
@@ -122,13 +161,20 @@
 						</p>
 					</th>
 					<td><input type="text" th:field="*{confirmPassword}">
-					</td>
+						<div class="error" th:if="${#fields.hasErrors('confirmPassword')}"
+							th:errors="*{confirmPassword}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 				<tr>
 					<th style="background-color: rgb(255, 206, 206);">メールアドレス<font
 						color="red" size=1>※</font>
 					</th>
-					<td><input type="text" th:field="*{mail}"></td>
+					<td><input type="text" th:field="*{mail}">
+						<div class="error" th:if="${#fields.hasErrors('mail')}"
+							th:errors="*{mail}">
+							<p style="color: rgb(255, 0, 0)">validation massage</p>
+						</div></td>
 				</tr>
 			</table>
 			<br>
