@@ -14,8 +14,8 @@
 
 		<table>
 			<tr th:each="hotelItem : ${hotelItemList}">
-				<td th:text="${hotelItem.date}">date</td>
-				<td th:text="${hotelItem.hotel.name}">hotelName</td>
+				<td style="border: none" th:text="${hotelItem.date}">date</td>
+				<td style="border: none" th:text="${hotelItem.hotel.name}">hotelName</td>
 			</tr>
 		</table>
 		<h3>予約キャンセル完了しました</h3>
