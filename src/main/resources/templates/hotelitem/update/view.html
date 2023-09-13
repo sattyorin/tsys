@@ -18,8 +18,7 @@
 		<h1>ホテル商品変更</h1>
 		<p th:text="${message}" class="error">error message</p>
 
-		<form th:object="${updateForm}" method="post"
-			th:action="@{/hotelitem/update/confirmupdate}">
+		<form th:object="${updateForm}">
 			<table border="1" align="center">
 				<tr>
 					<th>商品コード</th>
@@ -71,19 +70,20 @@
 							th:errors="${updateForm.stock}">validation massage</div></td>
 				</tr>
 			</table>
+			<br>
 
-			<p>
-				<a>
-					<button type="submit">変更</button>
-				</a>
-			</p>
+			<table align="center">
+				<tr>
+					<td style="border: none;"><a>
+							<button th:formaction="@{/hotelitem/update/quitupdate}">戻る</button>
+					</a></td>
+					<td style="border: none;"><a>
+							<button type="submit"
+								th:formaction="@{/hotelitem/update/confirmupdate}">変更</button>
+					</a></td>
+				</tr>
+			</table>
 		</form>
-
-		<p>
-			<a th:href="@{/hotelitem/update/quitupdate}">
-				<button>戻る</button>
-			</a>
-		</p>
 
 	</div>
 </body>

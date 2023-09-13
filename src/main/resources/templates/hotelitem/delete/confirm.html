@@ -45,25 +45,25 @@
 			<tr>
 				<th>料金</th>
 				<td class="digit" style="text-align: left;"
-					th:text="${hotelItemForm.price} + '円'">price</td>
+					th:text="${#numbers.formatInteger(hotelItemForm.price, 3, 'COMMA')} + '円'">price</td>
 			</tr>
 			<tr>
 				<th>在庫数</th>
 				<td th:text="${hotelItemForm.stock}">stock</td>
 			</tr>
 		</table>
+		<br>
 
-		<p>
-			<a th:href="@{/hotelitem/delete/commitdelete}">
-				<button>確定</button>
-			</a>
-		</p>
-
-		<p>
-			<a th:href="@{/hotelitem/delete/quitdelete}">
-				<button>戻る</button>
-			</a>
-		</p>
+		<table style="border: none;" align="center">
+			<tr>
+				<td><a th:href="@{/hotelitem/delete/quitdelete}">
+						<button>戻る</button>
+				</a></td>
+				<td><a th:href="@{/hotelitem/delete/commitdelete}">
+						<button>確定</button>
+				</a></td>
+			</tr>
+		</table>
 
 	</div>
 </body>

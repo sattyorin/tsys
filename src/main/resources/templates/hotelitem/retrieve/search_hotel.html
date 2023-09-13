@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+​
 
 <head>
 <meta charset="utf-8">
@@ -66,6 +67,8 @@
 						<th style="background-color: rgb(255, 185, 185);">在庫数</th>
 					</tr>
 				</thead>
+
+
 				<tbody>
 					<th:block th:object="${HotelItemDetailForm}"
 						th:each="hotelItem : ${HotelItemList}">

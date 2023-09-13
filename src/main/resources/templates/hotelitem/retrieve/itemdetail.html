@@ -45,7 +45,7 @@
 			<tr>
 				<th>料金</th>
 				<td class="digit" style="text-align: left;"
-					th:text="${hotelItemForm.price} + '円'">price</td>
+					th:text="${#numbers.formatInteger(hotelItemForm.price, 3, 'COMMA')} + '円'">price</td>
 			</tr>
 			<tr>
 				<th>在庫数</th>
